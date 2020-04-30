@@ -1,3 +1,30 @@
+## Display identifier only sorted by the second array (narrative) in descending order
+You can order by ```aid``` and ```descending``` as well.
+```
+select
+
+ aid , JSONB_ARRAY_LENGTH(xson->'/narrative')
+
+from xson where JSONB_ARRAY_LENGTH(xson->'/narrative') is not null
+
+order by 2 desc
+limit 100
+```
+
+
+## Display number of items and include all activities information for certain element and vocab
+```
+select
+
+JSONB_ARRAY_LENGTH(xson->'/narrative') , *
+
+from xson where root='/iati-activities/iati-activity/sector' and xson->>'@vocabulary' = '99' and JSONB_ARRAY_LENGTH(xson->'/narrative') > 1
+
+order by 1 desc
+
+limit 100;
+```
+
 ## Sub query to get full activity data
 Click on "Download XSON" and "Download XSON as XML" in the menu to get a link to run that query and return full activities as xml.
 
