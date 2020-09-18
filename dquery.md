@@ -1,3 +1,24 @@
+## Display information within an element
+Show all information within ```/budget``` for multiple identifiers.
+This works for ```/budget``` as ```root``` because this array occurs only once.
+```
+select *
+
+from xson where root='/iati-activities/iati-activity/budget'
+and aid in ('BE-10-3011287','BE-10-3011636','BE-10-3012116',
+'BE-10-3013682','BE-10-3013700','BE-10-3013816','BE-10-3014022',
+'BE-10-3014056','BE-10-3014752','BE-10-3014910','BE-10-3015098',
+'BE-10-3016473','BE-10-3016624','BE-10-3017143','BE-10-3017144',
+'BE-10-3017145','XM-DAC-2-10-1022','XM-DAC-2-10-1023',
+'XM-DAC-2-10-1027','XM-DAC-2-10-1196','XM-DAC-2-10-1481',
+'XM-DAC-2-10-1826','XM-DAC-2-10-2084','XM-DAC-2-10-2093',
+'XM-DAC-2-10-2150','XM-DAC-2-10-2643','XM-DAC-2-10-2654',
+'XM-DAC-2-10-2660','XM-DAC-2-10-2661','XM-DAC-2-10-2666',
+'XM-DAC-2-10-3017783','XM-DAC-2-10-3017854','XM-DAC-2-10-3018038')
+
+limit 100;
+```
+
 ## Display identifier only sorted by the second array (narrative) in descending order
 You can order by ```aid``` and ```descending``` as well.
 ```
