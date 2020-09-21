@@ -1,3 +1,24 @@
+## Display an element attribute, grouped in descending order
+Use ```as``` to name the columns  
+Order always depend on the column number or names, 3 being the count  
+You can use multiple groups, as you would a table grouping columns
+```
+
+select
+
+xson->>'@ref' as old_id, pid as new_id, count(*)
+
+from xson where root='/iati-activities/iati-activity/other-identifier' and xson->>'@type' = 'B1'
+group by xson->>'@ref', pid
+
+order by 3 desc
+
+limit 20000;
+
+```
+
+
+
 ## Display information within an element
 Show all information within ```/budget``` for multiple identifiers.
 This works for ```/budget``` as ```root``` because this array occurs only once.
