@@ -1,3 +1,49 @@
+## Conditions
+1. Displays all publishers with ```conditions@attached``` as YES, limit to 100
+```
+select
+
+pid as org_id, count(*)
+
+from xson where root='/iati-activities/iati-activity' and xson->>'/conditions@attached' = '1'
+group by pid
+
+order by 2 desc
+
+
+limit 100;
+```
+
+2. Displays the narratives grouped by publishers with ```condition@type```
+```
+select
+
+xson->>'/narrative' as narrative, xson->>'@type' as condition_type, pid as org_id, count(*)
+
+from xson where root='/iati-activities/iati-activity/conditions/condition'
+group by xson->>'/narrative', pid, condition_type
+
+order by 4 desc
+
+
+limit 100;
+```
+
+3. Displays narratives grouped by publishers with ```condition@type``` 1
+```
+select
+
+xson->>'/narrative' as narrative, pid as org, count(*)
+
+from xson where root='/iati-activities/iati-activity/conditions/condition' and xson->>'@type' = '1'
+group by xson->>'/narrative', pid
+
+order by 3 desc
+
+
+limit 10;
+```
+
 ## Display an element attribute, grouped in descending order
 Use ```as``` to name the columns  
 Order always depend on the column number or names, 3 being the count  
