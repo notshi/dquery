@@ -20,9 +20,11 @@ xson ->> '/value' as budgetvalue,
 xson ->> '/value@currency' as currency,
 xson ->> '/value@value-date' as valuedate,
 xson ->> '/period-end@iso-date' as enddate,
-xson ->> '/period-start@iso-date' as startdate
+xson ->> '/period-start@iso-date' as startdate,
+xson ->> '@status' as status
 
 from xson where root='/iati-organisations/iati-organisation/total-budget'
+
 ```
 
 
