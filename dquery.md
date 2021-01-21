@@ -10,6 +10,22 @@ and xson->>'/total-budget' IS NOT NULL
 
 ```
 
+2. Display iati-organisation id with elements within ```total-budget```
+```
+select
+
+pid,
+
+xson ->> '/value' as budgetvalue,
+xson ->> '/value@currency' as currency,
+xson ->> '/value@value-date' as valuedate,
+xson ->> '/period-end@iso-date' as enddate,
+xson ->> '/period-start@iso-date' as startdate
+
+from xson where root='/iati-organisations/iati-organisation/total-budget'
+```
+
+
 ## Conditions
 1. Displays all publishers with ```conditions@attached``` as YES, limit to 100
 ```
