@@ -1,3 +1,15 @@
+## Count
+1. Displays a count of certain element or attributes with no limit
+```
+select
+
+count(*)
+
+from xson where root='/iati-organisations/iati-organisation'
+and xson->>'/total-budget' IS NOT NULL
+
+```
+
 ## Conditions
 1. Displays all publishers with ```conditions@attached``` as YES, limit to 100
 ```
