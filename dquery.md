@@ -27,6 +27,20 @@ from xson where root='/iati-organisations/iati-organisation/total-budget'
 
 ```
 
+3. Display all publishers that use a particular ```@ref```
+
+```
+select
+
+pid as org, count(*)
+
+from xson where xson->>'@ref'='XM-OCHA-CBPF-NGA75'
+group by pid
+
+order by 2 desc
+
+limit 10;
+```
 
 ## Conditions
 1. Displays all publishers with ```conditions@attached``` as YES, limit to 100
