@@ -42,7 +42,7 @@ order by 2 desc
 limit 10;
 ```
 
-4. Display certain elements and count and grouped for a particular ```@ref```
+4. Display first ```/narrative``` array under multiple roots, count and grouped for a particular ```@ref```
 ```
 select
 
