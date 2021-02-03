@@ -42,6 +42,22 @@ order by 2 desc
 limit 10;
 ```
 
+4. Display certain elements and count and grouped for a particular ```@ref```
+```
+select
+
+xson->>'@ref' as reference, xson->'/narrative'->0->>'' as narrative, pid as publisher, count(*)
+
+from xson where root in ('/iati-activities/iati-activity/participating-org','/iati-activities/iati-activity/transaction/provider-org','/iati-activities/iati-activity/transaction/receiver-org')
+and xson->>'@ref'='XM-OCHA-CBPF-NGA75'
+group by 1, 2, pid
+
+order by 4 desc
+
+limit 10;
+```
+
+
 ## Conditions
 1. Displays all publishers with ```conditions@attached``` as YES, limit to 100
 ```
