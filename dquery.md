@@ -218,3 +218,35 @@ GROUP BY 1 ORDER BY 2 DESC
 
 LIMIT 1000;
 ```
+
+## Display all activities for a country_code within COVID-19
+```
+SELECT * FROM act JOIN country on act.aid = country.aid  WHERE country_code ='AO' AND act.aid in (
+SELECT DISTINCT aid FROM xson WHERE
+(
+	root='/iati-activities/iati-activity/humanitarian-scope' AND
+	xson->>'@type'='1' AND
+	xson->>'@vocabulary'='1-2' AND
+	xson->>'@code'='EP-2020-000012-001'
+)OR(
+	root='/iati-activities/iati-activity/humanitarian-scope' AND
+	xson->>'@type'='2' AND
+	xson->>'@vocabulary'='2-1' AND
+	xson->>'@code'='HCOVD20'
+)OR(
+	root='/iati-activities/iati-activity/tag' AND
+	xson->>'@vocabulary'='99' AND
+	xson->>'@vocabulary-uri' IS NULL AND
+	UPPER(xson->>'@code')='COVID-19'
+)OR(
+	root='/iati-activities/iati-activity/title/narrative' AND
+	to_tsvector('simple', xson->>'') @@ to_tsquery('simple','COVID-19')
+)OR(
+	root='/iati-activities/iati-activity/description/narrative' AND
+	to_tsvector('simple', xson->>'') @@ to_tsquery('simple','COVID-19')
+)OR(
+	root='/iati-activities/iati-activity/transaction/description/narrative' AND
+	to_tsvector('simple', xson->>'') @@ to_tsquery('simple','COVID-19')
+)
+)
+```
