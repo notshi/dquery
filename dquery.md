@@ -57,6 +57,29 @@ order by 4 desc
 limit 10;
 ```
 
+5. Displays all publishers listing (GIZ) in ```participating-org/narrative``` with other elements and grouped
+```
+select
+
+xson->>'@role' as role_, 
+xson->>'@type' as type_, 
+xson->'/narrative'->0->>'' as narrative, 
+pid as publisher, 
+count(*)
+
+from xson where root='/iati-activities/iati-activity/participating-org' 
+and xson->'/narrative'->0->>'' like '%(GIZ)%'
+
+group by xson->>'@role', 
+xson->>'@type', 
+pid, 
+narrative
+
+order by 5 desc
+
+limit 20000;
+```
+
 
 ## Conditions
 1. Displays all publishers with ```conditions@attached``` as YES, limit to 100
