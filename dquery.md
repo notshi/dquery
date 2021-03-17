@@ -58,6 +58,7 @@ limit 10;
 ```
 
 5. Displays all publishers listing (GIZ) in ```participating-org/narrative``` with other elements and grouped
+    Here we use LIKE and %% for wildcard SQL queries
 ```
 select
 
