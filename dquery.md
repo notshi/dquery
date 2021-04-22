@@ -10,6 +10,19 @@ and xson->>'/total-budget' IS NOT NULL
 
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            count: "437"
+        }
+    ],
+    duration: 0.053
+}
+```
+
 2. Display iati-organisation id with elements within ```total-budget```
 ```
 select
@@ -26,10 +39,11 @@ xson ->> '@status' as status
 from xson where root='/iati-organisations/iati-organisation/total-budget'
 
 ```
+
 Result snippet
+
 ```
 {
-
     result: [
         {
             pid: "DK-CVR-12006004",
@@ -42,7 +56,6 @@ Result snippet
         },
 	    ],
     duration: 0.031
-
 }
 ```
 
@@ -65,7 +78,6 @@ Result
 
 ```
 {
-
     result: [
         {
             org: "XM-OCHA-CBPF",
@@ -73,7 +85,6 @@ Result
         }
     ],
     duration: 29.328
-
 }
 ```
 
