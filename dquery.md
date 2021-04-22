@@ -2,8 +2,10 @@
 
 http://d-portal.org/dquery/
 
-dQuery allows you to query directly into the live d-portal database of **ALL** IATI data.  
+dQuery allows you to query directly into the live d-portal database of **the complete** IATI data, including non-standard attributes and extensions.  
 The following code snippets are some examples of what you can query using this tool.
+
+Results are limited to 1 as examples.
 
 
 ## Displays a count of certain element or attributes with no limit
@@ -586,4 +588,38 @@ SELECT DISTINCT aid FROM xson WHERE
 	to_tsvector('simple', xson->>'') @@ to_tsquery('simple','COVID-19')
 )
 )
+```
+
+Result
+
+```
+{
+    result: [
+        {
+            aid: "CZ-ICO-25755277-AGOZ000116",
+            reporting: "People in Need",
+            reporting_ref: "CZ-ICO-25755277",
+            funder_ref: "CZ-ICO-25755277",
+            title: "EC Covid Emergency Response 2020-22",
+            slug: "pin-dataset-20201231",
+            status_code: 2,
+            day_start: 18566,
+            day_end: 19111,
+            day_length: 545,
+            description: "Gender in the Time of COVID-19",
+            commitment: 312813.22,
+            spend: 6079.097,
+            commitment_eur: 257130,
+            spend_eur: 4996.97,
+            commitment_gbp: 233297.97,
+            spend_gbp: 4533.827,
+            commitment_cad: 400701.56,
+            spend_cad: 7787.087,
+            flags: 0,
+            country_code: "AO",
+            country_percent: 100
+        }
+    ],
+    duration: 2.411
+}
 ```
