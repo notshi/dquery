@@ -103,6 +103,22 @@ order by 4 desc
 limit 10;
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            reference: "XM-OCHA-CBPF-NGA75",
+            narrative: "Nigeria Humanitarian Fund",
+            publisher: "XM-OCHA-CBPF",
+            count: "308"
+        }
+    ],
+    duration: 7.945
+}
+```
+
 5. Displays all publishers listing (GIZ) in ```participating-org/narrative``` with other elements and grouped  
     Here we use LIKE and %% for wildcard SQL queries
 ```
@@ -127,6 +143,22 @@ order by 5 desc
 limit 20000;
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            role_: "3",
+            type_: null,
+            narrative: "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
+            publisher: "DE-1",
+            count: "2911"
+        },
+    ],
+    duration: 2.757
+}
+```
 
 ## Conditions
 1. Displays all publishers with ```conditions@attached``` as YES, limit to 100
@@ -144,6 +176,24 @@ order by 2 desc
 limit 100;
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            org_id: "XM-DAC-41122",
+            count: "14359"
+        },
+        {
+            org_id: "DE-1",
+            count: "12942"
+        },
+    ],
+    duration: 0.493
+}
+```
+
 2. Displays the narratives grouped by publishers with ```condition@type```
 ```
 select
@@ -159,6 +209,22 @@ order by 4 desc
 limit 100;
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            narrative: "[{\"\": \"Should contribute directly to results for children as outlined in the UNDAF, national results and/or UNICEF Strategic Plan and within the scope defined in the CPD, CPAP, OMP or other agreed upon programme documents\", \"@xml:lang\": \"EN\"}]",
+            condition_type: "1",
+            org_id: "XM-DAC-41122",
+            count: "14359"
+        },
+    ],
+    duration: 0.55
+}
+```
+
 3. Displays narratives grouped by publishers with ```condition@type``` 1
 ```
 select
@@ -172,6 +238,21 @@ order by 3 desc
 
 
 limit 10;
+```
+
+Result
+
+```
+{
+    result: [
+        {
+            narrative: "[{\"\": \"Should contribute directly to results for children as outlined in the UNDAF, national results and/or UNICEF Strategic Plan and within the scope defined in the CPD, CPAP, OMP or other agreed upon programme documents\", \"@xml:lang\": \"EN\"}]",
+            org: "XM-DAC-41122",
+            count: "14359"
+        },
+    ],
+    duration: 1.696
+}
 ```
 
 ## Display an element attribute, grouped in descending order
@@ -193,7 +274,20 @@ limit 20000;
 
 ```
 
+Result
 
+```
+{
+    result: [
+        {
+            old_id: "US-GOV",
+            new_id: "US-USAGOV",
+            count: "279337"
+        },
+    ],
+    duration: 2.415
+}
+```
 
 ## Display information within an element
 Show all information within ```/budget``` for multiple identifiers.
@@ -216,6 +310,29 @@ and aid in ('BE-10-3011287','BE-10-3011636','BE-10-3012116',
 limit 100;
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            aid: "BE-10-3013816",
+            pid: "XM-DAC-2-10",
+            root: "/iati-activities/iati-activity/budget",
+            xson: {
+                @type: "1",
+                /value: 804000,
+                /value@currency: "EUR",
+                /value@value-date: "2021-01-01",
+                /period-end@iso-date: "2021-12-31",
+                /period-start@iso-date: "2021-01-01"
+            }
+        }
+    ],
+    duration: 0.007
+}
+```
+
 ## Display identifier only sorted by the second array (narrative) in descending order
 You can order by ```aid``` and ```descending``` as well.
 ```
@@ -227,6 +344,20 @@ from xson where JSONB_ARRAY_LENGTH(xson->'/narrative') is not null
 
 order by 2 desc
 limit 100
+```
+
+Result
+
+```
+{
+    result: [
+        {
+            aid: "SE-ON-802005-9823-LA-500399",
+            jsonb_array_length: 63
+        }
+    ],
+    duration: 13.104
+}
 ```
 
 
@@ -241,6 +372,37 @@ from xson where root='/iati-activities/iati-activity/sector' and xson->>'@vocabu
 order by 1 desc
 
 limit 100;
+```
+
+Result
+
+```
+{
+    result: [
+        {
+            jsonb_array_length: 2,
+            aid: "XM-DAC-301-2-107720-001",
+            pid: "XM-DAC-301-2",
+            root: "/iati-activities/iati-activity/sector",
+            xson: {
+                @code: "4",
+                /narrative: [
+                    {
+                        : "Stimulating sustainable economic growth",
+                        @xml:lang: "EN"
+                    },
+                    {
+                        : "Croissance économique durable",
+                        @xml:lang: "FR"
+                    }
+                ],
+                @percentage: 100,
+                @vocabulary: "99"
+            }
+        }
+    ],
+    duration: 3.428
+}
 ```
 
 ## Sub query to get full activity data
@@ -265,6 +427,72 @@ and xson->>'@ascending'='0'
 limit 100;
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            aid: "BE-BCE_KBO-0415365777-PROG2017-2021_SD1",
+            pid: "BE-BCE_KBO-0415365777",
+            root: "/iati-activities/iati-activity/result/indicator",
+            xson: {
+                /period: [
+                    {
+                        /actual: [
+                            {
+                                @value: "Discoursanalyse werd uitgevoerd",
+                                /comment/narrative: [
+                                    {
+                                        : "Er is een geactualiseerde discoursanalyse die kijkt naar het discrous in kranten en magazines over de periode 2017 - 2018 en 2019. Hierbij zagen we een stijging in het aantal artikels die gepubliceerd werden over de drie kern thema's (eerlijke handel, leefbaar inkomen en zorgplicht). Naast de groeiende aandacht voor de thema's zien we ze ook meer en meer versmelten met elkaar. Deze trend werd eerst zichtbaar in 2018 en zette zich door in 2019. De kwalitatieve analyse over de jaren heen toont aan dat er meer urgentie gecreëerd wordt om het probleem te gaan aanpakken en dat hierbij aandacht gaat naar verschillende actoren maar dat daarbij de rol van de overheid ook steeds meer aan bod komt.",
+                                        @xml:lang: "NL"
+                                    },
+                                    {
+                                        : "There is an updated discours analysis. This showed us that there is more attention for our topics in the media as more articles were published that dealt with our priority themes (Fair Trade, Living Income and Human Rights Due Dilligence). In addition to this growing attention we see them more and more treated as elements of one and the same issue. We saw this trend first for the articles in 2018 and this continued in the articles for 2019. The analysis of the narrative of the articles indicated that these created more urgency to deal with the problems. The recongnized different actors that can contribute to the solution and amongst these there was a clear role for the government to contribute to the solution.",
+                                        @xml:lang: "EN"
+                                    }
+                                ]
+                            }
+                        ],
+                        /target: [
+                            {
+                                @value: "Actualisatie van de discoursanalyse",
+                                /comment/narrative: [
+                                    {
+                                        : "Dit is een kwalitatieve indicator die aangeeft of een discoursanalyse werd uitgevoerd of geactualiseerd. waarbij 0 staat voor niet bereikt en 1 voor bereikt.",
+                                        @xml:lang: "NL"
+                                    }
+                                ]
+                            }
+                        ],
+                        /period-end@iso-date: "2019-12-31",
+                        /period-start@iso-date: "2017-02-17"
+                    },
+                    {
+                        /target: [
+                            {
+                                @value: "Actualisatie van de discoursanalyse"
+                            }
+                        ],
+                        /period-end@iso-date: "2021-12-31",
+                        /period-start@iso-date: "2017-02-17"
+                    }
+                ],
+                @measure: "5",
+                @ascending: 0,
+                /title/narrative: [
+                    {
+                        : "Indicator 2 - Houding: Er is een geactualiseerde discoursanalyse binnen België over de spelregels van de internationale handelskader waaruit blijkt in hoeverre het belang aan een open en publiek debat gedeeld wordt.",
+                        @xml:lang: "NL"
+                    }
+                ],
+                @aggregation-status: 0
+            }
+        }
+    ],
+    duration: 0.006
+}
+```
 
 ## Display all activity identifiers with element attribute of certain value
 ```
@@ -288,6 +516,7 @@ GROUP BY 1 ORDER BY 2 DESC
 
 LIMIT 1000;
 ```
+
 
 ## Display all activities for a country_code within COVID-19
 ```
