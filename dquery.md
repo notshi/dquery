@@ -42,6 +42,22 @@ order by 2 desc
 limit 10;
 ```
 
+Result
+
+```
+{
+
+    result: [
+        {
+            org: "XM-OCHA-CBPF",
+            count: "308"
+        }
+    ],
+    duration: 29.328
+
+}
+```
+
 4. Display first ```/narrative``` array under multiple roots, count and grouped for a particular ```@ref```
 ```
 select
