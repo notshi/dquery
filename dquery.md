@@ -4,6 +4,15 @@ http://d-portal.org/dquery/
 
 dQuery allows you to query directly into the live d-portal database of **the complete** IATI data, including non-standard attributes and extensions. The following code snippets are some examples of what you can query using this tool.
 
+Click *Run Query* to view results in the browser or download data in various formats without viewing.  
+**The latter option is preferable as queries can slow down a browser.**
+
+Downloads of data is available as csv, json, xml and html.
+
+The html option will only work at the top level of an activity or an organisation file; ie. when ```select *```, the root needs to be at either ```/iati-activities/iati-activity``` or ```/iati-organisations/iati-organisation```.
+
+The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
+
 Results are limited to 1 as examples.
 
 
