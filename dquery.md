@@ -26,6 +26,25 @@ xson ->> '@status' as status
 from xson where root='/iati-organisations/iati-organisation/total-budget'
 
 ```
+Result snippet
+```
+{
+
+    result: [
+        {
+            pid: "DK-CVR-12006004",
+            budgetvalue: "8800000",
+            currency: "DKK",
+            valuedate: "2019-01-01",
+            enddate: "2019-12-31",
+            startdate: "2019-01-01",
+            status: "2"
+        },
+	    ],
+    duration: 0.031
+
+}
+```
 
 3. Display all publishers that use a particular ```@ref```
 
