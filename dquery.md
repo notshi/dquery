@@ -127,7 +127,9 @@ Result
 ```
 
 ## Displays all publishers listing (GIZ) in ```participating-org/narrative``` with other elements and grouped  
-    Here we use LIKE and %% for wildcard SQL queries
+
+Here we use LIKE and %% for wildcard SQL queries
+
 ```
 select
 
@@ -167,8 +169,7 @@ Result
 }
 ```
 
-## Conditions
-1. Displays all publishers with ```conditions@attached``` as YES, limit to 100
+## Displays all publishers with ```conditions@attached``` as YES, limit to 100
 ```
 select
 
@@ -201,7 +202,7 @@ Result
 }
 ```
 
-2. Displays the narratives grouped by publishers with ```condition@type```
+## Displays the narratives grouped by publishers with ```condition@type```
 ```
 select
 
@@ -232,7 +233,7 @@ Result
 }
 ```
 
-3. Displays narratives grouped by publishers with ```condition@type``` 1
+## Displays narratives grouped by publishers with ```condition@type``` 1
 ```
 select
 
