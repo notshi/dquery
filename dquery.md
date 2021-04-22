@@ -48,7 +48,7 @@ from xson where root='/iati-organisations/iati-organisation/total-budget'
 
 ```
 
-Result snippet
+Result
 
 ```
 {
