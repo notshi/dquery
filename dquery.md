@@ -503,12 +503,29 @@ Result
 ```
 
 ## Display all activity identifiers with element attribute of certain value
+
+This element may occur any number of times so the xpath has to be the root.  
+Any element occurring multiple times is turned into an array.
+
 ```
 SELECT DISTINCT aid
 FROM xson WHERE
-    root = '/iati-activities/iati-activity/transaction'
+    root = '/iati-activities/iati-activity/humanitarian-scope'
 AND
-    xson->>'/humanitarian-scope@code' = 'EP-2020-000012-001'
+    xson->>'@code' = 'EP-2020-000012-001'
+```
+
+Result
+
+```
+{
+    result: [
+        {
+            aid: "44000-P150481"
+        }
+    ],
+    duration: 0.017
+}
 ```
 
 ## Get a table of most used values sorted by count
@@ -516,15 +533,28 @@ AND
 SELECT xson->>'/humanitarian-scope@code' AS code , count(*)
 
 FROM xson WHERE
-    root='/iati-activities/iati-activity/transaction'
+    root='/iati-activities/iati-activity/humanitarian-scope'
 AND
-    xson->>'/humanitarian-scope@code' IS NOT NULL
+    xson->>'@code' IS NOT NULL
 
 GROUP BY 1 ORDER BY 2 DESC
 
 LIMIT 1000;
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            code: null,
+            count: "28222"
+        }
+    ],
+    duration: 0.131
+}
+```
 
 ## Display all activities for a country_code within COVID-19
 ```
