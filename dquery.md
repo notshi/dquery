@@ -6,8 +6,7 @@ dQuery allows you to query directly into the live d-portal database of **ALL** I
 The following code snippets are some examples of what you can query using this tool.
 
 
-## Count
-1. Displays a count of certain element or attributes with no limit
+## Displays a count of certain element or attributes with no limit
 ```
 select
 
@@ -31,7 +30,7 @@ Result
 }
 ```
 
-2. Display iati-organisation id with elements within ```total-budget```
+## Display iati-organisation id with elements within ```total-budget```
 ```
 select
 
@@ -67,7 +66,7 @@ Result snippet
 }
 ```
 
-3. Display all publishers that use a particular ```@ref```
+## Display all publishers that use a particular ```@ref```
 
 ```
 select
@@ -96,7 +95,7 @@ Result
 }
 ```
 
-4. Display first ```/narrative``` array under multiple roots, count and grouped for a particular ```@ref```
+## Display first ```/narrative``` array under multiple roots, count and grouped for a particular ```@ref```
 ```
 select
 
@@ -127,7 +126,7 @@ Result
 }
 ```
 
-5. Displays all publishers listing (GIZ) in ```participating-org/narrative``` with other elements and grouped  
+## Displays all publishers listing (GIZ) in ```participating-org/narrative``` with other elements and grouped  
     Here we use LIKE and %% for wildcard SQL queries
 ```
 select
