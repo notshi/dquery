@@ -2,8 +2,8 @@
 
 http://d-portal.org/dquery/
 
-dQuery allows you to query directly into the live d-portal database of **ALL** IATI data.
-The following code snippets are some example of what you can query using this tool.
+dQuery allows you to query directly into the live d-portal database of **ALL** IATI data.  
+The following code snippets are some examples of what you can query using this tool.
 
 
 ## Count
