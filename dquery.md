@@ -181,7 +181,7 @@ Result
 }
 ```
 
-## Displays all publishers with ```conditions@attached``` as YES, limit to 100
+## Displays all publishers with ```conditions@attached``` as YES
 ```
 select
 
@@ -203,10 +203,6 @@ Result
         {
             org_id: "XM-DAC-41122",
             count: "14359"
-        },
-        {
-            org_id: "DE-1",
-            count: "12942"
         },
     ],
     duration: 0.493
