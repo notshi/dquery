@@ -13,7 +13,7 @@ The html option will only work at the top level of an activity or an organisatio
 
 The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 
-Results are limited to 1 as examples.
+Where applicable, results are limited to 1 as examples below.
 
 
 ## Displays a count of certain element or attributes with no limit
@@ -55,6 +55,8 @@ xson ->> '@status' as status
 
 from xson where root='/iati-organisations/iati-organisation/total-budget'
 
+limit 1;
+
 ```
 
 Result
@@ -88,7 +90,7 @@ group by pid
 
 order by 2 desc
 
-limit 10;
+limit 1;
 ```
 
 Result
@@ -117,7 +119,7 @@ group by 1, 2, pid
 
 order by 4 desc
 
-limit 10;
+limit 1;
 ```
 
 Result
@@ -159,7 +161,7 @@ narrative
 
 order by 5 desc
 
-limit 20000;
+limit 1;
 ```
 
 Result
@@ -190,8 +192,7 @@ group by pid
 
 order by 2 desc
 
-
-limit 100;
+limit 1;
 ```
 
 Result
@@ -223,8 +224,7 @@ group by xson->>'/narrative', pid, condition_type
 
 order by 4 desc
 
-
-limit 100;
+limit 1;
 ```
 
 Result
@@ -254,8 +254,7 @@ group by xson->>'/narrative', pid
 
 order by 3 desc
 
-
-limit 10;
+limit 1;
 ```
 
 Result
@@ -288,7 +287,7 @@ group by xson->>'@ref', pid
 
 order by 3 desc
 
-limit 20000;
+limit 1;
 
 ```
 
@@ -325,7 +324,7 @@ and aid in ('BE-10-3011287','BE-10-3011636','BE-10-3012116',
 'XM-DAC-2-10-2660','XM-DAC-2-10-2661','XM-DAC-2-10-2666',
 'XM-DAC-2-10-3017783','XM-DAC-2-10-3017854','XM-DAC-2-10-3018038')
 
-limit 100;
+limit 1;
 ```
 
 Result
@@ -356,12 +355,12 @@ You can order by ```aid``` and ```descending``` as well.
 ```
 select
 
- aid , JSONB_ARRAY_LENGTH(xson->'/narrative')
+aid , JSONB_ARRAY_LENGTH(xson->'/narrative')
 
 from xson where JSONB_ARRAY_LENGTH(xson->'/narrative') is not null
 
 order by 2 desc
-limit 100
+limit 1;
 ```
 
 Result
@@ -389,7 +388,7 @@ from xson where root='/iati-activities/iati-activity/sector' and xson->>'@vocabu
 
 order by 1 desc
 
-limit 100;
+limit 1;
 ```
 
 Result
@@ -430,10 +429,11 @@ Click on "Download XSON" and "Download XSON as XML" in the menu to get a link to
 SELECT * FROM xson WHERE root = '/iati-activities/iati-activity' AND  aid IN (
 SELECT DISTINCT aid
 FROM xson WHERE
-    root = '/iati-activities/iati-activity/transaction'
+    root = '/iati-activities/iati-activity/humanitarian-scope'
 AND
-    xson->>'/humanitarian-scope@code' = 'EP-2020-000012-001'
+    xson->>'@code' = 'EP-2020-000012-001'
 )
+limit 1;
 ```
 
 ## Display all activities with attribute of certain value
@@ -442,7 +442,7 @@ AND
 select *
 from xson where root='/iati-activities/iati-activity/result/indicator'
 and xson->>'@ascending'='0'
-limit 100;
+limit 1;
 ```
 
 Result
@@ -523,6 +523,7 @@ FROM xson WHERE
     root = '/iati-activities/iati-activity/humanitarian-scope'
 AND
     xson->>'@code' = 'EP-2020-000012-001'
+limit 1;
 ```
 
 Result
@@ -549,7 +550,7 @@ AND
 
 GROUP BY 1 ORDER BY 2 DESC
 
-LIMIT 1000;
+LIMIT 1;
 ```
 
 Result
@@ -596,6 +597,7 @@ SELECT DISTINCT aid FROM xson WHERE
 	to_tsvector('simple', xson->>'') @@ to_tsquery('simple','COVID-19')
 )
 )
+limit 1;
 ```
 
 Result
