@@ -469,6 +469,53 @@ AND
 limit 1;
 ```
 
+Result
+
+```
+{
+    result: [
+        {
+            aid: "44000-P150481",
+            pid: "44000",
+            root: "/iati-activities/iati-activity",
+            xson: {
+                /budget: [144 items],
+                /result: [24 items],
+                @xml:lang: "EN",
+                @hierarchy: 1,
+                /description: [1 item],
+                /contact-info: [1 item],
+                @dstore:index: "2",
+                @xmlns:dstore: http://d-portal.org/xmlns/dstore,
+                /activity-date: [3 items],
+                /document-link: [21 items],
+                /title@xml:lang: "EN",
+                @dstore:dataset: "worldbank-ps",
+                /iati-identifier: "44000-P150481",
+                /title/narrative: [1 item],
+                /default-aid-type: [1 item],
+                @default-currency: "USD",
+                /participating-org: [4 items],
+                /recipient-country: [1 item],
+                /reporting-org@ref: "44000",
+                /humanitarian-scope: [2 items],
+                /reporting-org@type: "40",
+                /activity-status@code: "2",
+                @last-updated-datetime: "2020-07-23T11:53:45",
+                @xmlns:iati-activities: http://d-portal.org/xmlns/iati-activities,
+                /collaboration-type@code: "2",
+                /reporting-org/narrative: [1 item],
+                @iati-activities:version: 2.03,
+                /capital-spend@percentage: 100,
+                /default-tied-status@code: "5",
+                @iati-activities:generated-datetime: "2020-08-05T04:54:41"
+            }
+        }
+    ],
+    duration: 0.029
+}
+```
+
 ## Display all activities with attribute of certain value
 
 ```
@@ -484,64 +531,20 @@ Result
 {
     result: [
         {
-            aid: "BE-BCE_KBO-0415365777-PROG2017-2021_SD1",
-            pid: "BE-BCE_KBO-0415365777",
+            aid: "XM-DAC-41114-PROJECT-00038671",
+            pid: "XM-DAC-41114",
             root: "/iati-activities/iati-activity/result/indicator",
             xson: {
-                /period: [
-                    {
-                        /actual: [
-                            {
-                                @value: "Discoursanalyse werd uitgevoerd",
-                                /comment/narrative: [
-                                    {
-                                        : "Er is een geactualiseerde discoursanalyse die kijkt naar het discrous in kranten en magazines over de periode 2017 - 2018 en 2019. Hierbij zagen we een stijging in het aantal artikels die gepubliceerd werden over de drie kern thema's (eerlijke handel, leefbaar inkomen en zorgplicht). Naast de groeiende aandacht voor de thema's zien we ze ook meer en meer versmelten met elkaar. Deze trend werd eerst zichtbaar in 2018 en zette zich door in 2019. De kwalitatieve analyse over de jaren heen toont aan dat er meer urgentie gecreëerd wordt om het probleem te gaan aanpakken en dat hierbij aandacht gaat naar verschillende actoren maar dat daarbij de rol van de overheid ook steeds meer aan bod komt.",
-                                        @xml:lang: "NL"
-                                    },
-                                    {
-                                        : "There is an updated discours analysis. This showed us that there is more attention for our topics in the media as more articles were published that dealt with our priority themes (Fair Trade, Living Income and Human Rights Due Dilligence). In addition to this growing attention we see them more and more treated as elements of one and the same issue. We saw this trend first for the articles in 2018 and this continued in the articles for 2019. The analysis of the narrative of the articles indicated that these created more urgency to deal with the problems. The recongnized different actors that can contribute to the solution and amongst these there was a clear role for the government to contribute to the solution.",
-                                        @xml:lang: "EN"
-                                    }
-                                ]
-                            }
-                        ],
-                        /target: [
-                            {
-                                @value: "Actualisatie van de discoursanalyse",
-                                /comment/narrative: [
-                                    {
-                                        : "Dit is een kwalitatieve indicator die aangeeft of een discoursanalyse werd uitgevoerd of geactualiseerd. waarbij 0 staat voor niet bereikt en 1 voor bereikt.",
-                                        @xml:lang: "NL"
-                                    }
-                                ]
-                            }
-                        ],
-                        /period-end@iso-date: "2019-12-31",
-                        /period-start@iso-date: "2017-02-17"
-                    },
-                    {
-                        /target: [
-                            {
-                                @value: "Actualisatie van de discoursanalyse"
-                            }
-                        ],
-                        /period-end@iso-date: "2021-12-31",
-                        /period-start@iso-date: "2017-02-17"
-                    }
-                ],
-                @measure: "5",
+                /period: [2 items],
+                @measure: "1",
+                /baseline: [1 item],
                 @ascending: 0,
-                /title/narrative: [
-                    {
-                        : "Indicator 2 - Houding: Er is een geactualiseerde discoursanalyse binnen België over de spelregels van de internationale handelskader waaruit blijkt in hoeverre het belang aan een open en publiek debat gedeeld wordt.",
-                        @xml:lang: "NL"
-                    }
-                ],
-                @aggregation-status: 0
+                /title/narrative: [1 item],
+                /description/narrative: [1 item]
             }
         }
     ],
-    duration: 0.006
+    duration: 0.013
 }
 ```
 
