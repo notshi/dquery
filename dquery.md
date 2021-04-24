@@ -7,6 +7,8 @@ dQuery allows you to query directly into the live d-portal database of **the com
 Click *Run Query* to view results in the browser or download data in various formats without viewing.  
 **The latter option is preferable as queries can slow down a browser.**
 
+Click on *Browse Activities* to view results in d-portal.
+
 Downloads of data is available as csv, json, xml and html.
 
 The html option will only work at the top level of an activity or an organisation file; ie. when ```select *```, the root needs to be at either ```/iati-activities/iati-activity``` or ```/iati-organisations/iati-organisation```.
@@ -15,6 +17,39 @@ The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 
 Where applicable, results are limited to 1 as examples below.
 
+
+## Displays all ```iati-identifier``` with that search term using a wildcard ```%```
+
+The wildcard ```%``` can be placed before, after or before and after a search term to get the following results.
+
+```%```<searchterm> looks for identifiers that end with the search term.  
+<searchterm>```%``` looks for identifiers that start with the search term.  
+```%```<searchterm>```%``` looks for identifiers that has the search term within it.
+	
+```
+select
+
+distinct aid
+
+from xson where root='/iati-activities/iati-activity' 
+and xson->>'/iati-identifier' like '%1022474%'
+```
+
+Result
+
+```
+{
+    result: [
+        {
+            aid: "1022474"
+        },
+        {
+            aid: "DE-1-201022474"
+        }
+    ],
+    duration: 18.484
+}
+```
 
 ## Displays a count of certain element or attributes with no limit
 ```
