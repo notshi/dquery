@@ -47,7 +47,7 @@ Result
 
 The wildcard ```%``` can be placed before, after or before and after a search term to get the following results.
 
-```%<searchterm>``` looks for identifiers that end with the search term.  
+```%*<searchterm>*``` looks for identifiers that end with the search term.  
 ```<searchterm>%``` looks for identifiers that start with the search term.  
 ```%<searchterm>%``` looks for identifiers that has the search term within it.
 	
