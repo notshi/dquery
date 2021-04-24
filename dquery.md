@@ -18,6 +18,31 @@ The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 Where applicable, results are limited to 1 as examples below.
 
 
+
+## Displays a count of certain element or attributes
+```
+select
+
+count(*)
+
+from xson where root='/iati-organisations/iati-organisation'
+and xson->>'/total-budget' IS NOT NULL
+
+```
+
+Result
+
+```
+{
+    result: [
+        {
+            count: "437"
+        }
+    ],
+    duration: 0.053
+}
+```
+
 ## Displays all ```iati-identifier``` with that search term using a wildcard ```%```
 
 The wildcard ```%``` can be placed before, after or before and after a search term to get the following results.
@@ -51,29 +76,6 @@ Result
 }
 ```
 
-## Displays a count of certain element or attributes with no limit
-```
-select
-
-count(*)
-
-from xson where root='/iati-organisations/iati-organisation'
-and xson->>'/total-budget' IS NOT NULL
-
-```
-
-Result
-
-```
-{
-    result: [
-        {
-            count: "437"
-        }
-    ],
-    duration: 0.053
-}
-```
 
 ## Display iati-organisation id with elements within ```total-budget```
 ```
