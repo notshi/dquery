@@ -181,6 +181,8 @@ Result
 ```
 
 ## Display first ```/narrative``` array under multiple roots, count and grouped for a particular ```@ref```
+Raised https://github.com/devinit/D-Portal/issues/602
+
 ```
 select
 
@@ -212,6 +214,7 @@ Result
 ```
 
 ## Displays all publishers listing (GIZ) in ```participating-org/narrative``` with other elements and grouped  
+Raised https://github.com/devinit/D-Portal/issues/613
 
 Here we use ```LIKE``` and ```%%``` for wildcard SQL queries.
 
