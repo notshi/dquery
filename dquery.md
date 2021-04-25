@@ -54,6 +54,7 @@ Result
 ```
 
 ## Displays all ```iati-identifier``` with that search term using a wildcard ```%```
+Raised https://github.com/codeforIATI/iati-ideas/issues/37
 
 The wildcard ```%``` can be placed before, after or before and after a search term to get the following results.
 
