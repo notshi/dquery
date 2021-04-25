@@ -78,6 +78,30 @@ Result
 }
 ```
 
+## Filtering on custom namespace elements
+Raised https://github.com/devinit/D-Portal/issues/568
+
+```
+SELECT DISTINCT aid FROM xson
+WHERE
+	root='/iati-activities/iati-activity/transaction'
+AND
+	xson->>'/usg:treasury-account/usg:regular-account@code' = '72'
+```
+
+Result
+
+```
+{
+    result: [
+        {
+	        {
+            aid: "US-GOV-9-ZM-F19AP00767"
+        }
+    ],
+    duration: 10.615
+}
+```
 
 ## Display iati-organisation id with elements within ```total-budget```
 ```
