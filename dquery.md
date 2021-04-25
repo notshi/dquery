@@ -380,6 +380,8 @@ Result
 ```
 
 ## Display information within an element
+https://github.com/devinit/D-Portal/issues/620
+
 Show all information within ```/budget``` for multiple identifiers.
 This works for ```/budget``` as ```root``` because this array occurs only once.
 ```
