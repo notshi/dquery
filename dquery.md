@@ -2,7 +2,7 @@
 
 http://d-portal.org/dquery/
 
-dQuery allows you to query directly into the live d-portal database of **the complete** IATI data, including non-standard attributes and extensions. 
+dQuery allows you to query directly into the live d-portal database of **the complete IATI data, including non-standard attributes and extensions**. 
 
 *Documentation is ongoing so please bear with us. dQuery works well if you are familiar with the IATI Standard elements and querying in SQL using JSONB data types in PostgreSQL.*
 
