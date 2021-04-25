@@ -13,7 +13,7 @@ dQuery allows you to query directly into the live d-portal database of **the com
 Click *Run Query* to view results in the browser or *Download XSON* in various formats without viewing.  
 **The latter option is preferable as queries can slow down a browser.**
 
-Click on *Browse Activities* to view results in d-portal.
+Click *Browse Activities* to view results in d-portal.
 
 ## Data formats
 
