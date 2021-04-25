@@ -16,6 +16,8 @@ Downloads of data is available as csv, json, xml and html.
 The html option will only work at the top level of an activity or an organisation file; ie. when ```select *```, the root needs to be at either ```/iati-activities/iati-activity``` or ```/iati-organisations/iati-organisation```.
 
 The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
+
+Use the following in the url to get the query link in different formats.  
 ```http://d-portal.org/dquery?form=csv&sql=```
 
 # Query examples
