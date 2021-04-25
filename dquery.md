@@ -17,8 +17,8 @@ The html option will only work at the top level of an activity or an organisatio
 
 The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 
-Use the following in the url to get the query link in different formats.  
-```http://d-portal.org/dquery?form=csv&sql=```
+Replace ```/#``` in the url with ```?form=csv&sql=``` to get the query link in different formats.  
+
 
 # Query examples
 
