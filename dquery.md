@@ -1,4 +1,4 @@
-## dQuery
+# dQuery
 
 http://d-portal.org/dquery/
 
@@ -9,15 +9,19 @@ Click *Run Query* to view results in the browser or download data in various for
 
 Click on *Browse Activities* to view results in d-portal.
 
+## Data formats
+
 Downloads of data is available as csv, json, xml and html.
 
 The html option will only work at the top level of an activity or an organisation file; ie. when ```select *```, the root needs to be at either ```/iati-activities/iati-activity``` or ```/iati-organisations/iati-organisation```.
 
 The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
+```http://d-portal.org/dquery?form=csv&sql=```
 
-Where applicable, results are limited to 1 as examples below.
+# Query examples
 
-
+Some of these examples are requests for when more complex data is needed outside the scope of the d-portal platform.  
+Where applicable, results are limited to 1 in the examples below.
 
 ## Displays a count of certain element or attributes
 ```
@@ -630,6 +634,9 @@ Result
 ```
 
 ## Display all activities for a country_code within COVID-19
+
+Raised https://github.com/devinit/D-Portal/issues/589
+
 ```
 SELECT * FROM act JOIN country on act.aid = country.aid  WHERE country_code ='AO' AND act.aid in (
 SELECT DISTINCT aid FROM xson WHERE
