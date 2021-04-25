@@ -26,11 +26,11 @@ The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 Replace ```/#``` in the url with ```?form=csv&sql=``` to get the query link in different formats.  
 
 
-# Query examples
+# Recipes
 
-The following code snippets are some examples of what you can query using this tool.
+The following recipes are some examples of what you can query using this tool.
 
-Some of these examples are requests for when more complex data is needed outside the scope of the d-portal platform.  
+Some of these are requests for when more complex data is needed outside the scope of the d-portal platform.  
 Where applicable, results are limited to 1 in the examples below.
 
 ## Displays a count of certain element or attributes
