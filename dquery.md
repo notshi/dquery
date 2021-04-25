@@ -492,6 +492,8 @@ Result
 ```
 
 ## Sub query to get full activity data
+https://github.com/devinit/D-Portal/issues/562
+
 Click on "Download XSON" and "Download XSON as XML" in the menu to get a link to run that query and return full activities as xml.
 
 ```
@@ -585,6 +587,7 @@ Result
 ```
 
 ## Display all activity identifiers with element attribute of certain value
+https://github.com/devinit/D-Portal/issues/562
 
 This element may occur any number of times so the xpath has to be the root.  
 Any element occurring multiple times is turned into an array.
@@ -612,6 +615,8 @@ Result
 ```
 
 ## Get a table of most used values sorted by count
+Raised https://github.com/devinit/D-Portal/issues/562
+
 ```
 SELECT xson->>'/humanitarian-scope@code' AS code , count(*)
 
@@ -640,7 +645,6 @@ Result
 ```
 
 ## Display all activities for a country_code within COVID-19
-
 Raised https://github.com/devinit/D-Portal/issues/589
 
 ```
