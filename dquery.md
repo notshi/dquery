@@ -33,6 +33,11 @@ The following recipes are some examples of what you can query using this tool.
 Some of these are requests for when more complex data is needed outside the scope of the d-portal platform.  
 Where applicable, results are limited to 1 in the examples below.
 
+Add comments like so
+```
+/*This is a comment*/
+```
+
 ## Displays a count of certain element or attributes
 ```
 select
