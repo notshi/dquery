@@ -58,6 +58,8 @@ distinct aid
 
 from xson where root='/iati-activities/iati-activity' 
 and xson->>'/iati-identifier' like '%1022474%'
+
+limit 1;
 ```
 
 Result
