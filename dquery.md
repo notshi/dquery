@@ -9,7 +9,7 @@ dQuery lets you query **the complete IATI data, including non-standard attribute
 ```
 dQuery works well if you are familiar with the IATI Standard elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
 
-## Tool
+# Getting started
 
 The current interface is sparse and consists of two panels; the editor on the left and the console on the right.  
 There are four buttons above these panels which perform various things.
@@ -33,11 +33,11 @@ You can drag the partition to increase or decrease the space of either panel.
 
 Downloads of data is available as csv, json, xml and html.
 
-The html option will only work at the top level of an activity or an organisation file; ie. when ```select *```, the root needs to be at either ```/iati-activities/iati-activity``` or ```/iati-organisations/iati-organisation```.
+The html option will only work at the top level of an activity or an organisation file; ie. when `select *`, the root needs to be at either `/iati-activities/iati-activity` or `/iati-organisations/iati-organisation`.
 
 The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 
-Replace ```/#``` in the url with ```?form=csv&sql=``` to get the query link in different formats.  
+Replace `/#` in the url with `?form=csv&sql=` to get the query link in different formats.  
 
 ## Commands
 
@@ -47,21 +47,21 @@ The following table lists the most common SQL clauses and operators you can use 
 | Commands | What it does |
 | --- | ----------- |
 | select | Picks fields that contain data of interest |
-| from | For dQuery, this is usually ```xson``` |
+| from | For dQuery, this is usually `xson` |
 | where | Limits the data set we are working with |
 | and | Additional limits |
 | or | Additional limits |
 | not | Additional limits |
-| like | Use this with ```%``` for wildcard queries |
+| like | Use this with `%` for wildcard queries |
 | as | Use this to name columns |
 | in | Allows you to specify multiple values |
 | group by | Aggregates values across row |
-| order by | Specifies sorting of results with option for ```asc``` or ```desc``` |
+| order by | Specifies sorting of results with option for `asc` or `desc` |
 | limit | Limits the number of returned results |
 | offset | Skips a given number of results |
 | join | Get data from 2 or more tables |
 
-## Select
+### Select
 
 The following table lists the most common commands using select.
 
@@ -101,7 +101,7 @@ multi line comment
 */
 ```
 
-## Displays a count of certain element or attributes
+### Display count of certain element in org file
 ```sql
 select
 
@@ -125,14 +125,14 @@ Result
 }
 ```
 
-## Displays all ```iati-identifier``` with that search term using a wildcard ```%```
+### Look for similar `iati-identifier` using a wildcard `%`
 Raised https://github.com/codeforIATI/iati-ideas/issues/37
 
-The wildcard ```%``` can be placed before, after or before and after a search term to get the following results.
+The wildcard `%` can be placed before, after or before and after a search term to get the following results.
 
-```%<searchterm>``` looks for identifiers that end with the search term.  
-```<searchterm>%``` looks for identifiers that start with the search term.  
-```%<searchterm>%``` looks for identifiers that has the search term within it.
+`%<searchterm>` looks for identifiers that end with the search term.  
+`<searchterm>%` looks for identifiers that start with the search term.  
+`%<searchterm>%` looks for identifiers that has the search term within it.
 	
 ```sql
 select
@@ -161,7 +161,7 @@ Result
 }
 ```
 
-## Filtering on custom namespace elements
+### Filtering on custom namespace elements
 Raised https://github.com/devinit/D-Portal/issues/568
 
 ```sql
@@ -186,7 +186,7 @@ Result
 }
 ```
 
-## Display iati-organisation id with elements within ```total-budget```
+### Display iati-organisation id with curated elements within `total-budget`
 ```sql
 select
 
@@ -224,7 +224,7 @@ Result
 }
 ```
 
-## Display all publishers that use a particular ```@ref```
+### Group by publishers that use a particular `@ref`
 
 ```sql
 select
@@ -253,7 +253,7 @@ Result
 }
 ```
 
-## Display first ```/narrative``` array under multiple roots, count and grouped for a particular ```@ref```
+### Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`
 Raised https://github.com/devinit/D-Portal/issues/602
 
 ```sql
@@ -261,7 +261,9 @@ select
 
 xson->>'@ref' as reference, xson->'/narrative'->0->>'' as narrative, pid as publisher, count(*)
 
-from xson where root in ('/iati-activities/iati-activity/participating-org','/iati-activities/iati-activity/transaction/provider-org','/iati-activities/iati-activity/transaction/receiver-org')
+from xson where root in ('/iati-activities/iati-activity/participating-org',
+'/iati-activities/iati-activity/transaction/provider-org',
+'/iati-activities/iati-activity/transaction/receiver-org')
 and xson->>'@ref'='XM-OCHA-CBPF-NGA75'
 group by 1, 2, pid
 
@@ -286,10 +288,10 @@ Result
 }
 ```
 
-## Displays all publishers listing (GIZ) in ```participating-org/narrative``` with other elements and grouped  
+### Display all publishers listing (GIZ) in `participating-org/narrative` 
 Raised https://github.com/devinit/D-Portal/issues/613
 
-Here we use ```LIKE``` and ```%%``` for wildcard SQL queries.
+Here we use `LIKE` and `%` for wildcard SQL queries.
 
 ```sql
 select
@@ -330,7 +332,7 @@ Result
 }
 ```
 
-## Displays all publishers with ```conditions@attached``` as YES
+### Display all publishers with `conditions@attached` as YES
 ```sql
 select
 
@@ -358,7 +360,7 @@ Result
 }
 ```
 
-## Displays the narratives grouped by publishers with ```condition@type```
+### Display narratives and count, grouped by publishers with `condition@type`
 ```sql
 select
 
@@ -388,7 +390,7 @@ Result
 }
 ```
 
-## Displays narratives grouped by publishers with ```condition@type``` 1
+### Display narratives grouped by publishers with `condition@type` 1
 ```sql
 select
 
@@ -417,10 +419,9 @@ Result
 }
 ```
 
-## Display an element attribute, grouped in descending order
-Use ```as``` to name the columns  
-Order always depend on the column number or names, 3 being the count  
-You can use multiple groups, as you would a table grouping columns
+### Display an element attribute, grouped in descending order
+Use `as` to name the columns.  
+Order follows `group by`, if stated.
 
 ```sql
 select
@@ -451,11 +452,10 @@ Result
 }
 ```
 
-## Display information within an element
-https://github.com/devinit/D-Portal/issues/620
+### Display full activity data within an element for multiple identifiers
+Raised https://github.com/devinit/D-Portal/issues/620
 
-Show all information within ```/budget``` for multiple identifiers.
-This works for ```/budget``` as ```root``` because this array occurs only once.
+This works for `/budget` as `root` because this array occurs only once.
 
 ```sql
 select *
@@ -498,8 +498,8 @@ Result
 }
 ```
 
-## Display identifier only sorted by the second array (narrative) in descending order
-You can order by ```aid``` and ```descending``` as well.
+### Display identifiers sorted by the second column (narrative) in descending order
+You can order by `aid` and `desc` as well.
 
 ```sql
 select
@@ -527,7 +527,7 @@ Result
 ```
 
 
-## Display number of items and include all activities information for certain element and vocab
+### Display number of items with full activity data for an element and vocab
 ```sql
 select
 
@@ -571,10 +571,8 @@ Result
 }
 ```
 
-## Sub query to get full activity data
-https://github.com/devinit/D-Portal/issues/562
-
-Click on "Download XSON" and "Download XSON as XML" in the menu to get a link to run that query and return full activities as xml.
+### Subquery to get full activity data
+Raised https://github.com/devinit/D-Portal/issues/562
 
 ```sql
 SELECT * FROM xson WHERE root = '/iati-activities/iati-activity' AND  aid IN (
@@ -634,7 +632,7 @@ Result
 }
 ```
 
-## Display all activities with attribute of certain value
+### Display full activity data with attribute of certain value
 
 ```sql
 select *
@@ -666,8 +664,8 @@ Result
 }
 ```
 
-## Display all activity identifiers with element attribute of certain value
-https://github.com/devinit/D-Portal/issues/562
+### Display unique activity identifiers with attribute of certain value
+Raised https://github.com/devinit/D-Portal/issues/562
 
 This element may occur any number of times so the xpath has to be the root.  
 Any element occurring multiple times is turned into an array.
@@ -694,7 +692,7 @@ Result
 }
 ```
 
-## Get a table of most used values sorted by count
+### Get a table of most used values sorted by count
 Raised https://github.com/devinit/D-Portal/issues/562
 
 ```sql
