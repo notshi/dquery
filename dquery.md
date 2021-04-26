@@ -68,8 +68,9 @@ The following table lists the most common commands using select.
 | Commands | What it does |
 | --- | ----------- |
 | `*` | Returns full acitivity information |
-| distinct aid | Returns a list of identifiers |
 | count(`*`) | Returns a number of items |
+| distinct aid | Returns a list of identifiers |
+| aid | Returns a list of identifiers |
 | pid | Returns a list of publishers |
 
 Example
