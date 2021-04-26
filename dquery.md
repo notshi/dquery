@@ -61,7 +61,7 @@ The following table lists the most common SQL clauses and operators you can use 
 | offset | Skips a given number of results |
 | join | Get data from 2 or more tables |
 
-### select
+## Select
 
 The following table lists the most common commands using select.
 
@@ -73,9 +73,15 @@ The following table lists the most common commands using select.
 | aid | Returns a list of identifiers |
 | pid | Returns a list of publishers |
 
-Example
+### Example
 ```sql
 select distinct aid 
+```
+```sql
+select pid
+```
+```sql
+select * 
 ```
 
 # :sparkles: Recipes
