@@ -64,7 +64,7 @@ and xson->>'/total-budget' IS NOT NULL
 
 Result
 
-```xml
+```sql
 {
     result: [
         {
@@ -84,7 +84,7 @@ The wildcard ```%``` can be placed before, after or before and after a search te
 ```<searchterm>%``` looks for identifiers that start with the search term.  
 ```%<searchterm>%``` looks for identifiers that has the search term within it.
 	
-```
+```sql
 select
 
 distinct aid
@@ -97,7 +97,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -114,7 +114,7 @@ Result
 ## Filtering on custom namespace elements
 Raised https://github.com/devinit/D-Portal/issues/568
 
-```
+```sql
 SELECT DISTINCT aid FROM xson
 WHERE
 	root='/iati-activities/iati-activity/transaction'
@@ -124,7 +124,7 @@ AND
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -137,7 +137,7 @@ Result
 ```
 
 ## Display iati-organisation id with elements within ```total-budget```
-```
+```sql
 select
 
 pid,
@@ -157,7 +157,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -176,7 +176,7 @@ Result
 
 ## Display all publishers that use a particular ```@ref```
 
-```
+```sql
 select
 
 pid as org, count(*)
@@ -191,7 +191,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -206,7 +206,7 @@ Result
 ## Display first ```/narrative``` array under multiple roots, count and grouped for a particular ```@ref```
 Raised https://github.com/devinit/D-Portal/issues/602
 
-```
+```sql
 select
 
 xson->>'@ref' as reference, xson->'/narrative'->0->>'' as narrative, pid as publisher, count(*)
@@ -222,7 +222,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -241,7 +241,7 @@ Raised https://github.com/devinit/D-Portal/issues/613
 
 Here we use ```LIKE``` and ```%%``` for wildcard SQL queries.
 
-```
+```sql
 select
 
 xson->>'@role' as role_, 
@@ -265,7 +265,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -281,7 +281,7 @@ Result
 ```
 
 ## Displays all publishers with ```conditions@attached``` as YES
-```
+```sql
 select
 
 pid as org_id, count(*)
@@ -296,7 +296,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -309,7 +309,7 @@ Result
 ```
 
 ## Displays the narratives grouped by publishers with ```condition@type```
-```
+```sql
 select
 
 xson->>'/narrative' as narrative, xson->>'@type' as condition_type, pid as org_id, count(*)
@@ -324,7 +324,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -339,7 +339,7 @@ Result
 ```
 
 ## Displays narratives grouped by publishers with ```condition@type``` 1
-```
+```sql
 select
 
 xson->>'/narrative' as narrative, pid as org, count(*)
@@ -354,7 +354,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -371,8 +371,8 @@ Result
 Use ```as``` to name the columns  
 Order always depend on the column number or names, 3 being the count  
 You can use multiple groups, as you would a table grouping columns
-```
 
+```sql
 select
 
 xson->>'@ref' as old_id, pid as new_id, count(*)
@@ -388,7 +388,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -406,7 +406,8 @@ https://github.com/devinit/D-Portal/issues/620
 
 Show all information within ```/budget``` for multiple identifiers.
 This works for ```/budget``` as ```root``` because this array occurs only once.
-```
+
+```sql
 select *
 
 from xson where root='/iati-activities/iati-activity/budget'
@@ -426,7 +427,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -449,7 +450,8 @@ Result
 
 ## Display identifier only sorted by the second array (narrative) in descending order
 You can order by ```aid``` and ```descending``` as well.
-```
+
+```sql
 select
 
 aid , JSONB_ARRAY_LENGTH(xson->'/narrative')
@@ -462,7 +464,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -476,7 +478,7 @@ Result
 
 
 ## Display number of items and include all activities information for certain element and vocab
-```
+```sql
 select
 
 JSONB_ARRAY_LENGTH(xson->'/narrative') , *
@@ -490,7 +492,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -524,7 +526,7 @@ https://github.com/devinit/D-Portal/issues/562
 
 Click on "Download XSON" and "Download XSON as XML" in the menu to get a link to run that query and return full activities as xml.
 
-```
+```sql
 SELECT * FROM xson WHERE root = '/iati-activities/iati-activity' AND  aid IN (
 SELECT DISTINCT aid
 FROM xson WHERE
@@ -537,7 +539,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -584,7 +586,7 @@ Result
 
 ## Display all activities with attribute of certain value
 
-```
+```sql
 select *
 from xson where root='/iati-activities/iati-activity/result/indicator'
 and xson->>'@ascending'='0'
@@ -593,7 +595,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -620,7 +622,7 @@ https://github.com/devinit/D-Portal/issues/562
 This element may occur any number of times so the xpath has to be the root.  
 Any element occurring multiple times is turned into an array.
 
-```
+```sql
 SELECT DISTINCT aid
 FROM xson WHERE
     root = '/iati-activities/iati-activity/humanitarian-scope'
@@ -631,7 +633,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -645,7 +647,7 @@ Result
 ## Get a table of most used values sorted by count
 Raised https://github.com/devinit/D-Portal/issues/562
 
-```
+```sql
 SELECT xson->>'/humanitarian-scope@code' AS code , count(*)
 
 FROM xson WHERE
@@ -660,7 +662,7 @@ LIMIT 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
@@ -675,7 +677,7 @@ Result
 ## Display all activities for a country_code within COVID-19
 Raised https://github.com/devinit/D-Portal/issues/589
 
-```
+```sql
 SELECT * FROM act JOIN country on act.aid = country.aid  WHERE country_code ='AO' AND act.aid in (
 SELECT DISTINCT aid FROM xson WHERE
 (
@@ -709,7 +711,7 @@ limit 1;
 
 Result
 
-```
+```sql
 {
     result: [
         {
