@@ -15,7 +15,7 @@ The current interface is sparse and consists of two panels; the editor on the le
 There are four buttons above these panels which perform various things.
 
 Examples
-:Some example recipes.
+: Some example recipes.
 
 **Run Query**  
 View results in the browser (*Can be expensive and slow down the browser*).   
