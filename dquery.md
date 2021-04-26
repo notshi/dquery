@@ -52,7 +52,7 @@ Add comments like so
 ```
 
 ## Displays a count of certain element or attributes
-```
+```sql
 select
 
 count(*)
