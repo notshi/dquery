@@ -69,7 +69,7 @@ The following table lists the most common commands using select.
 | --- | ----------- |
 | `*` | Returns full acitivity information, in their original order |
 | count(`*`) | Returns a number of items |
-| distinct aid | Returns a list of unique identifiers |
+| distinct | Returns a list of unique results |
 | aid | Returns a list of identifiers |
 | pid | Returns a list of publishers |
 
