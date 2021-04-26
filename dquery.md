@@ -9,6 +9,34 @@ dQuery lets you query **the complete IATI data, including non-standard attribute
 ```
 dQuery works well if you are familiar with the IATI Standard elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
 
+### Contents
+- [**Getting started**](#getting-started)
+  - [Data formats](#data-formats)
+  - [Commands](#commands)
+    - [Select](#select)
+      - [Examples](#examples)
+- [:sparkles: **Recipes**](#sparkles-recipes)
+  - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
+  - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
+  - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
+  - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
+  - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
+  - [Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`](#display-first-narrative-array-in-multiple-roots-count-and-grouped-for-a-particular-ref)
+  - [Display all publishers listing (GIZ) in `participating-org/narrative`](#display-all-publishers-listing-giz-in-participating-orgnarrative)
+  - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
+  - [Display narratives and count, grouped by publishers with `condition@type`](#display-narratives-and-count-grouped-by-publishers-with-conditiontype)
+  - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
+  - [Display an element attribute, grouped in descending order](#display-an-element-attribute-grouped-in-descending-order)
+  - [Display full activity data within an element for multiple identifiers](#display-full-activity-data-within-an-element-for-multiple-identifiers)
+  - [Display identifiers sorted by the second column (narrative) in descending order](#display-identifiers-sorted-by-the-second-column-narrative-in-descending-order)
+  - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
+  - [Subquery to get full activity data](#subquery-to-get-full-activity-data)
+  - [Display full activity data with attribute of certain value](#display-full-activity-data-with-attribute-of-certain-value)
+  - [Display unique activity identifiers with attribute of certain value](#display-unique-activity-identifiers-with-attribute-of-certain-value)
+  - [Get a table of most used values sorted by count](#get-a-table-of-most-used-values-sorted-by-count)
+  - [Display all activities for a country_code within COVID-19](#display-all-activities-for-a-country_code-within-covid-19)
+
+
 # Getting started
 
 The current interface is sparse and consists of two panels; the editor on the left and the console on the right.  
@@ -42,6 +70,8 @@ Replace `/#` in the url with `?form=csv&sql=` to get the query link in different
 ## Commands
 
 You can more or less figure out what a query does by reading it like a sentence.  
+And just like a sentence, you can write out a whole query in a single line as linebreaks in these examples are mostly for legibility purposes.
+
 The following table lists the most common SQL clauses and operators you can use to create queries.
 
 | Commands | What it does |
