@@ -2,17 +2,31 @@
 
 http://d-portal.org/dquery/
 
-dQuery allows you to query **the complete IATI data, including non-standard attributes and extensions** directly into the live d-portal database.
+dQuery lets you query **the complete IATI data, including non-standard attributes and extensions** directly into the live d-portal database, in a modern browser.
 
 ```diff
 + Documentation is ongoing so please bear with us.
 ```
 dQuery works well if you are familiar with the IATI Standard elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
 
-Click *Run Query* to view results in the browser or *Download XSON* in various formats without viewing.  
-**The latter option is preferable as queries can slow down a browser.**
+## Tool
 
-Click *Browse Activities* to view results in d-portal.
+The current interface is sparse and consists of two panels; the editor on the left and the console on the right.  
+There are four buttons above these panels which perform various things.
+
+Examples  
+Some example recipes.
+
+Run Query  
+View results in the browser (*Can be expensive and slow down the browser*).   
+
+Browse Activities  
+View results in d-portal.
+
+Download XSON  
+Download data in various formats without viewing results in the browser.
+
+You can drag the partition to increase or decrease the space of either panel.  
 
 ## Data formats
 
