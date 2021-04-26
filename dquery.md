@@ -533,7 +533,9 @@ select
 
 JSONB_ARRAY_LENGTH(xson->'/narrative') , *
 
-from xson where root='/iati-activities/iati-activity/sector' and xson->>'@vocabulary' = '99' and JSONB_ARRAY_LENGTH(xson->'/narrative') > 1
+from xson where root='/iati-activities/iati-activity/sector' 
+and xson->>'@vocabulary' = '99' 
+and JSONB_ARRAY_LENGTH(xson->'/narrative') > 1
 
 order by 1 desc
 
