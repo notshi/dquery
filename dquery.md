@@ -18,7 +18,7 @@ There are four buttons above these panels which perform various things.
 Some example recipes.
 
 **Run Query**  
-View results in the browser  
+View results in the browser.  
 *If queries are complex, this can slow down the browser.*  
 
 **Browse Activities**  
@@ -38,6 +38,29 @@ The html option will only work at the top level of an activity or an organisatio
 The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 
 Replace ```/#``` in the url with ```?form=csv&sql=``` to get the query link in different formats.  
+
+## Commands
+
+You can more or less figure out what a query does by reading it like a sentence.
+
+The following table lists the most common SQL clauses and operators you can use to create queries.
+
+| Commands | What it does |
+| --- | ----------- |
+| select | Picks fields that contain data of interest |
+| from | For dQuery, this is usually ```xson``` |
+| where | Limits the data set we are working with |
+| and | Additional limits |
+| or | Additional limits |
+| not | Additional limits |
+| like | Use this with ```%``` for wildcard queries |
+| as | Use this to name columns |
+| in | Allows you to specify multiple values |
+| group by | Aggregates values across row |
+| order by | Specifies sorting of results with option for ```asc``` or ```desc``` |
+| limit | Limits the number of returned results |
+| offset | Skips a given number of results |
+| join | Get data from 2 or more tables |
 
 
 # :sparkles: Recipes
