@@ -64,7 +64,7 @@ and xson->>'/total-budget' IS NOT NULL
 
 Result
 
-```sql
+```json
 {
     result: [
         {
