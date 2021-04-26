@@ -41,8 +41,7 @@ Replace ```/#``` in the url with ```?form=csv&sql=``` to get the query link in d
 
 ## Commands
 
-You can more or less figure out what a query does by reading it like a sentence.
-
+You can more or less figure out what a query does by reading it like a sentence.  
 The following table lists the most common SQL clauses and operators you can use to create queries.
 
 | Commands | What it does |
@@ -62,6 +61,21 @@ The following table lists the most common SQL clauses and operators you can use 
 | offset | Skips a given number of results |
 | join | Get data from 2 or more tables |
 
+### select
+
+The following table lists the most common commands using select.
+
+| Commands | What it does |
+| --- | ----------- |
+| `*` | Returns full acitivity information |
+| distinct aid | Returns a list of identifiers |
+| count(`*`) | Returns a number of items |
+| pid | Returns a list of publishers |
+
+Example
+```sql
+select distinct aid 
+```
 
 # :sparkles: Recipes
 
