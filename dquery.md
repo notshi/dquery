@@ -1,4 +1,4 @@
-# Introduction
+# :tada: Introduction
 
 http://d-portal.org/dquery/
 
@@ -18,7 +18,8 @@ There are four buttons above these panels which perform various things.
 Some example recipes.
 
 **Run Query**  
-View results in the browser (*Can be expensive and slow down the browser*).   
+View results in the browser  
+*If queries are complex, this can slow down the browser.*  
 
 **Browse Activities**  
 View results in d-portal.
