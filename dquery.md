@@ -72,7 +72,12 @@ Where applicable, results are limited to 1 in the examples below.
 
 Add comments like so
 ```sql
-/*This is a comment*/
+-- This is a comment
+
+/*
+This is a  
+multi line comment
+*/
 ```
 
 ## Displays a count of certain element or attributes
