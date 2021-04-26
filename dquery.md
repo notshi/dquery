@@ -73,7 +73,7 @@ The following table lists the most common commands using select.
 | aid | Returns a list of identifiers |
 | pid | Returns a list of publishers |
 
-### Example
+#### Examples
 ```sql
 select distinct aid 
 ```
