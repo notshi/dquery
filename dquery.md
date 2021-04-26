@@ -47,7 +47,7 @@ Some of these are requests for when more complex data is needed outside the scop
 Where applicable, results are limited to 1 in the examples below.
 
 Add comments like so
-```
+```sql
 /*This is a comment*/
 ```
 
@@ -64,7 +64,7 @@ and xson->>'/total-budget' IS NOT NULL
 
 Result
 
-```
+```sql
 {
     result: [
         {
