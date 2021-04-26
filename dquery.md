@@ -39,7 +39,7 @@ The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 Replace ```/#``` in the url with ```?form=csv&sql=``` to get the query link in different formats.  
 
 
-# Recipes
+# :sparkles: Recipes
 
 The following recipes are some examples of what you can query using this tool.
 
