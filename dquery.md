@@ -13,7 +13,13 @@ dQuery works well if you are familiar with the IATI Standard elements and queryi
 - [**Getting started**](#getting-started)
   - [Data formats](#data-formats)
   - [Commands](#commands)
-    - [Select](#select)
+    - [Select](#Select)
+      - [Examples](#examples)
+    - [From](#From)
+      - [Examples](#examples)
+    - [Where](#Where)
+      - [Examples](#examples)
+    - [And](#And)
       - [Examples](#examples)
 - [:sparkles: **Recipes**](#sparkles-recipes)
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
@@ -84,7 +90,7 @@ The following table lists the most common SQL clauses and operators you can use 
 | not | Additional limits |
 | like | Use this with `%` for wildcard queries |
 | as | Use this to name columns |
-| in | Allows you to specify multiple values |
+| in | Specifies multiple values |
 | group by | Aggregates values across row |
 | order by | Specifies sorting of results with option for `asc` or `desc` |
 | limit | Limits the number of returned results |
@@ -93,7 +99,7 @@ The following table lists the most common SQL clauses and operators you can use 
 
 ### Select
 
-The following table lists the most common commands using select.
+The following table lists the most common commands using Select.
 
 | Commands | What it does |
 | --- | ----------- |
@@ -112,6 +118,66 @@ select pid
 ```
 ```sql
 select * 
+```
+
+### From
+
+For most queries, we are only looking at one table of indexes; `xson`.
+
+However, there are options to include multiple tables.
+
+#### Examples
+```sql
+from xson
+```
+```sql
+from xson as x2 , jsonb_array_elements(x2.xson -> '/document-link' )  as x1
+```
+
+### Where
+
+The following table lists the most common usage of Where.
+
+| Use | What it does |
+| --- | ----------- |
+| root | The root of the element to search in |
+| xson--> | Define an element here |
+| xson-> | Define an array here |
+
+#### Examples
+```sql
+where root='/iati-activities/iati-activity' 
+```
+```sql
+where xson->>'@ref'='XM-OCHA-CBPF-NGA75'
+```
+```sql
+where xson -> '/language'->0->>'@code'
+```
+
+### And
+
+Adds additional limits to the current query to narrow the results.
+
+This is useful for queries within a particular element.
+
+| Use | What it does |
+| --- | ----------- |
+| xson--> | Define an element here |
+| xson-> | Define an array here |
+
+#### Examples
+```sql
+and xson->>'@type' = 'B1'
+```
+```sql
+and xson->>'/total-budget' IS NOT NULL
+```
+```sql
+and xson->>'/iati-identifier' like '%1022474%'
+```
+```sql
+and xson->>'/usg:treasury-account/usg:regular-account@code' = '72'
 ```
 
 # :sparkles: Recipes
