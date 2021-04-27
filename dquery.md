@@ -110,9 +110,6 @@ The following table lists the most common commands using Select.
 select distinct aid 
 ```
 ```sql
-select pid
-```
-```sql
 select * 
 ```
 
@@ -145,9 +142,6 @@ The following table lists the most common usage of Where.
 where root='/iati-activities/iati-activity' 
 ```
 ```sql
-where xson->>'@ref'='XM-OCHA-CBPF-NGA75'
-```
-```sql
 where xson -> '/language'->0->>'@code'
 ```
 
@@ -168,12 +162,6 @@ and xson->>'@type' = 'B1'
 ```
 ```sql
 and xson->>'/total-budget' IS NOT NULL
-```
-```sql
-and xson->>'/iati-identifier' like '%1022474%'
-```
-```sql
-and xson->>'/usg:treasury-account/usg:regular-account@code' = '72'
 ```
 
 # :sparkles: Recipes
