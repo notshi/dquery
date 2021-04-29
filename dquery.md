@@ -95,12 +95,15 @@ The following table lists the most common SQL clauses and operators you can use 
 
 ### Select
 
-The following table lists the most common commands using Select.
+Include column names seperated by a comma (,) that you wish to select from the table.  
+If column names are not provided, this defaults to an asterisk (*) which means everything. The valid values here depend on which tables you are querying.
+
+The following table lists the most common, but not all commands using Select.
 
 | Commands | What it does |
 | --- | ----------- |
-| `*` | Returns full acitivity information, in their original order |
-| count(`*`) | Returns a number of items |
+| * | Returns full acitivity information, in their original order |
+| count(*) | Returns a number of items |
 | distinct | Returns a list of unique results |
 | aid | Returns a list of identifiers |
 | pid | Returns a list of publishers |
@@ -162,6 +165,42 @@ and xson->>'@type' = 'B1'
 ```
 ```sql
 and xson->>'/total-budget' IS NOT NULL
+```
+
+# Basic queries
+
+All possible column names can be found by querying a table and looking at the returned JSON.  
+By specifying the xpath of an element in `root`, you can filter results to within that element without displaying the entire xml.
+
+#### Examples
+
+This gets you data within the `budget` element from a random activity.
+```sql
+select *
+from xson where root='/iati-activities/iati-activity/budget'
+limit 1;
+```
+
+Result
+
+```sql
+{
+    result: [
+        {
+            aid: "SE-0-SE-6-10451A0101-MLI-72012",
+            pid: "SE-0",
+            root: "/iati-activities/iati-activity/budget",
+            xson: {
+                /value: 189381.7616514557,
+                /value@currency: "USD",
+                /value@value-date: "2019-01-01",
+                /period-end@iso-date: "2019-12-28",
+                /period-start@iso-date: "2019-01-01"
+            }
+        }
+    ],
+    duration: 0.014
+}
 ```
 
 # :sparkles: Recipes
