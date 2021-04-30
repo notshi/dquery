@@ -10,7 +10,7 @@ dQuery lets you query **the complete IATI data, including non-standard attribute
 dQuery works well if you are familiar with the IATI Standard activity elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
 
 ### Contents
-- [**Getting started**](#getting-started)
+- [:pushpin: **Getting started**](#getting-started)
   - [Data formats](#data-formats)
   - [Commands](#commands)
     - [Select](#select)
@@ -22,7 +22,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
     - [Limit](#limit)
     - [Offset](#offest)
     - [Join](#join)
-- [**Basic Queries**](#basic-queries)
+- [:mag: **Basic Queries**](#basic-queries)
   - [Syntax](#syntax)
   - [Advanced Queries](#advanced-queries)
   - [Database Dump](#database-dump)
@@ -323,7 +323,7 @@ from xson as "Table 1", xson as "Table 2"
 ```
 
 
-# Basic queries
+# :pushpin: Basic queries
 
 We often refer to tables, rows and columns when querying. This is because the database contains many tables.
 
@@ -474,20 +474,21 @@ For more information about the SQL language, the full list of functions and futh
 2. [PostgreSQL Functions and Operators](https://www.postgresql.org/docs/12/functions.html)
 
 
-# Database Dump
+# :mag: Database Dump
 
-Spin up a server, import and start querying.  
+*Spin up a server, import and start querying.*
+
 The following dumps can be imported locally and queried using the same SQL code that is used on the web interface so you can run large queries on it without clogging up d-portal.
 
 **The entire d-portal database is about 3GB in size.**
 
-PostgreSQL dump (Updated nightly)  
+PostgreSQL dump *(Updated nightly)*  
 [http://d-portal.org/db/dstore.sql.gz](http://d-portal.org/db/dstore.sql.gz)
 
-`pg_dump` custom format so `pg_restore` can be used with its various options (Updated nightly)  
+`pg_dump` custom format so `pg_restore` can be used with its various options *(Updated nightly)*  
 [http://d-portal.org/db/dstore.pg](http://d-portal.org/db/dstore.pg)
 
-A zip of all the raw cached xml (Updated nightly)  
+A zip of all the raw cached xml *(Updated nightly)*  
 [http://d-portal.org/db/cache.xml.zip](http://d-portal.org/db/cache.xml.zip)
 
 For us, a full restore of the database takes about 7 hours or 2 hours if you use multithreading with `pg_restore`.
