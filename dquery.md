@@ -115,6 +115,7 @@ The following lists the most common, but not all commands using Select.
 | distinct | Returns a list of unique results |
 | aid | Returns a list of identifiers |
 | pid | Returns a list of publishers |
+| as | Gives a table, or a column a temporary name |
 
 #### Examples
 ```sql
@@ -122,6 +123,16 @@ select distinct aid
 ```
 ```sql
 select * 
+```
+
+Sometimes we want column names that are more human readable when they are displayed in a CSV or JSON output.  
+We can give them temporary aliases that exists only for the duration of that query.
+
+We first specify which column we want, followed by As and the temporary column name.  
+Double quotation marks `""` are required if the alias name contains spaces.
+
+```sql
+select pid as "Organisation Identifier"
 ```
 
 ## From
@@ -256,6 +267,51 @@ order by pid desc
 order by 1 asc, xson->>'@role' desc
 ```
 
+## Limit
+
+When counting or adding up values, it is often neccesary to group columns with the same values.  
+Column numbers can be used instead of column names, as well as a combination of numbers and names.
+
+Multiple column names are separated by a comma `,`.
+
+#### Examples
+```sql
+group by 1
+```
+```sql
+group by xson->>'@role', xson->>'@type'
+```
+
+## Offset
+
+When counting or adding up values, it is often neccesary to group columns with the same values.  
+Column numbers can be used instead of column names, as well as a combination of numbers and names.
+
+Multiple column names are separated by a comma `,`.
+
+#### Examples
+```sql
+group by 1
+```
+```sql
+group by xson->>'@role', xson->>'@type'
+```
+
+## Join
+
+When counting or adding up values, it is often neccesary to group columns with the same values.  
+Column numbers can be used instead of column names, as well as a combination of numbers and names.
+
+Multiple column names are separated by a comma `,`.
+
+#### Examples
+```sql
+group by 1
+```
+```sql
+group by xson->>'@role', xson->>'@type'
+```
+
 
 # Basic queries
 
@@ -285,7 +341,7 @@ For this purpose, all SQL keywords are in upper-case.
 Hopefully, you are able to figure out the different clauses and fields that make up parts of the statement.
 
 ```sql
-SELECT column_name(s)
+SELECT column_name(s), column_name AS alias_name
 FROM table_name(s)
 WHERE condition
 AND condition
@@ -379,9 +435,9 @@ Result
 ```
 
 If we tweak the query like so, the result will change.  
-Here we only want the publisher identifier `pid` and `value` element which we have renamed as `total_expenditure_in_usd`.
+Here we only want the publisher identifier `pid` and `value` element which we have renamed as `Total Expenditure in USD`.
 ```sql
-select pid, xson->>'/value' as total_expenditure_in_usd
+select pid, xson->>'/value' as "Total Expenditure in USD"
 from xson where root='/iati-organisations/iati-organisation/total-expenditure'
 limit 1;
 ```
@@ -393,7 +449,7 @@ Result
     result: [
         {
             pid: "XM-DAC-41146",
-            total_expenditure_in_usd: "354113927"
+            Total Expenditure in USD: "354113927"
         }
     ],
     duration: 0.009
@@ -771,7 +827,7 @@ Result
 ### Display full activity data within an element for multiple identifiers
 Raised https://github.com/devinit/D-Portal/issues/620
 
-This works for `/budget` as `root` because this array occurs only once.
+This works for `/budget` in `root` because this array occurs only once.
 
 ```sql
 select *
