@@ -20,6 +20,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
     - [Group by](#group-by)
     - [Order by](#order-by)
 - [**Basic Queries**](#basic-queries)
+  - [Syntax](#syntax)
 - [:sparkles: **Recipes**](#sparkles-recipes)
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
@@ -52,7 +53,7 @@ Some example recipes.
 
 **Run Query**  
 View results in the browser.  
-*If queries are complex, this can slow down the browser.*  
+*Please limit your results! If queries are complex, this can slow down the browser.*  
 
 **Browse Activities**  
 View results in d-portal.
@@ -81,18 +82,18 @@ The following lists the most common SQL clauses and operators you can use to cre
 
 | Commands | What it does |
 | --- | ----------- |
-| select | Picks fields that contain data of interest |
-| from | For dQuery, this is usually `xson` |
-| where | Limits the data set we are working with |
-| and | Additional limits |
-| or | Additional limits |
-| not | Additional limits |
+| select | Picks field(s) that contain data of interest |
+| from | Picks table(s) that contain data of interest |
+| where | Adds conditions to the query |
+| and | Additional conditions |
+| or | Additional conditions |
+| not | Additional conditions |
 | like | Use with `%` or `_` |
 | ilike | Use with `%` or `_` |
-| as | Use this to name columns |
+| as | Use this to rename column(s) |
 | in | Specifies multiple values |
 | group by | Aggregates values across row |
-| order by | Specifies sorting of results with option for `asc` or `desc` |
+| order by | Specifies sorting conditions with option for `asc` or `desc` |
 | limit | Limits the number of returned results |
 | offset | Skips a given number of results |
 | join | Get data from 2 or more tables |
@@ -173,10 +174,11 @@ For Like and iLike, there are two wildcard options:
 | --- | ----------- |
 | like `a%` | Finds data that starts with "a" |
 | like `%a` | Finds data that ends with "a" |
-| like `%aa` | Finds data that has "aa" within it |
+| like `%aa%` | Finds data that has "aa" within it |
 | like `_a%` | Finds data that has "a" as the second character |
 | like `a_%` | Finds data that starts with "a" and is at least 2 characters in length |
 | like `a__%` | Finds data that starts with "a" and is at least 3 characters in length |
+| like `_a_` | Finds data that has 3 characters that has "a" as the second character |
 | like `a%s` | Finds data that starts with "a" and ends with "s" |
 
 
@@ -228,7 +230,7 @@ Multiple column names are separated by a comma `,`.
 group by pid
 ```
 ```sql
-group by xson->>'@role', xson->>'@type',
+group by xson->>'@role', xson->>'@type'
 ```
 
 ## Order by
@@ -254,12 +256,45 @@ order by 1 asc, 3 desc
 
 # Basic queries
 
+We often refer to tables, rows and columns when querying. This is because the database contains many tables.
+
+Each table is identified by a name, for example `xson`.  
+Each table has rows and columns, and those have names too, for example `iati-identifier`.
+
+For a full list of available tables in the database, please refer [here](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48).  
+
+When we do a query, we write SQL statements.  
+
+SQL keywords are **not** case sensitive, so `select` is the same as `SELECT`.  
+We usually end a statement with a semicolon `;` but this is optional as we only currently allow one SQL statement to be executed at a time.
+
+**We always limit our queries because the database is huge!**  
+Returning large results can impact your browser performance, and ultimately the server and the d-portal website.
+
+
+## Syntax
+
+The following is a SQL statement.  
+For this purpose, all SQL keywords are in upper-case.
+
+Hopefully, you are able to figure out the different clauses and fields that make up parts of the statement.
+
+```sql
+SELECT column_name(s)
+FROM table_name(s)
+WHERE condition
+AND condition
+GROUP BY column_name(s)
+ORDER BY column_name(s)
+LIMIT number;
+```
+
 All possible column names can be found by querying a table and looking at the returned JSON.  
 By specifying the xpath of an element in `root`, you can filter results to within that element without displaying the entire xml.
 
 #### Examples
 
-This gets you data within the `budget` element from a random activity.
+This gets you all the data within the `budget` element table from a random activity.
 ```sql
 select *
 from xson where root='/iati-activities/iati-activity/budget'
@@ -288,7 +323,28 @@ Result
 }
 ```
 
-This gets you data within the `total-expenditure` element from a random organisation file.
+If we change the `select` field from `*` to `aid`, the result will change.  
+This is because the query has specified that we only want a list of identifiers.
+```sql
+select aid
+from xson where root='/iati-activities/iati-activity/budget'
+limit 1;
+```
+
+Result
+
+```sql
+{
+    result: [
+        {
+            aid: "XM-DAC-903-SPI-10117"
+        }
+    ],
+    duration: 0.035
+}
+```
+
+This gets you all the data within the `total-expenditure` element table from a random organisation file.
 ```sql
 select *
 from xson where root='/iati-organisations/iati-organisation/total-expenditure'
