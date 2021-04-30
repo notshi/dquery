@@ -102,7 +102,7 @@ The following lists the most common SQL clauses and operators you can use to cre
 Select specifies the kind of data we want to get.
 
 Include column names that you wish to select from the table.  
-Multiple column names are seperated by a comma `,`.  
+Multiple column names are separated by a comma `,`.  
 
 If column names are not provided, this defaults to an asterisk `*` which means everything. The valid values here depend on which tables you are querying.
 
@@ -131,7 +131,7 @@ Tables are where the data is stored and From specifies which tables to look at t
 For most queries, we are only looking at the `xson` table.  
 The `xson` table includes the entire IATI activity elements, as well as non-standard attributes and extensions.
 
-Multiple table names are seperated by a comma `,`.  
+Multiple table names are separated by a comma `,`.  
 
 For a full list of available tables in the database, please refer [here](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48).  
 For a full list of IATI acitivity elements, please refer [here](https://iatistandard.org/en/iati-standard/203/activity-standard/).
@@ -150,7 +150,7 @@ At its most basic, Where is used to get data that fulfills a specified condition
 For most queries, we do this by specifying the xpath of an element in `root`.  
 
 Where can be combined with operators to get results based on more than one condition.  
-Multiple column names are seperated by a comma `,`.
+Multiple column names are separated by a comma `,`.
 
 | Operator | What it does |
 | --- | ----------- |
@@ -221,7 +221,7 @@ and xson->>'/total-budget' IS NOT NULL
 ## Group by
 
 When counting or adding up values, it is often neccesary to group columns with the same values.  
-Multiple column names are seperated by a comma `,`.
+Multiple column names are separated by a comma `,`.
 
 #### Examples
 ```sql
@@ -234,7 +234,7 @@ group by xson->>'@role', xson->>'@type',
 ## Order by
 
 This sorts the resulting data in ascending or descending order.  
-Multiple column names are seperated by a comma `,`.
+Multiple column names are separated by a comma `,`.
 
 The default order is in ascending order (low to high).
 
