@@ -25,7 +25,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
 - [:mag: **Basic Queries**](#mag-basic-queries)
   - [Syntax](#syntax)
   - [Advanced Queries](#advanced-queries)
-- [:doughnut: **Database Dump**](#shipit-database-dump)
+- [:doughnut: **Database Dump**](#doughnut-database-dump)
   - [Server](#server)
 - [:sparkles: **Recipes**](#sparkles-recipes)
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
