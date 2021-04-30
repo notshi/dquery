@@ -266,7 +266,9 @@ For a full list of available tables in the database, please refer [here](https:/
 When we do a query, we write SQL statements.  
 
 SQL keywords are **not** case sensitive, so `select` is the same as `SELECT`.  
-We usually end a statement with a semicolon `;` but this is optional as we only currently allow one SQL statement to be executed at a time.
+We always end a statement with a semicolon `;` so you can write many statements in a query.
+
+However, although we allow multiple SQL statements to be executed at a time, only the latest one will display.
 
 **We always limit our queries because the database is huge!**  
 Returning large results can impact your browser performance, and ultimately the server and the d-portal website.
