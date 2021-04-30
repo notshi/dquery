@@ -129,10 +129,12 @@ select *
 Tables are where the data is stored and From specifies which tables to look at to get them.
 
 For most queries, we are only looking at the `xson` table.  
-This table includes the entire IATI activity elements, as well as non-standard attributes and extensions.
+The `xson` table includes the entire IATI activity elements, as well as non-standard attributes and extensions.
 
-There are, however, options to include multiple tables.  
-For a full list of available tables in the database, please refer [here](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48).
+Multiple table names are seperated by a comma `,`.  
+
+For a full list of available tables in the database, please refer [here](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48).  
+For a full list of IATI acitivity elements, please refer [here](https://iatistandard.org/en/iati-standard/203/activity-standard/).
 
 #### Examples
 ```sql
