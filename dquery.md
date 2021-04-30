@@ -19,6 +19,9 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
     - [And](#and)
     - [Group by](#group-by)
     - [Order by](#order-by)
+    - [Limit](#limit)
+    - [Offset](#offest)
+    - [Join](#join)
 - [**Basic Queries**](#basic-queries)
   - [Syntax](#syntax)
 - [:sparkles: **Recipes**](#sparkles-recipes)
@@ -269,47 +272,49 @@ order by 1 asc, xson->>'@role' desc
 
 ## Limit
 
-When counting or adding up values, it is often neccesary to group columns with the same values.  
-Column numbers can be used instead of column names, as well as a combination of numbers and names.
+We use Limit to specify the number of results we want in the query.  
+This is especially useful if we want to test a query that might be intensive or to quickly see if it works.
 
-Multiple column names are separated by a comma `,`.
+This will return the first 10 results from a table.
 
 #### Examples
 ```sql
-group by 1
-```
-```sql
-group by xson->>'@role', xson->>'@type'
+limit 10;
 ```
 
 ## Offset
 
-When counting or adding up values, it is often neccesary to group columns with the same values.  
-Column numbers can be used instead of column names, as well as a combination of numbers and names.
-
-Multiple column names are separated by a comma `,`.
+We use Offset for pagination, especially useful on large tables when we need to see the next set of results.  
+When we combine it with Limit, this allows us to page through the results whilst still returning a limited number of results.
 
 #### Examples
 ```sql
-group by 1
+offset 5;
 ```
+
+The following query will return only 5 results, starting on the the 11th result.
 ```sql
-group by xson->>'@role', xson->>'@type'
+limit 5 offset 10;
 ```
 
 ## Join
 
-When counting or adding up values, it is often neccesary to group columns with the same values.  
-Column numbers can be used instead of column names, as well as a combination of numbers and names.
-
-Multiple column names are separated by a comma `,`.
+We use Join to combine rows from two or more tables, based on a related column between them.
 
 #### Examples
 ```sql
-group by 1
+join country on act.aid = country.aid
 ```
+
+We can also refer to the same table as two different table aliases, thus the `xson` table below is joined with itself.  
+An example of such use is when you want to return results that includes data within **and** outside a particular element.
+
+This can happen with IATI data due to the hierarchical nature of XML.
+
+However, it is highly recommended that we always aim to keep queries straightforward and simple to reduce load times!
+
 ```sql
-group by xson->>'@role', xson->>'@type'
+from xson as "Table 1", xson as "Table 2"
 ```
 
 
