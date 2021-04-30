@@ -10,7 +10,7 @@ dQuery lets you query **the complete IATI data, including non-standard attribute
 dQuery works well if you are familiar with the IATI Standard activity elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
 
 ### Contents
-- [:pushpin: **Getting started**](#getting-started)
+- [:pushpin: **Getting started**](#pushpin-getting-started)
   - [Data formats](#data-formats)
   - [Commands](#commands)
     - [Select](#select)
@@ -22,10 +22,10 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
     - [Limit](#limit)
     - [Offset](#offest)
     - [Join](#join)
-- [:mag: **Basic Queries**](#basic-queries)
+- [:mag: **Basic Queries**](#mag-basic-queries)
   - [Syntax](#syntax)
   - [Advanced Queries](#advanced-queries)
-  - [Database Dump](#database-dump)
+- [:shipit: **Database Dump**](#shipit-database-dump)
 - [:sparkles: **Recipes**](#sparkles-recipes)
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
@@ -48,7 +48,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
   - [Display all activities for a country_code within COVID-19](#display-all-activities-for-a-country_code-within-covid-19)
 
 
-# Getting started
+# :pushpin: Getting started
 
 The current interface is sparse and consists of two panels; the editor on the left and the console on the right.  
 There are four buttons above these panels which perform various things.
@@ -323,7 +323,7 @@ from xson as "Table 1", xson as "Table 2"
 ```
 
 
-# :pushpin: Basic queries
+# :mag: Basic queries
 
 We often refer to tables, rows and columns when querying. This is because the database contains many tables.
 
@@ -474,7 +474,7 @@ For more information about the SQL language, the full list of functions and futh
 2. [PostgreSQL Functions and Operators](https://www.postgresql.org/docs/12/functions.html)
 
 
-# :mag: Database Dump
+# :shipit: Database Dump
 
 *Spin up a server, import and start querying.*
 
