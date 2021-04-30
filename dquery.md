@@ -7,16 +7,19 @@ dQuery lets you query **the complete IATI data, including non-standard attribute
 ```diff
 + Documentation is ongoing so please bear with us.
 ```
-dQuery works well if you are familiar with the IATI Standard elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
+dQuery works well if you are familiar with the IATI Standard activity elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
 
 ### Contents
 - [**Getting started**](#getting-started)
   - [Data formats](#data-formats)
   - [Commands](#commands)
-    - [Select](#Select)
-    - [From](#From)
-    - [Where](#Where)
-    - [And](#And)
+    - [Select](#select)
+    - [From](#from)
+    - [Where](#where)
+    - [And](#and)
+    - [Group by](#group-by)
+    - [Order by](#order-by)
+- [**Basic Queries**](#basic-queries)
 - [:sparkles: **Recipes**](#sparkles-recipes)
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
@@ -74,7 +77,7 @@ Replace `/#` in the url with `?form=csv&sql=` to get the query link in different
 You can more or less figure out what a query does by reading it like a sentence.  
 And just like a sentence, you can write out a whole query in a single line as linebreaks in these examples are mostly for legibility purposes.
 
-The following table lists the most common SQL clauses and operators you can use to create queries.
+The following lists the most common SQL clauses and operators you can use to create queries.
 
 | Commands | What it does |
 | --- | ----------- |
@@ -84,7 +87,7 @@ The following table lists the most common SQL clauses and operators you can use 
 | and | Additional limits |
 | or | Additional limits |
 | not | Additional limits |
-| like | Use this with `%` for wildcard queries |
+| like / ilike | Use with `%` or `_` |
 | as | Use this to name columns |
 | in | Specifies multiple values |
 | group by | Aggregates values across row |
@@ -95,10 +98,14 @@ The following table lists the most common SQL clauses and operators you can use 
 
 ### Select
 
-Include column names seperated by a comma (,) that you wish to select from the table.  
-If column names are not provided, this defaults to an asterisk (*) which means everything. The valid values here depend on which tables you are querying.
+Select specifies the kind of data we want to get.
 
-The following table lists the most common, but not all commands using Select.
+Include column names that you wish to select from the table.  
+Multiple column names are seperated by a comma `,`.  
+
+If column names are not provided, this defaults to an asterisk `*` which means everything. The valid values here depend on which tables you are querying.
+
+The following lists the most common, but not all commands using Select.
 
 | Commands | What it does |
 | --- | ----------- |
@@ -118,46 +125,86 @@ select *
 
 ### From
 
-For most queries, we are only looking at one table of indexes; `xson`.
+Tables are where the data is stored and From specifies which tables to look at to get them.
 
-However, there are options to include multiple tables.
+For most queries, we are only looking at the `xson` table.  
+This table includes the entire IATI activity elements, as well as non-standard attributes and extensions.
+
+There are, however, options to include multiple tables.  
+For a full list of available tables in the database, please refer [here](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48).
 
 #### Examples
 ```sql
 from xson
 ```
 ```sql
-from xson as x2 , jsonb_array_elements(x2.xson -> '/document-link' )  as x1
+from location
 ```
 
 ### Where
 
-The following table lists the most common usage of Where.
+At its most basic, Where is used to get data that fulfills a specified condition.  
+For most queries, we do this by specifying the xpath of an element in `root`.  
+
+Where can be combined with operators to get results based on more than one condition.  
+Multiple column names are seperated by a comma `,`.
+
+| Operator | What it does |
+| --- | ----------- |
+| and | Returns data if all the conditions separated by And are TRUE |
+| or | Returns data if all the conditions separated by Or are TRUE |
+| not | Returns data if the condition(s) is NOT TRUE |
+| in | Specifies multiple values, short for multiple Or conditions |
+| between | Selects a range, start and end values included (values can be numbers, text, or dates) |
+| like | Search for a specified pattern, case sensitive |
+| ilike | Search for a specified pattern, case insensitive |
+
+
+For Like / iLike, there are two wildcard options.
+
+    The percent sign `%` for multiple characters.  
+    The underscore sign `_` for a single character.
+
 
 | Use | What it does |
 | --- | ----------- |
-| root | The root of the element to search in |
-| xson--> | Define an element here |
-| xson-> | Define an array here |
+| like `a%` | Finds data that starts with "a" |
+| like `%a` | Finds data that ends with "a" |
+| like `%aa` | Finds data that has "aa" within it |
+| like `_a%` | Finds data that has "a" as the second character |
+| like `a_%` | Finds data that starts with "a" and is at least 2 characters in length |
+| like `a___%` | Finds data that starts with "a" and is at least 4 characters in length |
+| like `a%s` | Finds data that starts with "a" and ends with "s" |
+
+
 
 #### Examples
 ```sql
 where root='/iati-activities/iati-activity' 
 ```
 ```sql
-where xson -> '/language'->0->>'@code'
+where root='/iati-activities/iati-activity/other-identifier' and xson->>'@type' = 'B1'
+```
+```sql
+where root in ('/iati-activities/iati-activity/participating-org', '/iati-activities/iati-activity/transaction/')
 ```
 
 ### And
 
-Adds additional limits to the current query to narrow the results.
+Adds additional limits to the current query to narrow the results.  
 
-This is useful for queries within a particular element.
+You can use the following operators to enhance a query.
 
-| Use | What it does |
+| Operator | Description |
 | --- | ----------- |
-| xson--> | Define an element here |
-| xson-> | Define an array here |
+| = | Equal |
+| > | Greater than |
+| < | Less than |
+| >= | Greater than or equal |
+| <= | Less than or equal |
+| != / <> | Not equal |
+| is null | Find missing values |
+| is not null | Ignore missing values |
 
 #### Examples
 ```sql
@@ -166,6 +213,40 @@ and xson->>'@type' = 'B1'
 ```sql
 and xson->>'/total-budget' IS NOT NULL
 ```
+
+### Group by
+
+When counting or adding up values, it is often neccesary to group columns with the same values.  
+Multiple column names are seperated by a comma `,`.
+
+#### Examples
+```sql
+group by pid
+```
+```sql
+group by xson->>'@role', xson->>'@type',
+```
+
+### Order by
+
+This sorts the resulting data in ascending or descending order.  
+Multiple column names are seperated by a comma `,`.
+
+The default order is in ascending order (low to high).
+
+| Operator | Description |
+| --- | ----------- |
+| asc | Sorts in ascending order (low to high) |
+| desc | Sorts in descending order (high to low) |
+
+#### Examples
+```sql
+order by 2 desc
+```
+```sql
+order by 1 asc, 3 desc
+```
+
 
 # Basic queries
 
@@ -200,6 +281,35 @@ Result
         }
     ],
     duration: 0.014
+}
+```
+
+This gets you data within the `total-expenditure` element from a random organisation file.
+```sql
+select *
+from xson where root='/iati-organisations/iati-organisation/total-expenditure'
+limit 1;
+```
+
+Result
+
+```
+{
+    result: [
+        {
+            aid: null,
+            pid: "XM-DAC-41123",
+            root: "/iati-organisations/iati-organisation/total-expenditure",
+            xson: {
+                /value: 1060488055.37,
+                /value@currency: "USD",
+                /value@value-date: "2013-01-01",
+                /period-end@iso-date: "2013-12-31",
+                /period-start@iso-date: "2013-01-01"
+            }
+        }
+    ],
+    duration: 0.009
 }
 ```
 
