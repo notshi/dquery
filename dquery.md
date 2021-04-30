@@ -137,6 +137,9 @@ Double quotation marks `""` are required if the alias name contains spaces.
 ```sql
 select pid as "Organisation Identifier"
 ```
+```sql
+select pid as org_id
+```
 
 ## From
 
