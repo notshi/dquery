@@ -96,7 +96,7 @@ The following lists the most common SQL clauses and operators you can use to cre
 | offset | Skips a given number of results |
 | join | Get data from 2 or more tables |
 
-### Select
+## Select
 
 Select specifies the kind of data we want to get.
 
@@ -123,7 +123,7 @@ select distinct aid
 select * 
 ```
 
-### From
+## From
 
 Tables are where the data is stored and From specifies which tables to look at to get them.
 
@@ -141,7 +141,7 @@ from xson
 from location
 ```
 
-### Where
+## Where
 
 At its most basic, Where is used to get data that fulfills a specified condition.  
 For most queries, we do this by specifying the xpath of an element in `root`.  
@@ -162,8 +162,8 @@ Multiple column names are seperated by a comma `,`.
 
 For Like / iLike, there are two wildcard options.
 
-    The percent sign `%` for multiple characters.  
-    The underscore sign `_` for a single character.
+  The percent sign `%` for multiple characters.  
+  The underscore sign `_` for a single character.
 
 
 | Use | What it does |
@@ -173,7 +173,7 @@ For Like / iLike, there are two wildcard options.
 | like `%aa` | Finds data that has "aa" within it |
 | like `_a%` | Finds data that has "a" as the second character |
 | like `a_%` | Finds data that starts with "a" and is at least 2 characters in length |
-| like `a___%` | Finds data that starts with "a" and is at least 4 characters in length |
+| like `a__%` | Finds data that starts with "a" and is at least 3 characters in length |
 | like `a%s` | Finds data that starts with "a" and ends with "s" |
 
 
@@ -189,7 +189,7 @@ where root='/iati-activities/iati-activity/other-identifier' and xson->>'@type' 
 where root in ('/iati-activities/iati-activity/participating-org', '/iati-activities/iati-activity/transaction/')
 ```
 
-### And
+## And
 
 Adds additional limits to the current query to narrow the results.  
 
@@ -214,7 +214,7 @@ and xson->>'@type' = 'B1'
 and xson->>'/total-budget' IS NOT NULL
 ```
 
-### Group by
+## Group by
 
 When counting or adding up values, it is often neccesary to group columns with the same values.  
 Multiple column names are seperated by a comma `,`.
@@ -227,7 +227,7 @@ group by pid
 group by xson->>'@role', xson->>'@type',
 ```
 
-### Order by
+## Order by
 
 This sorts the resulting data in ascending or descending order.  
 Multiple column names are seperated by a comma `,`.
