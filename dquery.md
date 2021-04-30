@@ -102,7 +102,6 @@ The following lists the most common SQL clauses and operators you can use to cre
 
 Select specifies the kind of data we want to get.
 
-Include column names that you wish to select from the table.  
 Multiple column names are separated by a comma `,`.  
 
 If column names are not provided, this defaults to an asterisk `*` which means everything. The valid values here depend on which tables you are querying.
@@ -223,11 +222,13 @@ and xson->>'/total-budget' IS NOT NULL
 ## Group by
 
 When counting or adding up values, it is often neccesary to group columns with the same values.  
+Column numbers can be used instead of column names, as well as a combination of numbers and names.
+
 Multiple column names are separated by a comma `,`.
 
 #### Examples
 ```sql
-group by pid
+group by 1
 ```
 ```sql
 group by xson->>'@role', xson->>'@type'
@@ -236,6 +237,8 @@ group by xson->>'@role', xson->>'@type'
 ## Order by
 
 This sorts the resulting data in ascending or descending order.  
+Column numbers can be used instead of column names, as well as a combination of numbers and names.
+
 Multiple column names are separated by a comma `,`.
 
 The default order is in ascending order (low to high).
@@ -247,10 +250,10 @@ The default order is in ascending order (low to high).
 
 #### Examples
 ```sql
-order by 2 desc
+order by pid desc
 ```
 ```sql
-order by 1 asc, 3 desc
+order by 1 asc, xson->>'@role' desc
 ```
 
 
@@ -369,6 +372,28 @@ Result
                 /period-end@iso-date: "2013-12-31",
                 /period-start@iso-date: "2013-01-01"
             }
+        }
+    ],
+    duration: 0.009
+}
+```
+
+If we tweak the query like so, the result will change.  
+Here we only want the publisher identifier `pid` and `value` element which we have renamed as `total_expenditure_in_usd`.
+```sql
+select pid, xson->>'/value' as total_expenditure_in_usd
+from xson where root='/iati-organisations/iati-organisation/total-expenditure'
+limit 1;
+```
+
+Result
+
+```sql
+{
+    result: [
+        {
+            pid: "XM-DAC-41146",
+            total_expenditure_in_usd: "354113927"
         }
     ],
     duration: 0.009
