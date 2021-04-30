@@ -24,6 +24,8 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
     - [Join](#join)
 - [**Basic Queries**](#basic-queries)
   - [Syntax](#syntax)
+  - [Advanced Queries](#advanced-queries)
+  - [Database Dump](#database-dump)
 - [:sparkles: **Recipes**](#sparkles-recipes)
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
@@ -463,6 +465,46 @@ Result
     duration: 0.009
 }
 ```
+
+## Advanced Queries
+
+For more information about the SQL language, the full list of functions and futher documentation, please refer to the following official pages.
+
+1. [PostgreSQL Queries](https://www.postgresql.org/docs/12/queries.html)
+2. [PostgreSQL Functions and Operators](https://www.postgresql.org/docs/12/functions.html)
+
+
+# Database Dump
+
+Spin up a server, import and start querying.  
+The following dumps can be imported locally and queried using the same SQL code that is used on the web interface so you can run large queries on it without clogging up d-portal.
+
+**The entire d-portal database is about 3GB in size.**
+
+PostgreSQL dump (Updated nightly)  
+[http://d-portal.org/db/dstore.sql.gz](http://d-portal.org/db/dstore.sql.gz)
+
+`pg_dump` custom format so `pg_restore` can be used with its various options (Updated nightly)  
+[http://d-portal.org/db/dstore.pg](http://d-portal.org/db/dstore.pg)
+
+A zip of all the raw cached xml (Updated nightly)  
+[http://d-portal.org/db/cache.xml.zip](http://d-portal.org/db/cache.xml.zip)
+
+For us, a full restore of the database takes about 7 hours or 2 hours if you use multithreading with `pg_restore`.
+
+```
+--jobs=(number of cpu cores)
+```
+
+Almost all of the time is spent rebuilding indexes so it's not the data itself that takes the time.  
+We create a lot of indexes because, as a public facing site, we need the database queries to run as fast as possible.
+
+For comparison, this is our test server specification that imported the data in 2 hours.
+
+| CPU   |      RAM      |  Hard Drive(s) |
+|----------|:-------------:|------|
+| Intel Atom C2750 - 2.4 GHz - 8 core(s) |  16GB - DDR3 | 1x 256GB (SSD SATA) |
+
 
 # :sparkles: Recipes
 
