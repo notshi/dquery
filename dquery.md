@@ -87,7 +87,8 @@ The following lists the most common SQL clauses and operators you can use to cre
 | and | Additional limits |
 | or | Additional limits |
 | not | Additional limits |
-| like / ilike | Use with `%` or `_` |
+| like | Use with `%` or `_` |
+| ilike | Use with `%` or `_` |
 | as | Use this to name columns |
 | in | Specifies multiple values |
 | group by | Aggregates values across row |
@@ -160,10 +161,10 @@ Multiple column names are seperated by a comma `,`.
 | ilike | Search for a specified pattern, case insensitive |
 
 
-For Like / iLike, there are two wildcard options.
+For Like and iLike, there are two wildcard options:
 
-  The percent sign `%` for multiple characters.  
-  The underscore sign `_` for a single character.
+- The percent sign `%` for multiple characters.  
+- The underscore sign `_` for a single character.
 
 
 | Use | What it does |
@@ -202,7 +203,8 @@ You can use the following operators to enhance a query.
 | < | Less than |
 | >= | Greater than or equal |
 | <= | Less than or equal |
-| != / <> | Not equal |
+| != | Not equal |
+| <> | Not equal |
 | is null | Find missing values |
 | is not null | Ignore missing values |
 
