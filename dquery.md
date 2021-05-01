@@ -683,6 +683,35 @@ Result
 }
 ```
 
+### Display all unique `reporting-org/@ref` published in a dataset
+Raised https://github.com/codeforIATI/iati-data-bugtracker/issues/7
+
+Here we have selected the `reporting_ref` column from the `act` table and gave the column a temporary name (alias) for legibility.  
+We are looking for a particular dataset `slovakaid-69_1_ac` in the `slug` column.
+
+Finally, we have grouped the results by the temporary name (alias) `reporting_org` and sorted it alphabetically, in the default ascending order.
+
+```sql
+select act.reporting_ref as reporting_org
+from act where act.slug='slovakaid-69_1_ac'
+group by reporting_org
+order by reporting_org
+limit 1;
+```
+
+Result
+
+```sql
+{
+    result: [
+        {
+            reporting_org: "XM-DAC-69-0"
+        }
+    ],
+    duration: 0.015
+}
+```
+
 ### Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`
 Raised https://github.com/devinit/D-Portal/issues/602
 
