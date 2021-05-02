@@ -50,7 +50,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
   - [Get a table of most used values sorted by count](#get-a-table-of-most-used-values-sorted-by-count)
   - [Display all activities for a country_code within COVID-19](#display-all-activities-for-a-country_code-within-covid-19)
 
-<a href="#tada-introduction" style="display:block;text-align:right;">To Top</a>
+<a href="#tada-introduction" style="display:block;text-align:right;position:fixed;top:5em;right:190px;">To Top</a>
 
 # :pushpin: Getting started
 
