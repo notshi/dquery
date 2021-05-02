@@ -15,6 +15,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
   - [Commands](#commands)
     - [Select](#select)
     - [From](#from)
+    - [As](#as)
     - [Where](#where)
     - [And](#and)
     - [Group by](#group-by)
@@ -49,6 +50,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
   - [Get a table of most used values sorted by count](#get-a-table-of-most-used-values-sorted-by-count)
   - [Display all activities for a country_code within COVID-19](#display-all-activities-for-a-country_code-within-covid-19)
 
+<a href="#tada-introduction" style="display:block;text-align:right;">To Top</a>
 
 # :pushpin: Getting started
 
@@ -132,12 +134,15 @@ select distinct aid
 select * 
 ```
 
+## As
+
 Sometimes we want column names that are more human readable when they are displayed in a CSV or JSON output.  
 We can give them temporary aliases that exists only for the duration of that query.
 
 We first specify which column we want, followed by As and the temporary column name.  
 Double quotation marks `""` are required if the alias name contains spaces.
 
+#### Examples
 ```sql
 select pid as "Organisation Identifier"
 ```
