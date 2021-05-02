@@ -33,6 +33,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
+  - [Display all unique `reporting-org/@ref` published in a dataset](#display-all-unique-reporting-orgref-published-in-a-dataset)
   - [Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`](#display-first-narrative-array-in-multiple-roots-count-and-grouped-for-a-particular-ref)
   - [Display all publishers listing (GIZ) in `participating-org/narrative`](#display-all-publishers-listing-giz-in-participating-orgnarrative)
   - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
@@ -96,7 +97,7 @@ The following lists the most common SQL clauses and operators you can use to cre
 | not | Additional conditions |
 | like | Use with `%` or `_` |
 | ilike | Use with `%` or `_` |
-| as | Use this to rename column(s) |
+| as | Gives a table, or a column a temporary name |
 | in | Specifies multiple values |
 | group by | Aggregates values across row |
 | order by | Specifies sorting conditions with option for `asc` or `desc` |
@@ -687,7 +688,7 @@ Result
 Raised https://github.com/codeforIATI/iati-data-bugtracker/issues/7
 
 Here we have selected the `reporting_ref` column from the `act` table and gave the column a temporary name (alias) for legibility.  
-We are looking for a particular dataset `slovakaid-69_1_ac` in the `slug` column.
+We are looking at a particular dataset `slovakaid-69_1_ac` in the `slug` column.
 
 Finally, we have grouped the results by the temporary name (alias) `reporting_org` and sorted it alphabetically, in the default ascending order.
 
