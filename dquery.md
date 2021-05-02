@@ -71,7 +71,7 @@ Download data in various formats without viewing results in the browser.
 
 You can drag the partition to increase or decrease the space of either panel.  
 
-<p align="right">[To Top](#tada-introduction)</p>
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Data formats
 
 Downloads of data is available as csv, json, xml and html.
