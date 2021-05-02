@@ -71,7 +71,7 @@ Download data in various formats without viewing results in the browser.
 
 You can drag the partition to increase or decrease the space of either panel.  
 
-[To Top](#tada-introduction)
+<p align="right">[To Top](#tada-introduction)</p>
 ## Data formats
 
 Downloads of data is available as csv, json, xml and html.
@@ -567,7 +567,7 @@ Result
 }
 ```
 
-[To Top](#tada-introduction)
+<p align="right">[To Top](#tada-introduction)</p>
 
 ### Look for similar `iati-identifier` using a wildcard `%`
 Raised https://github.com/codeforIATI/iati-ideas/issues/37
