@@ -50,7 +50,6 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
   - [Get a table of most used values sorted by count](#get-a-table-of-most-used-values-sorted-by-count)
   - [Display all activities for a country_code within COVID-19](#display-all-activities-for-a-country_code-within-covid-19)
 
-<div style="display:block;text-align:right;position:fixed;top:5em;right:190px;"><a href="#tada-introduction">To Top</a></div>
 
 # :pushpin: Getting started
 
@@ -72,6 +71,7 @@ Download data in various formats without viewing results in the browser.
 
 You can drag the partition to increase or decrease the space of either panel.  
 
+[To Top](#tada-introduction)
 ## Data formats
 
 Downloads of data is available as csv, json, xml and html.
@@ -82,6 +82,7 @@ The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 
 Replace `/#` in the url with `?form=csv&sql=` to get the query link in different formats.  
 
+[To Top](#tada-introduction)
 ## Commands
 
 You can more or less figure out what a query does by reading it like a sentence.  
@@ -107,6 +108,7 @@ The following lists the most common SQL clauses and operators you can use to cre
 | offset | Skips a given number of results |
 | join | Get data from 2 or more tables |
 
+[To Top](#tada-introduction)
 ## Select
 
 Select specifies the kind of data we want to get.
@@ -481,6 +483,7 @@ For more information about the SQL language, the full list of functions and futh
 
 2. [PostgreSQL Functions and Operators](https://www.postgresql.org/docs/12/functions.html)
 
+[To Top](#tada-introduction)
 
 # :doughnut: Database Dump
 
@@ -499,6 +502,8 @@ The following dumps can be imported locally and queried using the same SQL code 
 3. A zip of all the raw cached xml *(Updated nightly)*  
     [http://d-portal.org/db/cache.xml.zip](http://d-portal.org/db/cache.xml.zip)
 
+
+[To Top](#tada-introduction)
 
 ## Server
 
@@ -519,6 +524,7 @@ For comparison, this is our test server specification that imported the data in 
 
 What we found is having a solid state drive really speeds up the import process more than anything else.
 
+[To Top](#tada-introduction)
 
 # :sparkles: Recipes
 
@@ -560,6 +566,8 @@ Result
     duration: 0.053
 }
 ```
+
+[To Top](#tada-introduction)
 
 ### Look for similar `iati-identifier` using a wildcard `%`
 Raised https://github.com/codeforIATI/iati-ideas/issues/37
