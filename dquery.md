@@ -26,6 +26,7 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
 - [:mag: **Basic Queries**](#mag-basic-queries)
   - [Syntax](#syntax)
   - [Advanced Queries](#advanced-queries)
+  - [Tables and references](#tables-and-references)
 - [:doughnut: **Database Dump**](#doughnut-database-dump)
   - [Server](#server)
 - [:sparkles: **Recipes**](#sparkles-recipes)
@@ -512,6 +513,33 @@ For more information about the SQL language, the full list of functions and futh
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
+## Tables and references
+
+This will return a list of available tables in the database.
+
+```sql
+select tablename from pg_tables
+where schemaname='public'
+order by tablename
+```
+
+For a complete list of column names and elements , please refer to the following pages.
+
+1. [List of available table and column names in the database](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48)
+
+2. [List of IATI acitivity elements](https://iatistandard.org/en/iati-standard/203/activity-standard/)
+
+Adding `explain` before your query displays how the database handles your query.
+
+```sql
+explain
+select * from table
+where condition
+limit 1;
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
 # :doughnut: Database Dump
 
 *Spin up a server, import and start querying.*
@@ -602,12 +630,12 @@ Result
 }
 ```
 
-We can do the same search using the `xson` table but this will be much slower as the `xson` table is huge and encompasses the entire IATI element structure.  
+We can do the same search using the `xson` table but this will be much slower as this column is not part of the IATI Standard and so is not indexed.  
 You can compare this by looking at the `duration` of the query.
 
 This query took 17 seconds compared to almost instantaneous in the previous query.
 
-When creating queries, it is always good to aim at efficiency so it could be that it takes a few tries to get it right.  
+**When creating queries, it is always good to aim at efficiency so it could be that it takes a few tries to get it right.**  
 Databases are complex creatures!
 
 Here we selected the `/reporting-org@ref` element from the `xson` table and gave the column a temporary name (alias).  
