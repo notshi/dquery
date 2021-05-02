@@ -82,7 +82,7 @@ The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
 
 Replace `/#` in the url with `?form=csv&sql=` to get the query link in different formats.  
 
-[To Top](#tada-introduction)
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Commands
 
 You can more or less figure out what a query does by reading it like a sentence.  
@@ -108,7 +108,7 @@ The following lists the most common SQL clauses and operators you can use to cre
 | offset | Skips a given number of results |
 | join | Get data from 2 or more tables |
 
-[To Top](#tada-introduction)
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Select
 
 Select specifies the kind of data we want to get.
@@ -136,6 +136,7 @@ select distinct aid
 select * 
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## As
 
 Sometimes we want column names that are more human readable when they are displayed in a CSV or JSON output.  
@@ -152,6 +153,7 @@ select pid as "Organisation Identifier"
 select pid as org_id
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## From
 
 Tables are where the data is stored and From specifies which tables to look at to get them.
@@ -172,6 +174,7 @@ from xson
 from location
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Where
 
 At its most basic, Where is used to get data that fulfills a specified condition.  
@@ -209,7 +212,6 @@ For Like and iLike, there are two wildcard options:
 | like `a%s` | Finds data that starts with "a" and ends with "s" |
 
 
-
 #### Examples
 ```sql
 where root='/iati-activities/iati-activity' 
@@ -221,6 +223,7 @@ where root='/iati-activities/iati-activity/other-identifier' and xson->>'@type' 
 where root in ('/iati-activities/iati-activity/participating-org', '/iati-activities/iati-activity/transaction/')
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## And
 
 Adds additional limits to the current query to narrow the results.  
@@ -247,6 +250,7 @@ and xson->>'@type' = 'B1'
 and xson->>'/total-budget' IS NOT NULL
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Group by
 
 When counting or adding up values, it is often neccesary to group columns with the same values.  
@@ -262,6 +266,7 @@ group by 1
 group by xson->>'@role', xson->>'@type'
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Order by
 
 This sorts the resulting data in ascending or descending order.  
@@ -284,6 +289,7 @@ order by pid desc
 order by 1 asc, xson->>'@role' desc
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Limit
 
 We use Limit to specify the number of results we want in the query.  
@@ -296,6 +302,7 @@ This will return the first 10 results from a table.
 limit 10;
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Offset
 
 We use Offset for pagination, especially useful on large tables when we need to see the next set of results.  
@@ -311,6 +318,7 @@ The following query will return only 5 results, starting on the the 11th result.
 limit 5 offset 10;
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Join
 
 We use Join to combine rows from two or more tables, based on a related column between them.
@@ -332,6 +340,7 @@ from xson as "Table 1", xson as "Table 2"
 ```
 
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 # :mag: Basic queries
 
 We often refer to tables, rows and columns when querying. This is because the database contains many tables.
@@ -352,6 +361,7 @@ However, although we allow multiple SQL statements to be executed at a time, onl
 Returning large results can impact your browser performance, and ultimately the server and the d-portal website.
 
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Syntax
 
 The following is a SQL statement.  
@@ -475,6 +485,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Advanced Queries
 
 For more information about the SQL language, the full list of functions and futher documentation, please refer to the following official pages.
@@ -483,8 +494,8 @@ For more information about the SQL language, the full list of functions and futh
 
 2. [PostgreSQL Functions and Operators](https://www.postgresql.org/docs/12/functions.html)
 
-[To Top](#tada-introduction)
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 # :doughnut: Database Dump
 
 *Spin up a server, import and start querying.*
@@ -503,8 +514,7 @@ The following dumps can be imported locally and queried using the same SQL code 
     [http://d-portal.org/db/cache.xml.zip](http://d-portal.org/db/cache.xml.zip)
 
 
-[To Top](#tada-introduction)
-
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Server
 
 For us, a full restore of the database takes about 7 hours, or 2 hours if you use multithreading with `pg_restore`.
@@ -524,8 +534,8 @@ For comparison, this is our test server specification that imported the data in 
 
 What we found is having a solid state drive really speeds up the import process more than anything else.
 
-[To Top](#tada-introduction)
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 # :sparkles: Recipes
 
 The following recipes are some examples of what you can query using this tool.
@@ -567,8 +577,7 @@ Result
 }
 ```
 
-<p align="right">[To Top](#tada-introduction)</p>
-
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Look for similar `iati-identifier` using a wildcard `%`
 Raised https://github.com/codeforIATI/iati-ideas/issues/37
 
@@ -605,6 +614,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Filtering on custom namespace elements
 Raised https://github.com/devinit/D-Portal/issues/568
 
@@ -630,6 +640,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display iati-organisation id with curated elements within `total-budget`
 ```sql
 select
@@ -668,6 +679,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Group by publishers that use a particular `@ref`
 
 ```sql
@@ -697,6 +709,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display all unique `reporting-org/@ref` published in a dataset
 Raised https://github.com/codeforIATI/iati-data-bugtracker/issues/7
 
@@ -726,6 +739,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`
 Raised https://github.com/devinit/D-Portal/issues/602
 
@@ -761,6 +775,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display all publishers listing (GIZ) in `participating-org/narrative` 
 Raised https://github.com/devinit/D-Portal/issues/613
 
@@ -805,6 +820,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display all publishers with `conditions@attached` as YES
 ```sql
 select
@@ -833,6 +849,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display narratives and count, grouped by publishers with `condition@type`
 ```sql
 select
@@ -863,6 +880,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display narratives grouped by publishers with `condition@type` 1
 ```sql
 select
@@ -892,6 +910,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display an element attribute, grouped in descending order
 Use `as` to name the columns.  
 Order follows `group by`, if stated.
@@ -925,6 +944,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display full activity data within an element for multiple identifiers
 Raised https://github.com/devinit/D-Portal/issues/620
 
@@ -971,6 +991,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display identifiers sorted by the second column (narrative) in descending order
 You can order by `aid` and `desc` as well.
 
@@ -999,7 +1020,7 @@ Result
 }
 ```
 
-
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display number of items with full activity data for an element and vocab
 ```sql
 select
@@ -1046,6 +1067,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Subquery to get full activity data
 Raised https://github.com/devinit/D-Portal/issues/562
 
@@ -1107,6 +1129,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display full activity data with attribute of certain value
 
 ```sql
@@ -1139,6 +1162,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Display unique activity identifiers with attribute of certain value
 Raised https://github.com/devinit/D-Portal/issues/562
 
@@ -1167,6 +1191,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ### Get a table of most used values sorted by count
 Raised https://github.com/devinit/D-Portal/issues/562
 
@@ -1197,6 +1222,7 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
 ## Display all activities for a country_code within COVID-19
 Raised https://github.com/devinit/D-Portal/issues/589
 
