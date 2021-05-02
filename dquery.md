@@ -29,12 +29,12 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
 - [:doughnut: **Database Dump**](#doughnut-database-dump)
   - [Server](#server)
 - [:sparkles: **Recipes**](#sparkles-recipes)
+  - [Display all unique `reporting-org/@ref` published in a dataset](#display-all-unique-reporting-orgref-published-in-a-dataset)
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
-  - [Display all unique `reporting-org/@ref` published in a dataset](#display-all-unique-reporting-orgref-published-in-a-dataset)
   - [Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`](#display-first-narrative-array-in-multiple-roots-count-and-grouped-for-a-particular-ref)
   - [Display all publishers listing (GIZ) in `participating-org/narrative`](#display-all-publishers-listing-giz-in-participating-orgnarrative)
   - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
@@ -573,6 +573,70 @@ multi line comment
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
+### Display all unique `reporting-org/@ref` published in a dataset
+Raised https://github.com/codeforIATI/iati-data-bugtracker/issues/7
+
+Here we have selected the `reporting_ref` column from the `act` table and gave the column a temporary name (alias) for legibility.  
+We are looking at a particular dataset `slovakaid-69_1_ac` in the `slug` column.
+
+Finally, we have grouped the results by the temporary name (alias) `reporting_org` and sorted it alphabetically, in the default ascending order.
+
+```sql
+select act.reporting_ref as reporting_org
+from act where act.slug='slovakaid-69_1_ac'
+group by reporting_org
+order by reporting_org
+limit 1;
+```
+
+Result
+
+```sql
+{
+    result: [
+        {
+            reporting_org: "XM-DAC-69-0"
+        }
+    ],
+    duration: 0.015
+}
+```
+
+We can do the same search using the `xson` table but this will be much slower as the `xson` table is huge and encompasses the entire IATI element structure.  
+You can compare this by looking at the `duration` of the query.
+
+This query took 17 seconds compared to almost instantaneous in the previous query.
+
+When creating queries, it is always good to aim at efficiency so it could be that it takes a few tries to get it right.  
+Databases are complex creatures!
+
+Here we selected the `/reporting-org@ref` element from the `xson` table and gave the column a temporary name (alias).  
+We are looking at the dataset `slovakaid-69_1_ac` in the `@dstore:dataset` column.
+
+```sql
+select xson->>'/reporting-org@ref' as reporting_org
+from xson where root='/iati-activities/iati-activity'
+and xson->>'@dstore:dataset' = 'slovakaid-69_1_ac'
+group by reporting_org
+order by reporting_org
+limit1 ;
+```
+
+Result
+
+```sql
+{
+    result: [
+        {
+            reporting_org: "XM-DAC-69-0"
+        }
+    ],
+    duration: 17.329
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
 ### Display count of certain element in org file
 ```sql
 select
@@ -730,37 +794,6 @@ Result
         }
     ],
     duration: 29.328
-}
-```
-
-<p align="right"><a href="#tada-introduction">To Top</a></p>
-
-### Display all unique `reporting-org/@ref` published in a dataset
-Raised https://github.com/codeforIATI/iati-data-bugtracker/issues/7
-
-Here we have selected the `reporting_ref` column from the `act` table and gave the column a temporary name (alias) for legibility.  
-We are looking at a particular dataset `slovakaid-69_1_ac` in the `slug` column.
-
-Finally, we have grouped the results by the temporary name (alias) `reporting_org` and sorted it alphabetically, in the default ascending order.
-
-```sql
-select act.reporting_ref as reporting_org
-from act where act.slug='slovakaid-69_1_ac'
-group by reporting_org
-order by reporting_org
-limit 1;
-```
-
-Result
-
-```sql
-{
-    result: [
-        {
-            reporting_org: "XM-DAC-69-0"
-        }
-    ],
-    duration: 0.015
 }
 ```
 
