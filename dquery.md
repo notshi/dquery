@@ -409,7 +409,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -439,7 +439,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -459,7 +459,7 @@ limit 1;
 
 Result
 
-```
+```jsonc
 {
     result: [
         {
@@ -489,7 +489,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -621,7 +621,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -655,7 +655,7 @@ limit1 ;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -681,7 +681,7 @@ and xson->>'/total-budget' IS NOT NULL
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -716,7 +716,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -746,7 +746,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -776,7 +776,7 @@ AND
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -811,7 +811,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -847,7 +847,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -882,7 +882,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -927,7 +927,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -960,7 +960,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -990,7 +990,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1022,7 +1022,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1057,7 +1057,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1097,7 +1097,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1136,7 +1136,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1167,7 +1167,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1214,7 +1214,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1272,7 +1272,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1312,7 +1312,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1343,7 +1343,7 @@ LIMIT 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
@@ -1394,7 +1394,7 @@ limit 1;
 
 Result
 
-```sql
+```jsonc
 {
     result: [
         {
