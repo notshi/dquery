@@ -1502,6 +1502,22 @@ order by url
 limit 1 offset 0;
 ```
 
+Result
+
+```jsonc
+{
+    result: [
+        {
+            publisher: "NL-KVK-40409352",
+            activity: "NL-KVK-40409352-PRJ08-237",
+            title: "Annual narrative report RPII 2018",
+            url: "_Annual narrative report RPII 2018.pdf"
+        }
+    ],
+    duration: 3.75
+}
+```
+
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
 ## Display a count of `document-link` reported by a publisher
@@ -1517,6 +1533,20 @@ group by pid
 order by 2 desc
 
 limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            publisher: "US-USAGOV",
+            count: "739161"
+        }
+    ],
+    duration: 3.327
+}
 ```
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
