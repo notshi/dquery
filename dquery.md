@@ -60,12 +60,13 @@ There are four buttons above these panels which perform various things.
 **Examples**  
 Some example recipes.
 
-**Run Query**  
+**Run Query** (optional)  
 View results in the browser.  
 *Please limit your results! If queries are complex, this can slow down the browser.*  
 
 **Browse Activities**  
-View results in d-portal.
+View results in d-portal.  
+*Only works if query includes activity identifiers.*
 
 **Download XSON**  
 Download data in various formats without viewing results in the browser.
