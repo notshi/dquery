@@ -9,7 +9,7 @@ dQuery lets you query **the complete IATI data, including non-standard attribute
 ```
 dQuery works well if you are familiar with the IATI Standard activity elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
 
-dQuery is an internal tool created by Wetgenes to aid the development of d-portal but available publicly as a courtesy.
+#### dQuery is an internal tool created by Wetgenes to aid the development of d-portal but publicly available as a courtesy.
 
 
 ### Contents
