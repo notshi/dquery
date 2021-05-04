@@ -362,7 +362,7 @@ We often refer to tables, rows and columns when querying. This is because the da
 Each table is identified by a name, for example `xson`.  
 Each table has rows and columns, and those have names too, for example `iati-identifier`.
 
-For a full list of available tables in the database, please refer [here](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48).  
+For a full list of available table and column names in the database, please refer [here](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48).  
 
 When we do a query, we write SQL statements.  
 
@@ -605,6 +605,7 @@ multi line comment
 Raised https://github.com/codeforIATI/iati-data-bugtracker/issues/7
 
 Here we have selected the `reporting_ref` column from the `act` table and gave the column a temporary name (alias) for legibility.  
+
 We are looking at a particular dataset `slovakaid-69_1_ac` in the `slug` column.
 
 Finally, we have grouped the results by the temporary name (alias) `reporting_org` and sorted it alphabetically, in the default ascending order.
@@ -631,6 +632,7 @@ Result
 ```
 
 We can do the same search using the `xson` table but this will be much slower as this column is not part of the IATI Standard and so is not indexed.  
+
 You can compare this by looking at the `duration` of the query.
 
 This query took 17 seconds compared to almost instantaneous in the previous query.
@@ -726,6 +728,37 @@ Result
     duration: 18.484
 }
 ```
+
+Below is an alternative query using a different table `act`.
+
+This is a much faster search because it is looking at a smaller table that has the same data in column, `iati-identifier`.  
+The `act` table is a curated table and does not include all IATI elements.
+
+For a full list of available table and column names in the database, please refer [here](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48).  
+
+```sql
+select act.aid as identifier
+from act where act.aid like '%1022474%'
+group by act.aid
+limit 1;
+```
+
+Result
+
+```sql
+{
+    result: [
+        {
+            identifier: "1022474"
+        },
+        {
+            identifier: "DE-1-201022474"
+        }
+    ],
+    duration: 1.457
+}
+```
+
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
