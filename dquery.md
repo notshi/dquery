@@ -58,6 +58,9 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display unique activity identifiers with attribute of certain value](#display-unique-activity-identifiers-with-attribute-of-certain-value)
   - [Get a table of most used values sorted by count](#get-a-table-of-most-used-values-sorted-by-count)
   - [Display all activities for a country_code within COVID-19](#display-all-activities-for-a-country_code-within-covid-19)
+  - [Flattening `document-link` with higher level elements in `iati-activity`](#flattening-document-link-with-higher-level-elements-in-iati-activity)
+  - [Display unique `document-link@url`, publisher and activity identifier](#display-unique-document-linkurl-publisher-and-activity-identifier)
+  - [Display a count of `document-link` reported by a publisher](#display-a-count-of-document-link-reported-by-a-publisher)
 
 
 # :pushpin: Getting started
@@ -1436,7 +1439,7 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
-## Flattening ```document-link``` with higher level elements in ```iati-activity```
+## Flattening `document-link` with higher level elements in `iati-activity`
 Raised https://github.com/codeforIATI/iati-ideas/issues/26
 
 This is a complex query that references the same table twice due to the nature of IATI hierarchical data.  
@@ -1480,7 +1483,7 @@ select aid from act order by aid limit 1 offset 0
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
-## Display unique ```document-link@url```, publisher and activity identifier
+## Display unique `document-link@url`, publisher and activity identifier
 
 ```sql
 select
@@ -1501,7 +1504,7 @@ limit 1 offset 0;
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
-## Displays a count of ```document-link``` reported by a publisher
+## Display a count of `document-link` reported by a publisher
 
 ```sql
 select
