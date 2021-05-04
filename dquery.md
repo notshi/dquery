@@ -11,6 +11,11 @@ dQuery works well if you are familiar with the IATI Standard activity elements a
 
 #### dQuery is an internal tool created by Wetgenes to aid the development of d-portal but publicly available as a courtesy.
 
+<!--
+Documentation by shi Blank, 2021  
+Do get in touch if you would like to contribute!  
+We are on Discord https://discord.gg/UxvKPVMz
+-->
 
 ### Contents
 - [:pushpin: **Getting started**](#pushpin-getting-started)
@@ -1431,3 +1436,84 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
+## Flattening ```document-link``` with higher level elements in ```iati-activity```
+Raised https://github.com/codeforIATI/iati-ideas/issues/26
+
+This is a complex query that references the same table twice due to the nature of IATI hierarchical data.  
+In this case, the request was to include data outside the `document-link` element.
+
+We recommend against queries like these as they can be intensive but we are including it here to show that it is possible.
+
+For such in-depth queries, we recommend [spinning up your own server to use locally](#doughnut-database-dump).
+
+```sql
+select
+
+x2.pid as publisher,
+x2.aid as activity,
+
+x2.xson -> '/reporting-org/narrative'->0->>'' as reporting_org,
+x2.xson ->> '/reporting-org@ref' as reporting_ref,
+x2.xson ->> '/reporting-org@type' as reporting_type,
+x2.xson -> '/recipient-country'->0->>'@code' as recipient,
+x2.xson -> '/recipient-country'->0->>'@percentage' as recipient_percentage,
+x2.xson -> '/sector'->0->>'@code' as sector,
+x2.xson -> '/sector'->0->>'@vocabulary' as sector_vocab,
+x2.xson -> '/sector'->0->>'@percentage' as sector_percentage,
+x2.xson ->> '/activity-status@code' as status,
+
+x1 -> '/title/narrative'->0->>'' as title,
+x1 -> '/description/narrative'->0->>'' as description,
+array_to_string(array( select x->>'@code' from jsonb_array_elements(x1 -> '/category') as x ),' ')  as category,
+x1 -> '/language'->0->>'@code' as lang,
+x1 ->> '/document-date@iso-date' as isodate,
+x1 ->> '@format' as file,
+x1 ->> '@url' as url
+
+from xson as x2 , jsonb_array_elements(x2.xson -> '/document-link' )  as x1
+
+where x2.root='/iati-activities/iati-activity' and x2.aid in
+(
+select aid from act order by aid limit 1 offset 0
+)
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+## Display unique ```document-link@url```, publisher and activity identifier
+
+```sql
+select
+
+max(pid) as publisher,
+max(aid) as activity,
+
+max(xson -> '/title/narrative'->0->>'') as title,
+xson ->> '@url' as url
+
+from xson where root='/iati-activities/iati-activity/document-link'
+
+group by url
+order by url
+
+limit 1 offset 0;
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+## Displays a count of ```document-link``` reported by a publisher
+
+```sql
+select
+
+pid as publisher,
+count(*)
+
+from xson where root='/iati-activities/iati-activity/document-link'
+group by pid
+order by 2 desc
+
+limit 1;
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
