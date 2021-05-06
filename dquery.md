@@ -49,7 +49,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
   - [Display narratives and count, grouped by publishers with `condition@type`](#display-narratives-and-count-grouped-by-publishers-with-conditiontype)
   - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
-  - [Display an element attribute, grouped in descending order](#display-an-element-attribute-grouped-in-descending-order)
+  - [Display a list of changed IATI organisation identifiers](#display-a-list-of-changed-iati-organisation-identifiers)
   - [Display full activity data within an element for multiple identifiers](#display-full-activity-data-within-an-element-for-multiple-identifiers)
   - [Display identifiers sorted by the second column (narrative) in descending order](#display-identifiers-sorted-by-the-second-column-narrative-in-descending-order)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
@@ -1048,9 +1048,12 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
-### Display an element attribute, grouped in descending order
-Use `as` to name the columns.  
-Order follows `group by`, if stated.
+### Display a list of changed IATI organisation identifiers
+Raised https://github.com/IATI/ckanext-iati/issues/218#issuecomment-696289896
+
+We can list old and new identifiers of various types by looking in the `other-identifier` element.  
+
+In this example, we are looking for [Previous Reporting Organisation Identifier](https://iatistandard.org/en/iati-standard/203/codelists/otheridentifiertype/) `B1` and listing both their old and new identifier, along with the number of times this occurs in the data.
 
 ```sql
 select
