@@ -1494,29 +1494,29 @@ Result
 
 ```jsonc
 {
-	result: [
-		{
-			publisher: "BD-NAB-1301",
-			activity: 1301-4.0000,
-			reporting_org: "Transparency International Bangladesh",
-			reporting_ref: "BD-NAB-1301",
-			reporting_type: "22",
-			recipient: "BD",
-			recipient_percentage: "100",
-			sector: "15113",
-			sector_vocab: "1",
-			sector_percentage: "100",
-			status: "2",
-			title: "Organisation Website",
-			description: null,
-			category: "B16",
-			lang: null,
-			isodate: null,
-			file: "APPLICATION/HTTP",
-			url: https://www.ti-bangladesh.org/beta3/index.php/en/
-		}
-	],
-	duration: 0.012
+    result: [
+        {
+            publisher: "BD-NAB-1301",
+            activity: 1301-4.0000,
+            reporting_org: "Transparency International Bangladesh",
+            reporting_ref: "BD-NAB-1301",
+            reporting_type: "22",
+            recipient: "BD",
+            recipient_percentage: "100",
+            sector: "15113",
+            sector_vocab: "1",
+            sector_percentage: "100",
+            status: "2",
+            title: "Organisation Website",
+            description: null,
+            category: "B16",
+            lang: null,
+            isodate: null,
+            file: "APPLICATION/HTTP",
+            url: https://www.ti-bangladesh.org/beta3/index.php/en/
+        }
+    ],
+    duration: 0.012
 }
 ```
 
@@ -1547,11 +1547,11 @@ Result
 {
     result: [
         {
-			publisher: "US-EIN-11-3803281",
-			activity: "US-EIN-11-3803281-ATF 2",
-			title: "African Transformation Forum",
-			url: http://acetforafrica.org/ATF/
-		}
+            publisher: "US-EIN-11-3803281",
+            activity: "US-EIN-11-3803281-ATF 2",
+            title: "African Transformation Forum",
+            url: http://acetforafrica.org/ATF/
+        }
     ],
     duration: 3.75
 }
