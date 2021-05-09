@@ -90,6 +90,10 @@ You can drag the partition to increase or decrease the space of either panel.
 
 Downloads of data is available as csv, json, xml and html.
 
+**The default format of the queried results is json.**
+
+> When getting a lot of data, json has to repeat the header names so you may find that opting for csv is substantially faster for larger queries.
+
 The html option will only work at the top level of an activity or an organisation file; ie. when `select *`, the root needs to be at either `/iati-activities/iati-activity` or `/iati-organisations/iati-organisation`.
 
 The html option is a Print-friendly version of SAVi (Simple Activity Viewer).
@@ -1553,3 +1557,32 @@ Result
 ```
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
+
+
+## Display all `reporting_ref` found in null publishers
+
+```sql
+select distinct reporting_ref
+from act where reporting_ref not in
+(
+    select distinct pid
+    from xson where root='/iati-activities/iati-activity' and pid is not null
+)
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            reporting_ref: "GH-DSW-4711 "
+        }
+    ],
+    duration: 3.719
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
