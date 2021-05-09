@@ -1548,9 +1548,9 @@ Result
     result: [
         {
 			publisher: "US-EIN-11-3803281",
-			activity: "US-EIN-11-3803281-Financial Inclusion",
-			title: "Research Ongoing",
-			url: http://acetforafrica.org/event/promoting-women-and-youth-financial-inclusion-for-entrepreneurship-and-job-creation-comparative-study-of-selected-sub-saharan-african-countries/
+			activity: "US-EIN-11-3803281-ATF 2",
+			title: "African Transformation Forum",
+			url: http://acetforafrica.org/ATF/
 		}
     ],
     duration: 3.75
