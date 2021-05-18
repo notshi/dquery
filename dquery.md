@@ -25,6 +25,7 @@ We are on Discord https://discord.gg/UxvKPVMz
     - [From](#from)
     - [As](#as)
     - [Where](#where)
+    - [In](#in)
     - [And](#and)
     - [Group by](#group-by)
     - [Order by](#order-by)
@@ -61,6 +62,8 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Flattening `document-link` with higher level elements in `iati-activity`](#flattening-document-link-with-higher-level-elements-in-iati-activity)
   - [Display unique `document-link@url`, publisher and activity identifier](#display-unique-document-linkurl-publisher-and-activity-identifier)
   - [Display a count of `document-link` reported by a publisher](#display-a-count-of-document-link-reported-by-a-publisher)
+  - [Display `@last-updated-datetime` for activities in Somalia](#display-last-updated-datetime-for-activities-in-somalia)
+  - [Ask PostgreSQL to do as they are told with `materialized`](#ask-postgresql-to-do-as-they-are-told-with-materialized)
 
 
 # :pushpin: Getting started
@@ -211,7 +214,7 @@ Multiple column names are separated by a comma `,`.
 | and | Returns data if all the conditions separated by And are TRUE |
 | or | Returns data if all the conditions separated by Or are TRUE |
 | not | Returns data if the condition(s) is NOT TRUE |
-| in | Specifies multiple values, short for multiple Or conditions |
+| in | Specifies multiple values, arrays, short for multiple Or conditions |
 | between | Selects a range, start and end values included (values can be numbers, text, or dates) |
 | like | Search for a specified pattern, case sensitive |
 | ilike | Search for a specified pattern, case insensitive |
@@ -241,6 +244,24 @@ where root='/iati-activities/iati-activity'
 ```
 ```sql
 where root='/iati-activities/iati-activity/other-identifier' and xson->>'@type' = 'B1'
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+## In
+
+There are many elements in the IATI Standard that have multiple values; for example, there can be multiple countries reported in an activity.
+
+In such cases, we can use `in` to look through multiple values or a number of arrays.
+
+For a full list of arrays in the database, please refer [here](#tables-and-references).
+
+#### Examples
+```sql
+and aid in (
+    select aid from xson where root='/iati-activities/iati-activity/recipient-country'
+    and xson->>'@code' = 'SO'
+)
 ```
 ```sql
 where root in ('/iati-activities/iati-activity/participating-org', '/iati-activities/iati-activity/transaction/')
@@ -540,7 +561,7 @@ order by tablename
 ```
 
 This will return a list of available `xson` roots and how often they are used in the database.  
-They also represent whereabouts in the json you will find arrays.
+They also represent whereabouts in the json you will find **arrays**.
 
 ```sql
 select root, count(*)
@@ -1622,6 +1643,32 @@ Result
         }
     ],
     duration: 3.719
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+
+## Display `@last-updated-datetime` for activities in Somalia
+
+```sql
+select aid, xson->>'@last-updated-datetime' as updated
+from xson where root='/iati-activities/iati-activity'
+and aid in (
+    select aid from xson where root='/iati-activities/iati-activity/recipient-country'
+    and xson->>'@code' = 'SO'
+)
+limit 1;
+```
+```jsonc
+{
+    result: [
+        {
+            aid: "41119-SO-O1-RT",
+            updated: "2021-05-04T12:50:39"
+        }
+    ],
+    duration: 0.66
 }
 ```
 
