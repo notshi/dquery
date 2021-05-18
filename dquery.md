@@ -539,6 +539,15 @@ where schemaname='public'
 order by tablename
 ```
 
+This will return a list of available `xson` roots and how often they are used in the database.  
+They also represent whereabouts in the json you will find arrays.
+
+```sql
+select root, count(*)
+from xson
+group by 1 order by 2 desc
+```
+
 For a complete list of column names and elements , please refer to the following pages.
 
 1. [List of available table and column names in the database](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L48)
@@ -1613,6 +1622,53 @@ Result
         }
     ],
     duration: 3.719
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+
+## Ask PostgreSQL to do as they are told with `materialized`
+
+PostgreSQL always tries to optimize your query and usually gets it wrong.  
+Instead, we want it to do what we tell it to do.
+
+So to be extra sure, specifically in situations where `is not null` is used as described below, we use `materialized` in our query.  
+
+This tells PostgreSQL to follow the query as sequenced.
+
+```sql
+with q1 as MATERIALIZED (
+select aid, xson->>'@last-updated-datetime' as updated
+from xson where root='/iati-activities/iati-activity'
+and xson @? '$."/recipient-country"[*]."@code" ? ( @ == "SO" )'
+) select * from q1 where updated is not null and updated != ''
+order by updated desc
+```
+```jsonc
+{
+    result: [9310 items],
+    duration: 19.626
+}
+```
+
+The example above uses the new PostgreSQL jsonb query but isn't as fast as the indexed tables that we already have in the database.
+
+```sql
+with q1 as MATERIALIZED (
+select aid, xson->>'@last-updated-datetime' as updated
+from xson where root='/iati-activities/iati-activity'
+and aid in (
+    select aid from xson where root='/iati-activities/iati-activity/recipient-country'
+    and xson->>'@code' = 'SO'
+)
+) select * from q1 where updated is not null and updated != ''
+order by updated desc
+```
+```jsonc
+{
+    result: [9310 items],
+    duration: 4.289
 }
 ```
 
