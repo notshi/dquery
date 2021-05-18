@@ -265,8 +265,8 @@ and aid in (
 ```
 ```sql
 where root in (
-'/iati-activities/iati-activity/participating-org',
-'/iati-activities/iati-activity/transaction/'
+	'/iati-activities/iati-activity/participating-org',
+	'/iati-activities/iati-activity/transaction/'
 )
 ```
 
