@@ -250,6 +250,7 @@ where root='/iati-activities/iati-activity/other-identifier' and xson->>'@type' 
 
 ## In
 
+Sometimes you want to look for something within multiple elements or within an element that has multiple values.  
 There are many elements in the IATI Standard that have multiple values; for example, there can be multiple countries reported in an activity.
 
 In such cases, we can use `in` to look through multiple values or a number of arrays.
@@ -257,16 +258,21 @@ In such cases, we can use `in` to look through multiple values or a number of ar
 For a full list of arrays in the database, please refer [here](#tables-and-references).
 
 #### Examples
+
+This looks into the `recipient-country` element that can occur multiple times in an activity.  
+We refer to this element as an **array**.
 ```sql
 and aid in (
     select aid from xson where root='/iati-activities/iati-activity/recipient-country'
     and xson->>'@code' = 'SO'
 )
 ```
+
+This looks into multiple elements seperated by a comma `,`.
 ```sql
 where root in (
-	'/iati-activities/iati-activity/participating-org',
-	'/iati-activities/iati-activity/transaction/'
+    '/iati-activities/iati-activity/participating-org',
+    '/iati-activities/iati-activity/transaction/'
 )
 ```
 
