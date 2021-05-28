@@ -71,8 +71,12 @@ We are on Discord https://discord.gg/UxvKPVMz
 
 # :pushpin: Getting started
 
-The current interface is sparse and consists of two panels; the editor on the left and the console on the right.  
-There are four buttons above these panels which perform various things.
+The current interface is sparse and consists of two panels; the editor on the left and the console on the right.
+
+The numbers you see on the side of the editor are line numbers and are purely there as visual aid.  
+The console displays results of your query when you click the *Run* button.
+
+There are five buttons above these panels which perform various things.
 
 **Examples**  
 Some example recipes.
@@ -87,6 +91,9 @@ View the results of the query on the d-portal website.
 
 **Download**  
 Download data in various formats without viewing results in the browser.
+
+**How to**
+Sends you to this documentation page.
 
 You can drag the partition to increase or decrease the space of either panel.  
 
