@@ -47,6 +47,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
   - [Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`](#display-first-narrative-array-in-multiple-roots-count-and-grouped-for-a-particular-ref)
   - [Display all publishers listing (GIZ) in `participating-org/narrative`](#display-all-publishers-listing-giz-in-participating-orgnarrative)
+  - [Display all `participating-org` with `@crs-channel-code`](#display-all-participating-org-with-crs-channel-code)
   - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
   - [Display narratives and count, grouped by publishers with `condition@type`](#display-narratives-and-count-grouped-by-publishers-with-conditiontype)
   - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
@@ -993,6 +994,40 @@ Result
         },
     ],
     duration: 2.757
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display all `participating-org` with `@crs-channel-code`
+```sql
+select
+xson->'/narrative'->0->>'' as "Name",
+xson->>'@ref' as "Participating Org Ref",
+xson->>'@type' as "Type",
+xson->>'@role' as "Role",
+xson->>'@crs-channel-code' as "CRS Channel Code"
+
+from xson where root='/iati-activities/iati-activity/participating-org'
+and xson->>'@crs-channel-code' is not null
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Name: "Donor Committee for Enterprise Development",
+            Participating Org Ref: null,
+            Type: "10",
+            Role: "2",
+            CRS Channel Code: "21000"
+        }
+    ],
+    duration: 0.007
 }
 ```
 
