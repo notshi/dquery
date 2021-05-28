@@ -7,7 +7,7 @@ dQuery lets you query **the complete IATI data, including non-standard attribute
 ```diff
 + Documentation is ongoing so please bear with us.
 ```
-dQuery works well if you are familiar with the IATI Standard activity elements and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
+dQuery works well if you are familiar with the IATI Standard and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
 
 #### dQuery is an internal tool created by Wetgenes to aid the development of d-portal but publicly available as a courtesy.
 
@@ -35,6 +35,7 @@ We are on Discord https://discord.gg/UxvKPVMz
 - [:mag: **Basic Queries**](#mag-basic-queries)
   - [Syntax](#syntax)
   - [Advanced Queries](#advanced-queries)
+  - [XSON](#xson)
   - [Tables and references](#tables-and-references)
 - [:doughnut: **Database Dump**](#doughnut-database-dump)
   - [Server](#server)
@@ -185,7 +186,7 @@ select pid as org_id
 Tables are where the data is stored and From specifies which tables to look at to get them.
 
 For most queries, we are only looking at the `xson` table.  
-The `xson` table includes the entire IATI activity elements, as well as non-standard attributes and extensions.
+The `xson` table includes the entire IATI activity and organisation elements, as well as non-standard attributes and extensions.
 
 Multiple table names are separated by a comma `,`.  
 
@@ -429,7 +430,8 @@ Returning large results can impact your browser performance, and ultimately the 
 The following is a SQL statement.  
 For this purpose, all SQL keywords are in upper-case.
 
-Hopefully, you are able to figure out the different clauses and fields that make up parts of the statement.
+Hopefully by reading the following code snippet, you are able to figure out the different clauses and fields that make up parts of the statement.  
+You can always refer back to the most common commands [here](#commands).
 
 ```sql
 SELECT column_name(s), column_name AS alias_name
@@ -546,6 +548,57 @@ Result
     duration: 0.009
 }
 ```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+## XSON
+
+For the majority of our queries, we will be using the `xson` table as it includes all activity and organisation elements according to the IATI Standard, as well as non-standard attributes and extensions that can be found in published data.
+
+You will find `root='/iati-activities/iati-activity'` in many of the example queries below.
+
+This tells PostgreSQL where to look within the `xson` table by giving it a start of the xpath.  
+When we say xpath, we mean where an IATI element is within the Activity or Organisation Standard; ie. `/iati-activities/iati-activity`.
+
+If you are familiar with the IATI Standard, you can manipulate the xpath to look at any activity or organisation element.
+
+When we set conditions for a query, it usually looks like the following.
+
+```sql
+and xson->>'@vocabulary' = '99'
+```
+```sql
+and xson->>'@dstore:dataset' = 'slovakaid-69_1_ac'
+```
+
+This filters the queries to certain requirements by looking at specific values of IATI element attributes.
+
+
+`xson` is a JSON representation of the XML data, such that if you concatenate the root value plus all the object key names in a tree, the result will be a valid XML path that can be looked up in the IATI schema to tell you what data it represents.
+
+For example, within the `xson` row, the entries to the left of the colon; ie. `@type`, `@iso-date`, `/narrative` and `@xml` are key names.  
+And thus, object entries on the right are the values.
+ 
+`aid`, `pid`, `root` and `xson` are row values from the PostgreSQL database.
+
+```jsonc
+{
+    aid: "ID-KHH-5018112631240040-ID012-LEAP",
+    pid: "ID-KHH-5018112631240040",
+    root: "/iati-activities/iati-activity/activity-date",
+    xson: {
+        @type: "1",
+        @iso-date: "2017-09-01",
+        /narrative: [
+            {
+                : "Grant Decision LEAP Project was signed by EKN (Minbuza) Reference: JAK-2017/859",
+                @xml:lang: "EN"
+            }
+        ]
+    }
+}
+```
+
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
