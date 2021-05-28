@@ -92,7 +92,7 @@ View the results of the query on the d-portal website.
 **Download**  
 Download data in various formats without viewing results in the browser.
 
-**How to**
+**How to**  
 Sends you to this documentation page.
 
 You can drag the partition to increase or decrease the space of either panel.  
