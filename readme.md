@@ -56,7 +56,9 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display a list of changed IATI organisation identifiers](#display-a-list-of-changed-iati-organisation-identifiers)
   - [Display full activity data within an element for multiple identifiers](#display-full-activity-data-within-an-element-for-multiple-identifiers)
   - [Display identifiers sorted by the second column (narrative) in descending order](#display-identifiers-sorted-by-the-second-column-narrative-in-descending-order)
+  - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
+  - [Display `sum` of transaction values under specific conditions](#display-sum-of-transaction-values-under-specific-conditions)
   - [Subquery to get full activity data](#subquery-to-get-full-activity-data)
   - [Display full activity data with attribute of certain value](#display-full-activity-data-with-attribute-of-certain-value)
   - [Display unique activity identifiers with attribute of certain value](#display-unique-activity-identifiers-with-attribute-of-certain-value)
@@ -1303,6 +1305,40 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
+### Display number of transactions you can find in an activity
+
+Here we use `jsonb_array_length` to find how many arrays are present in a specified element.
+```sql
+select JSONB_ARRAY_LENGTH(xson->'/transaction')
+from xson where root='/iati-activities/iati-activity'
+group by 1
+limit 1000;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            jsonb_array_length: 1
+        },
+        {
+            jsonb_array_length: 2
+        },
+        {
+            jsonb_array_length: 3
+        },
+        {
+            jsonb_array_length: null
+        }
+    ],
+    duration: 5.479
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
 ### Display number of items with full activity data for an element and vocab
 ```sql
 select
@@ -1346,6 +1382,34 @@ Result
         }
     ],
     duration: 3.428
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display `sum` of transaction values under specific conditions
+```sql
+select
+xson -> '/recipient-country'->0->>'@code' as "Recipient country" ,
+sum((tx  ->> '/value')::real) as "Transaction in USD" ,
+tx ->> '/transaction-type@code' as "Transaction type"
+from xson as x , jsonb_array_elements(xson -> '/transaction') as tx
+where x.root = '/iati-activities/iati-activity' group by 1,3
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Recipient country: "AF",
+            Transaction in USD: 12612746000,
+            Transaction type: "2"
+        }
+    ],
+    duration: 12.663
 }
 ```
 
