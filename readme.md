@@ -59,6 +59,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
   - [Display `sum` of transaction values under specific conditions](#display-sum-of-transaction-values-under-specific-conditions)
+  - [Diplay `sum` of all transaction types that are `@code` 3](#diplay-sum-of-all-transaction-types-that-are-code-3)
   - [Subquery to get full activity data](#subquery-to-get-full-activity-data)
   - [Display full activity data with attribute of certain value](#display-full-activity-data-with-attribute-of-certain-value)
   - [Display unique activity identifiers with attribute of certain value](#display-unique-activity-identifiers-with-attribute-of-certain-value)
@@ -1410,6 +1411,29 @@ Result
         }
     ],
     duration: 12.663
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Diplay `sum` of all transaction types that are `@code` 3
+```sql
+select sum( cast(xson->>'/value' AS real) ) as "Sum of all Disbursments in USD"
+from xson where root='/iati-activities/iati-activity/transaction'
+and xson->>'/transaction-type@code'='3'
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Sum of all Disbursements in USD: 485037470000
+        }
+    ],
+    duration: 6.617
 }
 ```
 
