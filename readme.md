@@ -1497,7 +1497,7 @@ An organisation can have many different `@ref` identifiers, depending on who is 
 
 It can be useful, for instance, to find out if your organisation is given the same `@ref` by different publishers.
 
-In the example below, we display the Publisher (`pid`) as well as the first `/narrative`, usually the `participating-org` name and the `@ref` identifier as well as other useful elements like the `@role` and `@type`.
+In the example below, we display the Publisher (`pid`) so that we know who has published this data, the first `/narrative` as this is usually the `participating-org` name, and the `@ref` identifier as well as other useful elements like the `@role` and `@type` so we know what role they played in the activity and what type of organisation they are.
 
 We then group by `@ref` so that rows that have the same values are grouped together, followed by the names of the organisation and so forth.  
 `@ref` is the 3rd column (there are 5 columns in total in this query).
