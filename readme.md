@@ -1100,7 +1100,7 @@ Result
 
 ### Display `participating-org` with their `@role`, `@ref`, `@type` and include associated transaction types.
 
-For this particular dataset, the name of the participating organisation was not published within a `narrative` element, as recommended in the latest version of the IATI Standard (2.03 at the time of writing) so we've had to use an empty space ` ` for the element we want to display. Otherwise, we would have used `/narrative` in the query.
+For this particular dataset, the name of the participating organisation was not published within a `narrative` element, as recommended in the latest version of the IATI Standard (2.03 at the time of writing) so we've had to use an empty space `' '` for the element we want to display. Otherwise, we would have used `/narrative` in the query.
 
 We've also had to join the `transaction` and `participating-org` tables for this query as both of those elements can occur multiple times.  
 Any element occurring multiple times is turned into an array.
