@@ -1105,7 +1105,7 @@ For this particular dataset, the name of the participating organisation was not 
 We've also had to join the `transaction` and `participating-org` tables for this query as both of those elements can occur multiple times.  
 Any element occurring multiple times is turned into an array.
 
-Here we've used the shorthand to do a full join or a full outer join with `,`.
+Here we've used the comma `,` shorthand to do a full join or a full outer join (both mean the same thing; they return all rows from the tables).
 
 ```sql
 from xson as x , 
@@ -1117,8 +1117,8 @@ can be also be read as
 
 ```sql
 from xson as x
-full join jsonb_array_elements(xson -> '/transaction') as tx
-full join jsonb_array_elements(xson -> '/participating-org') as p
+join jsonb_array_elements(xson -> '/transaction') as tx
+join jsonb_array_elements(xson -> '/participating-org') as p
 ```
 
 We use `jsonb_array_elements()` when we want to look at arrays as it expands a JSON array to a set of JSON elements; essentially flattening an array so that it is possible to output the results as a csv file that we can convert into pivot tables.
