@@ -51,6 +51,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display all publishers listing (GIZ) in `participating-org/narrative`](#display-all-publishers-listing-giz-in-participating-orgnarrative)
   - [Display all `participating-org` with `@crs-channel-code`](#display-all-participating-org-with-crs-channel-code)
   - [Display `participating-org` with their `@role`, `@ref`, `@type` and include associated transaction types](#display-participating-org-with-their-role-ref-type-and-include-associated-transaction-types)
+  - [Display number of `participating-org` found in activities and then display the activity with the most](#display-number-of-participating-org-found-in-activities-and-then-display-the-activity-with-the-most)
   - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
   - [Display narratives and count, grouped by publishers with `condition@type`](#display-narratives-and-count-grouped-by-publishers-with-conditiontype)
   - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
@@ -1156,6 +1157,337 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
+### Display number of `participating-org` found in activities and then display the activity with the most
+
+Here we use `JSONB_ARRAY_LENGTH` because `participating-org` can occur multiple times and is therefore, an array.
+
+We also need to group this query by `participating-org` so that we can get an aggregate of the numbers returned.
+
+```sql
+select JSONB_ARRAY_LENGTH(xson->'/participating-org')
+from xson where root='/iati-activities/iati-activity'
+group by 1
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            jsonb_array_length: 1
+        },
+        {
+            jsonb_array_length: 2
+        },
+        {
+            jsonb_array_length: 3
+        },
+        {
+            jsonb_array_length: 4
+        },
+        {
+            jsonb_array_length: 5
+        },
+        {
+            jsonb_array_length: 6
+        },
+        {
+            jsonb_array_length: 7
+        },
+        {
+            jsonb_array_length: 8
+        },
+        {
+            jsonb_array_length: 9
+        },
+        {
+            jsonb_array_length: 10
+        },
+        {
+            jsonb_array_length: 11
+        },
+        {
+            jsonb_array_length: 12
+        },
+        {
+            jsonb_array_length: 13
+        },
+        {
+            jsonb_array_length: 14
+        },
+        {
+            jsonb_array_length: 15
+        },
+        {
+            jsonb_array_length: 16
+        },
+        {
+            jsonb_array_length: 17
+        },
+        {
+            jsonb_array_length: 18
+        },
+        {
+            jsonb_array_length: 19
+        },
+        {
+            jsonb_array_length: 20
+        },
+        {
+            jsonb_array_length: 21
+        },
+        {
+            jsonb_array_length: 22
+        },
+        {
+            jsonb_array_length: 23
+        },
+        {
+            jsonb_array_length: 24
+        },
+        {
+            jsonb_array_length: 25
+        },
+        {
+            jsonb_array_length: 26
+        },
+        {
+            jsonb_array_length: 27
+        },
+        {
+            jsonb_array_length: 28
+        },
+        {
+            jsonb_array_length: 29
+        },
+        {
+            jsonb_array_length: 30
+        },
+        {
+            jsonb_array_length: 31
+        },
+        {
+            jsonb_array_length: 32
+        },
+        {
+            jsonb_array_length: 33
+        },
+        {
+            jsonb_array_length: 34
+        },
+        {
+            jsonb_array_length: 35
+        },
+        {
+            jsonb_array_length: 36
+        },
+        {
+            jsonb_array_length: 37
+        },
+        {
+            jsonb_array_length: 38
+        },
+        {
+            jsonb_array_length: 39
+        },
+        {
+            jsonb_array_length: 40
+        },
+        {
+            jsonb_array_length: 41
+        },
+        {
+            jsonb_array_length: 42
+        },
+        {
+            jsonb_array_length: 43
+        },
+        {
+            jsonb_array_length: 44
+        },
+        {
+            jsonb_array_length: 45
+        },
+        {
+            jsonb_array_length: 46
+        },
+        {
+            jsonb_array_length: 47
+        },
+        {
+            jsonb_array_length: 48
+        },
+        {
+            jsonb_array_length: 49
+        },
+        {
+            jsonb_array_length: 50
+        },
+        {
+            jsonb_array_length: 51
+        },
+        {
+            jsonb_array_length: 52
+        },
+        {
+            jsonb_array_length: 53
+        },
+        {
+            jsonb_array_length: 54
+        },
+        {
+            jsonb_array_length: 55
+        },
+        {
+            jsonb_array_length: 56
+        },
+        {
+            jsonb_array_length: 57
+        },
+        {
+            jsonb_array_length: 58
+        },
+        {
+            jsonb_array_length: 59
+        },
+        {
+            jsonb_array_length: 60
+        },
+        {
+            jsonb_array_length: 61
+        },
+        {
+            jsonb_array_length: 62
+        },
+        {
+            jsonb_array_length: 63
+        },
+        {
+            jsonb_array_length: 64
+        },
+        {
+            jsonb_array_length: 65
+        },
+        {
+            jsonb_array_length: 66
+        },
+        {
+            jsonb_array_length: 67
+        },
+        {
+            jsonb_array_length: 68
+        },
+        {
+            jsonb_array_length: 69
+        },
+        {
+            jsonb_array_length: 70
+        },
+        {
+            jsonb_array_length: 71
+        },
+        {
+            jsonb_array_length: 72
+        },
+        {
+            jsonb_array_length: 78
+        },
+        {
+            jsonb_array_length: 79
+        },
+        {
+            jsonb_array_length: 82
+        },
+        {
+            jsonb_array_length: 84
+        },
+        {
+            jsonb_array_length: 85
+        },
+        {
+            jsonb_array_length: 86
+        },
+        {
+            jsonb_array_length: 88
+        },
+        {
+            jsonb_array_length: 91
+        },
+        {
+            jsonb_array_length: 92
+        },
+        {
+            jsonb_array_length: 98
+        },
+        {
+            jsonb_array_length: 100
+        },
+        {
+            jsonb_array_length: 107
+        },
+        {
+            jsonb_array_length: 108
+        },
+        {
+            jsonb_array_length: 114
+        },
+        {
+            jsonb_array_length: 117
+        },
+        {
+            jsonb_array_length: 120
+        },
+        {
+            jsonb_array_length: 123
+        },
+        {
+            jsonb_array_length: 125
+        },
+        {
+            jsonb_array_length: 138
+        },
+        {
+            jsonb_array_length: 186
+        },
+        {
+            jsonb_array_length: 203
+        },
+        {
+            jsonb_array_length: null
+        }
+    ],
+    duration: 7.423
+}
+```
+
+From the results, we can see that the most number of `participating-org` you can find in an activity is 203.
+
+Now we can display the activity with the most number of `participating-org` and view that activity by clicking the 'View on d-portal' button.
+
+```sql
+select aid
+from xson where root='/iati-activities/iati-activity'
+and JSONB_ARRAY_LENGTH(xson->'/participating-org')='203'
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "XM-DAC-21018-MDRHT008"
+        }
+    ],
+    duration: 18.859
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
 ### Display all publishers with `conditions@attached` as YES
 ```sql
 select
@@ -1368,11 +1700,13 @@ Result
 ### Display number of transactions you can find in an activity
 
 Here we use `jsonb_array_length` to find how many arrays are present in a specified element.
+
+In this example, we can see that the most number of transactions you can find in the data is 10517.
 ```sql
 select JSONB_ARRAY_LENGTH(xson->'/transaction')
 from xson where root='/iati-activities/iati-activity'
 group by 1
-limit 1000;
+limit 1;
 ```
 
 Result
@@ -1384,16 +1718,38 @@ Result
             jsonb_array_length: 1
         },
         {
-            jsonb_array_length: 2
+            jsonb_array_length: 215
         },
         {
-            jsonb_array_length: 3
+            jsonb_array_length: 10517
         },
         {
             jsonb_array_length: null
         }
     ],
     duration: 5.479
+}
+```
+
+We can then find that activity by using `JSONB_ARRAY_LENGTH(xson->'/transaction')` and giving it a value.
+
+```sql
+select aid
+from xson where root='/iati-activities/iati-activity'
+and JSONB_ARRAY_LENGTH(xson->'/transaction')='10517'
+limit 10;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "GB-CHC-1045348-Families' Empowerment Project"
+        }
+    ],
+    duration: 18.991
 }
 ```
 
