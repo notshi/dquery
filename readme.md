@@ -50,6 +50,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`](#display-first-narrative-array-in-multiple-roots-count-and-grouped-for-a-particular-ref)
   - [Display all publishers listing (GIZ) in `participating-org/narrative`](#display-all-publishers-listing-giz-in-participating-orgnarrative)
   - [Display all `participating-org` with `@crs-channel-code`](#display-all-participating-org-with-crs-channel-code)
+  - [Display `participating-org` with their `@role`, `@ref`, `@type` and include associated transaction types](#display-participating-org-with-their-role-ref-type-and-include-associated-transaction-types)
   - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
   - [Display narratives and count, grouped by publishers with `condition@type`](#display-narratives-and-count-grouped-by-publishers-with-conditiontype)
   - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
@@ -1092,6 +1093,64 @@ Result
         }
     ],
     duration: 0.007
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display `participating-org` with their `@role`, `@ref`, `@type` and include associated transaction types.
+
+For this particular dataset, the name of the participating organisation was not published within a `narrative` element, as recommended in the latest version of the IATI Standard (2.03 at the time of writing) so we've had to use an empty space ` ` for the element we want to display. Otherwise, we would have used `/narrative` in the query.
+
+We've also had to join the `transaction` and `participating-org` tables for this query as both of those elements can occur multiple times.  
+Any element occurring multiple times is turned into an array.
+
+Here we've used the shorthand to do a full join or a full outer join with `,`.
+
+```sql
+from xson as x , 
+jsonb_array_elements(xson -> '/transaction') as tx , 
+jsonb_array_elements(xson -> '/participating-org') as p
+```
+
+can be also be read as
+
+```sql
+from xson as x
+full join jsonb_array_elements(xson -> '/transaction') as tx
+full join jsonb_array_elements(xson -> '/participating-org') as p
+```
+
+We use `jsonb_array_elements()` when we want to look at arrays as it expands a JSON array to a set of JSON elements; essentially flattening an array so that it is possible to output the results as a csv file that we can convert into pivot tables.
+
+```sql
+select
+p  ->> '' as "Participating Org" ,
+p  ->> '@ref' as "ref",
+p  ->> '@role' as "role",
+p  ->> '@type' as "type",
+tx ->> '/transaction-type@code' as "Transaction type"
+from xson as x , 
+jsonb_array_elements(xson -> '/transaction') as tx , 
+jsonb_array_elements(xson -> '/participating-org') as p
+where x.root = '/iati-activities/iati-activity' group by p,5
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Participating Org: "Abu Dhabi Department of Finance",
+            ref: "AE-2",
+            role: "3",
+            type: null,
+            Transaction type: "3"
+        }
+    ],
+    duration: 16.211
 }
 ```
 
