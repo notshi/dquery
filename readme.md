@@ -52,6 +52,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display all `participating-org` with `@crs-channel-code`](#display-all-participating-org-with-crs-channel-code)
   - [Display `participating-org` with their `@role`, `@ref`, `@type` and include associated transaction types](#display-participating-org-with-their-role-ref-type-and-include-associated-transaction-types)
   - [Display number of `participating-org` found in activities and then display the activity with the most](#display-number-of-participating-org-found-in-activities-and-then-display-the-activity-with-the-most)
+  - [Display all `participating-org` names, grouped by `@ref`](#display-all-participating-org-names-grouped-by-ref)
   - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
   - [Display narratives and count, grouped by publishers with `condition@type`](#display-narratives-and-count-grouped-by-publishers-with-conditiontype)
   - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
@@ -1483,6 +1484,51 @@ Result
         }
     ],
     duration: 18.859
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display all `participating-org` names, grouped by `@ref`
+
+There are millions of organisations listed in IATI data and each have their own unique reference identifiers.
+
+An organisation can have many different `@ref` identifiers, depending on who is publishing the data.
+
+It can be useful, for instance, to find out if your organisation is given the same `@ref` by different publishers.
+
+In the example below, we display the Publisher (`pid`) as well as the first `/narrative`, usually the `participating-org` name and the `@ref` identifier as well as other useful elements like the `@role` and `@type`.
+
+We then group by `@ref` so that rows that have the same values are grouped together, followed by the names of the organisation and so forth.  
+`@ref` is the 3rd column (there are 5 columns in total in this query).
+
+```sql
+select
+pid,
+xson  -> '/narrative'->0->>'' as "Participating Org" ,
+xson  ->> '@ref' as "ref",
+xson  ->> '@role' as "role",
+xson  ->> '@type' as "type"
+from xson
+where root = '/iati-activities/iati-activity/participating-org'
+group by 3,2,4,5,1
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            pid: "ES-DIR3-EA0035768",
+            Participating Org: "ACCIONA MICROENERGÍA PANAMÁ",
+            ref: "#",
+            role: "2",
+            type: null
+        }
+    ],
+    duration: 5.93
 }
 ```
 
