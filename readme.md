@@ -58,10 +58,10 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
   - [Display a list of changed IATI organisation identifiers](#display-a-list-of-changed-iati-organisation-identifiers)
   - [Display full activity data within an element for multiple identifiers](#display-full-activity-data-within-an-element-for-multiple-identifiers)
+  - [Display identifiers of activities that are published in version 1 of the standard](#display-identifiers-of-activities-that-are-published-in-version-1-of-the-standard)
   - [Display identifiers sorted by the second column (narrative) in descending order](#display-identifiers-sorted-by-the-second-column-narrative-in-descending-order)
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
-  - [Display `sum` of transaction values under specific conditions](#display-sum-of-transaction-values-under-specific-conditions)
   - [Diplay `sum` of all transaction types that are `@code` 3](#diplay-sum-of-all-transaction-types-that-are-code-3)
   - [Subquery to get full activity data](#subquery-to-get-full-activity-data)
   - [Display full activity data with attribute of certain value](#display-full-activity-data-with-attribute-of-certain-value)
@@ -1713,6 +1713,33 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
+### Display identifiers of activities that are published in version 1 of the standard
+
+Since there are various versions of 1, we use `like` and `%` after the number to account for it.
+
+```sql
+select aid
+from xson
+where root='/iati-activities/iati-activity'
+and xson->>'@iati-activities:version' like '1%'
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "GB-CHC-288701-IN110"
+        }
+    ],
+    duration: 0.216
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
 ### Display identifiers sorted by the second column (narrative) in descending order
 You can order by `aid` and `desc` as well.
 
@@ -1844,34 +1871,6 @@ Result
         }
     ],
     duration: 3.428
-}
-```
-
-<p align="right"><a href="#tada-introduction">To Top</a></p>
-
-### Display `sum` of transaction values under specific conditions
-```sql
-select
-xson -> '/recipient-country'->0->>'@code' as "Recipient country" ,
-sum((tx  ->> '/value')::real) as "Transaction in USD" ,
-tx ->> '/transaction-type@code' as "Transaction type"
-from xson as x , jsonb_array_elements(xson -> '/transaction') as tx
-where x.root = '/iati-activities/iati-activity' group by 1,3
-limit 1;
-```
-
-Result
-
-```jsonc
-{
-    result: [
-        {
-            Recipient country: "AF",
-            Transaction in USD: 12612746000,
-            Transaction type: "2"
-        }
-    ],
-    duration: 12.663
 }
 ```
 
