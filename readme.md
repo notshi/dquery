@@ -61,6 +61,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display identifiers of activities that are published in version 1 of the standard](#display-identifiers-of-activities-that-are-published-in-version-1-of-the-standard)
   - [Display identifiers sorted by the second column (narrative) in descending order](#display-identifiers-sorted-by-the-second-column-narrative-in-descending-order)
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
+  - [Display `@percentage` reported for `recipient-country`, starting with the lowest number](#display-percentage-reported-for-recipient-country-starting-with-the-lowest-number)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
   - [Diplay `sum` of all transaction types that are `@code` 3](#diplay-sum-of-all-transaction-types-that-are-code-3)
   - [Subquery to get full activity data](#subquery-to-get-full-activity-data)
@@ -1823,6 +1824,59 @@ Result
         }
     ],
     duration: 18.991
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display `@percentage` reported for `recipient-country`, starting with the lowest number
+
+This query lets you find the lowest `/recipient-country@percentage` published in the data.  
+
+```sql
+select xson->>'@code' as code, xson->>'@percentage' as percentage
+from xson
+where root='/iati-activities/iati-activity/recipient-country'
+order by 2 asc
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            code: "KE",
+            percentage: "0"
+        }
+    ],
+    duration: 2.845
+}
+```
+
+I can tweak the query slightly to only display data with `@percentage` greater than 0 as this is more useful.
+
+```sql
+select xson->>'@code' as code, xson->>'@percentage' as percentage
+from xson
+where root='/iati-activities/iati-activity/recipient-country'
+and xson->>'@percentage' > '0'
+order by 2 asc
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            code: "TR",
+            percentage: 0.0084
+        }
+    ],
+    duration: 0.007
 }
 ```
 
