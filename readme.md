@@ -44,6 +44,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display all unique `reporting-org/@ref` published in a dataset](#display-all-unique-reporting-orgref-published-in-a-dataset)
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
+  - [Display IATI Registry dataset for publishers that use the same `organisation-identifier`](#display-iati-registry-dataset-for-publishers-that-use-the-same-organisation-identifier)
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
@@ -883,6 +884,60 @@ Result
 }
 ```
 
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display IATI Registry dataset for publishers that use the same `organisation-identifier`
+From https://github.com/codeforIATI/iati-data-bugtracker/issues/19, we wanted to check if there were more publishers that used the same id.
+
+```sql
+select
+distinct xson->>'@dstore:dataset' as "IATI Registry Dataset"
+from xson where root='/iati-organisations/iati-organisation' 
+and xson->>'/organisation-identifier' like '%NL-KVK-30285304%'
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            IATI Registry Dataset: "humana_houben-org"
+        }
+    ],
+    duration: 0.058
+}
+```
+
+We can display the `narrative` of both `/name` and `/reporting-org` so that we know who these publishers are.  
+We include these two different elements become sometimes publishers can publish either one or both fields.
+
+```sql
+select
+distinct xson->'/reporting-org/narrative'->0->>'' as "Publisher",
+xson->'/name/narrative'->0->>'' as "Publisher Name",
+xson->>'@dstore:dataset' as "IATI Registry Dataset"
+from xson where root='/iati-organisations/iati-organisation' 
+and xson->>'/organisation-identifier' like '%NL-KVK-30285304%'
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Publisher: "Humana people to people",
+            Publisher Name: "Humana people to people",
+            IATI Registry Dataset: "humana_houben-org"
+        }
+    ],
+    duration: 0.059
+}
+```
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
