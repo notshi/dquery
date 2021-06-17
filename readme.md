@@ -90,7 +90,7 @@ There are five buttons above these panels which perform various things.
 Some example recipes.
 
 **Run** (optional)  
-View results in the browser.  
+View results in the browser. ( _Keyboard Shortcut_ **Ctrl** + **Enter** )  
 *Please limit your results! If queries are complex, this can slow down the browser.*  
 
 **View on d-portal**  
@@ -944,12 +944,17 @@ Result
 ### Filtering on custom namespace elements
 Raised https://github.com/devinit/D-Portal/issues/568
 
+There are many fields in published data that are not in the IATI Standard list of elements.
+
+These additional data called [Namespaces & Extensions](https://iatistandard.org/en/iati-standard/203/namespaces-extensions/) can be found in many published data and they can be queried like so.
+
 ```sql
 SELECT DISTINCT aid FROM xson
 WHERE
 	root='/iati-activities/iati-activity/transaction'
 AND
 	xson->>'/usg:treasury-account/usg:regular-account@code' = '72'
+limit 1;
 ```
 
 Result
@@ -958,11 +963,10 @@ Result
 {
     result: [
         {
-	        {
-            aid: "US-GOV-9-ZM-F19AP00767"
+            aid: "US-GOV-1-00001"
         }
     ],
-    duration: 10.615
+    duration: 7.962
 }
 ```
 
@@ -973,7 +977,6 @@ Result
 select
 
 pid,
-
 xson ->> '/value' as budgetvalue,
 xson ->> '/value@currency' as currency,
 xson ->> '/value@value-date' as valuedate,
@@ -982,9 +985,7 @@ xson ->> '/period-start@iso-date' as startdate,
 xson ->> '@status' as status
 
 from xson where root='/iati-organisations/iati-organisation/total-budget'
-
 limit 1;
-
 ```
 
 Result
@@ -1125,6 +1126,7 @@ Result
 ### Display all `participating-org` with `@crs-channel-code`
 ```sql
 select
+
 xson->'/narrative'->0->>'' as "Name",
 xson->>'@ref' as "Participating Org Ref",
 xson->>'@type' as "Type",
