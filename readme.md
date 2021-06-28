@@ -949,7 +949,7 @@ From https://github.com/codeforIATI/iati-data-bugtracker/issues/10, we wanted to
 select
 distinct xson->>'@dstore:dataset' as "IATI Registry Dataset"
 from xson where root='/iati-activities/iati-activity' 
-and xson->>'/iati-identifier' like '%XM-DAC-6-4-011752-01-6%'
+and xson->>'/iati-identifier'='XM-DAC-6-4-011752-01-6'
 limit 1;
 ```
 
@@ -962,7 +962,7 @@ Result
             IATI Registry Dataset: "aics-jo"
         }
     ],
-    duration: 18.929
+    duration: 0.252
 }
 ```
 
