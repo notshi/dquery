@@ -45,6 +45,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
   - [Display IATI Registry dataset for publishers that use the same `organisation-identifier`](#display-iati-registry-dataset-for-publishers-that-use-the-same-organisation-identifier)
+  - [Display IATI Registry dataset for duplicate activities of a specific publisher](#display-iati-registry-dataset-for-duplicate-activities-of-a-specific-publisher)
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
@@ -936,6 +937,32 @@ Result
         }
     ],
     duration: 0.059
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display IATI Registry dataset for duplicate activities of a specific publisher
+From https://github.com/codeforIATI/iati-data-bugtracker/issues/10, we wanted to look for datasets containing duplicate activities for this publisher.
+
+```sql
+select
+distinct xson->>'@dstore:dataset' as "IATI Registry Dataset"
+from xson where root='/iati-activities/iati-activity' 
+and xson->>'/iati-identifier' like '%XM-DAC-6-4-011752-01-6%'
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            IATI Registry Dataset: "aics-jo"
+        }
+    ],
+    duration: 18.929
 }
 ```
 
