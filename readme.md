@@ -45,7 +45,8 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display count of certain element in org file](#display-count-of-certain-element-in-org-file)
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
   - [Display IATI Registry dataset for publishers that use the same `organisation-identifier`](#display-iati-registry-dataset-for-publishers-that-use-the-same-organisation-identifier)
-  - [Display IATI Registry dataset for duplicate activities of a specific publisher](#display-iati-registry-dataset-for-duplicate-activities-of-a-specific-publisher)
+  - [Display IATI Registry dataset for an activity](#display-iati-registry-dataset-for-an-activity)
+  - [Display IATI Registry dataset for duplicate activities where we know the `iati-identifier`](#display-iati-registry-dataset-for-duplicate-activities-where-we-know-the-iati-identifier)
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
@@ -632,6 +633,14 @@ For more information about the SQL language, the full list of functions and futh
 
 ## Tables and references
 
+We have a few different tables you can query but you should probably use the ones referred to in the recipes and examples.
+
+For example, the [slug](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L169) table stores duplicate identifiers and would be the best place to look for such things.
+
+The [trans](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L100) and [budget](https://github.com/devinit/D-Portal/blob/master/dstore/js/dstore_db.js#L124) tables would be very useful for analysts interested in IATI transaction data as the complicated job of splitting by sector / country and currency conversions to USD, CAD, GBP and Euro is already done for you.
+
+**Please note that transaction data is in IATI Standard version 1.04 as that is when d-portal was created.**
+
 This will return a list of available tables in the database.
 
 ```sql
@@ -942,8 +951,7 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
-### Display IATI Registry dataset for duplicate activities of a specific publisher
-From https://github.com/codeforIATI/iati-data-bugtracker/issues/10, we wanted to look for datasets containing duplicate activities for this publisher.
+### Display IATI Registry dataset for an activity
 
 ```sql
 select
@@ -963,6 +971,38 @@ Result
         }
     ],
     duration: 0.252
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display IATI Registry dataset for duplicate activities where we know the `iati-identifier`
+From https://github.com/codeforIATI/iati-data-bugtracker/issues/10, we wanted to look for datasets containing a specific `iati-identifier`.
+
+Multiple identifiers are only stored in the `slug` table so we should look there.
+
+```sql
+select *
+from slug
+where aid='XM-DAC-6-4-011752-01-6'
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "XM-DAC-6-4-011752-01-6",
+            slug: "aics-679"
+        },
+        {
+            aid: "XM-DAC-6-4-011752-01-6",
+            slug: "aics-jo"
+        }
+    ],
+    duration: 0.009
 }
 ```
 
