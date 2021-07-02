@@ -7,10 +7,12 @@ dQuery lets you query **the complete IATI data, including non-standard attribute
 ```diff
 + Documentation is ongoing so please bear with us.
 ```
-dQuery works well if you are familiar with the IATI Standard and querying in SQL using JSONB data types in PostgreSQL.  
-However, it shouldn't be too hard to pick up once you've done a few recipes.
 
-#### dQuery is an internal tool created by Wetgenes to aid the development of d-portal but publicly available as a courtesy.
+**If you have a data need or question** that could benefit from a query but don't know how, do [raise an issue](https://github.com/notshi/dquery/issues/new) and we can work it out together.
+
+dQuery works well if you are familiar with the IATI Standard and querying in SQL using JSONB data types in PostgreSQL. However, it shouldn't be too hard to pick up once you've done a few recipes.
+
+*dQuery is an internal tool created by Wetgenes to aid the development of d-portal but publicly available as a courtesy.*
 
 <!--
 Documentation by shi Blank, 2021  
