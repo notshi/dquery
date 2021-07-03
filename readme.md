@@ -1155,10 +1155,10 @@ We want to look for a couple of specific word combinations in all the `narrative
 We can do this easily by entering the word combinations in double quotes `"`.  
 If we want to do multiple word searches at the same time, we use `or` to separate the search terms.
 
-*Be mindful of the double quotes within the single quote when querying.*
+*Be mindful of the double quotes within the single quote when querying, as seen below.*
 
 The default search uses `and` so if searching for two different single words, we use `spaces` to separate them, without the double quotes.  
-The same method works when searching freetext on the d-portal website.
+The same method works when searching freetext on the d-portal website; ie. "hearing aids" or "learning difficulties"
 
 For more on [websearch_to_tsquery](http://www.postgresql.cn/docs/11/textsearch-controls.html#TEXTSEARCH-PARSING-QUERIES).
 
