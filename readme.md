@@ -70,6 +70,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display `@percentage` reported for `recipient-country`, starting with the lowest number](#display-percentage-reported-for-recipient-country-starting-with-the-lowest-number)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
   - [Diplay `sum` of all transaction types that are `@code` 3](#diplay-sum-of-all-transaction-types-that-are-code-3)
+  - [Display activities with more than 10 `actual` values reported in results data](#display-activities-with-more-than-10-actual-values-reported-in-results-data)
   - [Subquery to get full activity data](#subquery-to-get-full-activity-data)
   - [Display full activity data with attribute of certain value](#display-full-activity-data-with-attribute-of-certain-value)
   - [Display unique activity identifiers with attribute of certain value](#display-unique-activity-identifiers-with-attribute-of-certain-value)
@@ -2113,6 +2114,36 @@ Result
         }
     ],
     duration: 6.617
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display activities with more than 10 `actual` values reported in results data
+
+We also want to display the publisher and order the results with the most at the top.
+
+```sql
+select aid, pid
+from xson
+where root='/iati-activities/iati-activity/result/indicator/period'
+and jsonb_array_length(xson->'/actual') > 10
+group by 1, 2
+order by 2 desc
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "NL-KVK-41160054-112859",
+            pid: "NL-KVK-41160054"
+        }
+    ],
+    duration: 0.654
 }
 ```
 
