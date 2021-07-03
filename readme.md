@@ -53,6 +53,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
   - [Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`](#display-first-narrative-array-in-multiple-roots-count-and-grouped-for-a-particular-ref)
+  - [Text search](#text-search)
   - [Display all publishers listing (GIZ) in `participating-org/narrative`](#display-all-publishers-listing-giz-in-participating-orgnarrative)
   - [Display all `participating-org` with `@crs-channel-code`](#display-all-participating-org-with-crs-channel-code)
   - [Display `participating-org` with their `@role`, `@ref`, `@type` and include associated transaction types](#display-participating-org-with-their-role-ref-type-and-include-associated-transaction-types)
@@ -1141,6 +1142,43 @@ Result
         }
     ],
     duration: 7.945
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Text search
+Raised https://github.com/devinit/D-Portal/issues/623
+
+We want to look for a couple of specific word combinations in all the `narrative` element.  
+
+We can do this easily by entering the word combinations in double quotes `"`.  
+If we want to do multiple word searches at the same time, we use `or` to separate the search terms.
+
+*Be mindful of the double quotes within the single quote when querying.*
+
+The default search uses `and` so if searching for two different single words, we use `spaces` to separate them, without the double quotes.
+
+The same method works when searching freetext on the d-portal website.
+
+```sql
+select distinct aid
+from xson
+where to_tsvector('simple', xson->>'') 
+@@ websearch_to_tsquery('simple','"hearing aids" or "learning difficulties"') 
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "BE-BCE_KBO-0423616717-KH_PE_17-21_DGD"
+        }
+    ],
+    duration: 0.079
 }
 ```
 
