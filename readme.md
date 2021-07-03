@@ -1157,9 +1157,10 @@ If we want to do multiple word searches at the same time, we use `or` to separat
 
 *Be mindful of the double quotes within the single quote when querying.*
 
-The default search uses `and` so if searching for two different single words, we use `spaces` to separate them, without the double quotes.
-
+The default search uses `and` so if searching for two different single words, we use `spaces` to separate them, without the double quotes.  
 The same method works when searching freetext on the d-portal website.
+
+For more on [websearch_to_tsquery](http://www.postgresql.cn/docs/11/textsearch-controls.html).
 
 ```sql
 select distinct aid
