@@ -2,7 +2,7 @@
 
 http://d-portal.org/dquery/
 
-dQuery lets you query **the complete IATI data, including non-standard attributes and extensions** directly into the live d-portal database, in a modern browser.
+Use SQL to search **the complete IATI data, including non-standard attributes and extensions** directly into the live d-portal database, in a modern browser.
 
 ```diff
 + Documentation is ongoing so please bear with us.
