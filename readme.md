@@ -33,7 +33,7 @@ We are on Discord https://discord.gg/UxvKPVMz
     - [Group by](#group-by)
     - [Order by](#order-by)
     - [Limit](#limit)
-    - [Offset](#offest)
+    - [Offset](#offset)
     - [Join](#join)
 - [:mag: **Basic Queries**](#mag-basic-queries)
   - [Syntax](#syntax)
