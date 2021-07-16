@@ -49,6 +49,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display IATI Registry dataset for publishers that use the same `organisation-identifier`](#display-iati-registry-dataset-for-publishers-that-use-the-same-organisation-identifier)
   - [Display IATI Registry dataset for an activity](#display-iati-registry-dataset-for-an-activity)
   - [Display IATI Registry dataset for duplicate activities where we know the `iati-identifier`](#display-iati-registry-dataset-for-duplicate-activities-where-we-know-the-iati-identifier)
+  - [Display]()
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
@@ -1008,6 +1009,156 @@ Result
     ],
     duration: 0.009
 }
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Exploring traceability within IATI data
+
+Here are steps to reproduce the results for traceability as outlined in the methodology used for IATI Trace.
+
+The report used a previous version of d-portal that was not able to provide support for all the data needed.  
+However, this should now be possible with dQuery.
+
+Any line starting with `--` are commented out so you can delete any `--` to start a comment chunk.
+
+Click the _Download_ button to choose the format you want to download the data in.
+
+```sql
+--/* Show all participating-org (include all attributes) for this activity
+
+select aid,
+jsonb_array_elements(xson -> '/participating-org') as "/participating-org"
+from xson where root='/iati-activities/iati-activity' 
+and aid='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
+
+--/* Show all 'Funding' participating-org (include activity-id, narrative and ref) for this activity
+
+select xson->>'@activity-id' as "activity-id",
+xson->'/narrative'->0->>'' as "narrative",
+xson->>'@ref' as "@ref"
+from xson where root='/iati-activities/iati-activity/participating-org'
+and xson->>'@role'='1'
+and aid='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
+
+--/* Show an activity that has provider-activity-id in transaction type 1 or 11
+
+select distinct aid
+from xson where root='/iati-activities/iati-activity/transaction'
+and xson->>'/transaction-type@code'='1'
+or xson->>'/transaction-type@code'='11'
+and xson->>'/provider-org@provider-activity-id' is not null
+limit 1;
+
+--*/
+
+
+--/* Show activities that have this identifier in provider-activity-id
+
+select distinct aid
+from xson where root='/iati-activities/iati-activity/transaction'
+and xson->>'/provider-org@provider-activity-id'='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
+
+--/* Show activities that have this identifier in receiver-activity-id
+
+select distinct aid
+from xson where root='/iati-activities/iati-activity/transaction'
+and xson->>'/receiver-org@receiver-activity-id'='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
+
+--/* Show all provider-activity-id (include narrative and transaction type) for this activity
+
+select xson->>'/provider-org@provider-activity-id' as "provider-activity-id",
+xson->'/receiver-org/narrative'->0->>'' as "receiver-narrative",
+xson->>'/transaction-type@code' as "transaction-type"
+from xson where root='/iati-activities/iati-activity/transaction'
+and aid='GB-CHC-1038860-28437'
+limit 1000;
+
+--*/
+
+
+--/* Show all receiver-activity-id (include narrative and transaction type) for this activity
+
+select xson->>'/receiver-org@receiver-activity-id' as "receiver-activity-id",
+xson->'/receiver-org/narrative'->0->>'' as "receiver-narrative",
+xson->>'/transaction-type@code' as "transaction-type"
+from xson where root='/iati-activities/iati-activity/transaction'
+and aid='GB-CHC-1038860-28437'
+limit 1000;
+
+--*/
+
+
+--/* Show all related activities (include related-activity type) for this activity
+
+select aid as "Activity Identifier",
+xson->>'@type' as "Related Activity Type"
+from xson where root='/iati-activities/iati-activity/related-activity'
+and xson->>'@ref'='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
+
+--/* Show all 'Parent' related activities for this activity
+
+select xson->>'@ref' as "Activity Identifier"
+from xson where root='/iati-activities/iati-activity/related-activity'
+and xson->>'@type'='1'
+and aid='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
+
+--/* Show all 'Child' related activities for this activity
+
+select xson->>'@ref' as "Activity Identifier"
+from xson where root='/iati-activities/iati-activity/related-activity'
+and xson->>'@type'='2'
+and aid='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
+
+--/* Show all activities with this identifier as 'Parent' in related activities
+
+select aid
+from xson where root='/iati-activities/iati-activity/related-activity'
+and xson->>'@type'='1'
+and xson->>'@ref'='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
+
+--/* Show all activities with this identifier as 'Parent' in related activities
+
+select aid
+from xson where root='/iati-activities/iati-activity/related-activity'
+and xson->>'@type'='2'
+and xson->>'@ref'='GB-CHC-1038860-28437'
+limit 100;
+
+--*/
+
 ```
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
