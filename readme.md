@@ -1025,7 +1025,9 @@ However, this should now be possible with dQuery.
 You can write as many SQL statements in the editor but only the latest one will be displayed as results.
 
 Any line starting with `--` are commented out so you can delete any `--` to start a comment chunk.  
-Queries are limited so it doesn't stress the server but you can increase or increase the `limit` accordingly.
+Alternatively, just delete the query chunk you don't need.
+
+Queries are limited so it doesn't stress the server but you can increase or decrease the `limit` accordingly.
 
 Click the _Download_ button to choose the format you want to download the data in.
 
@@ -1164,6 +1166,40 @@ limit 100;
 
 --*/
 
+```
+
+For example, here's a single query from the list above.
+
+View the [query](http://d-portal.org/dquery/#--/*%20Show%20all%20provider-activity-id%20(include%20narrative%20and%20transaction%20type)%20for%20this%20activity%0A%0Aselect%20xson-%3E%3E'/provider-org@provider-activity-id'%20as%20%22provider-activity-id%22,%0Axson-%3E'/receiver-org/narrative'-%3E0-%3E%3E''%20as%20%22receiver-narrative%22,%0Axson-%3E%3E'/transaction-type@code'%20as%20%22transaction-type%22%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/transaction'%0Aand%20aid='GB-CHC-1038860-28437'%0Alimit%201;%0A%0A--*/) in dQuery.  
+View the [JSON](http://d-portal.org/dquery?sql=--%2F*%20Show%20all%20provider-activity-id%20(include%20narrative%20and%20transaction%20type)%20for%20this%20activity%0A%0Aselect%20xson-%3E%3E%27%2Fprovider-org%40provider-activity-id%27%20as%20%22provider-activity-id%22%2C%0Axson-%3E%27%2Freceiver-org%2Fnarrative%27-%3E0-%3E%3E%27%27%20as%20%22receiver-narrative%22%2C%0Axson-%3E%3E%27%2Ftransaction-type%40code%27%20as%20%22transaction-type%22%0Afrom%20xson%20where%20root%3D%27%2Fiati-activities%2Fiati-activity%2Ftransaction%27%0Aand%20aid%3D%27GB-CHC-1038860-28437%27%0Alimit%201%3B%0A%0A--*%2F) generated.
+View the [CSV](http://d-portal.org/dquery?form=csv&sql=--%2F*%20Show%20all%20provider-activity-id%20(include%20narrative%20and%20transaction%20type)%20for%20this%20activity%0A%0Aselect%20xson-%3E%3E%27%2Fprovider-org%40provider-activity-id%27%20as%20%22provider-activity-id%22%2C%0Axson-%3E%27%2Freceiver-org%2Fnarrative%27-%3E0-%3E%3E%27%27%20as%20%22receiver-narrative%22%2C%0Axson-%3E%3E%27%2Ftransaction-type%40code%27%20as%20%22transaction-type%22%0Afrom%20xson%20where%20root%3D%27%2Fiati-activities%2Fiati-activity%2Ftransaction%27%0Aand%20aid%3D%27GB-CHC-1038860-28437%27%0Alimit%201%3B%0A%0A--*%2F) generated.
+
+```sql
+--/* Show all provider-activity-id (include narrative and transaction type) for this activity
+
+select xson->>'/provider-org@provider-activity-id' as "provider-activity-id",
+xson->'/receiver-org/narrative'->0->>'' as "receiver-narrative",
+xson->>'/transaction-type@code' as "transaction-type"
+from xson where root='/iati-activities/iati-activity/transaction'
+and aid='GB-CHC-1038860-28437'
+limit 1;
+
+--*/
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            provider-activity-id: "GB-CHC-1038860-28437",
+            receiver-narrative: "ACS/AMO Congo",
+            transaction-type: "2"
+        }
+    ],
+    duration: 0.004
+}
 ```
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
