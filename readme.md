@@ -1015,7 +1015,7 @@ Result
 
 ### Exploring traceability within IATI data
 
-Here are steps to reproduce the results for traceability as outlined in the methodology used for IATI Trace.
+Here are steps to reproduce the results for traceability as outlined in the [methodology used for IATI Trace](https://iatistandard.org/en/news/data-use-fund-explores-traceability-within-iati-data/).
 
 The report used a previous version of d-portal that was not able to provide support for all the data needed.  
 However, this should now be possible with dQuery.
