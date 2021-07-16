@@ -49,7 +49,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display IATI Registry dataset for publishers that use the same `organisation-identifier`](#display-iati-registry-dataset-for-publishers-that-use-the-same-organisation-identifier)
   - [Display IATI Registry dataset for an activity](#display-iati-registry-dataset-for-an-activity)
   - [Display IATI Registry dataset for duplicate activities where we know the `iati-identifier`](#display-iati-registry-dataset-for-duplicate-activities-where-we-know-the-iati-identifier)
-  - [Display]()
+  - [Exploring traceability within IATI data](#exploring-traceability-within-iati-data)
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
