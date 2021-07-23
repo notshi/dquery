@@ -48,6 +48,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Look for similar `iati-identifier` using a wildcard `%`](#look-for-similar-iati-identifier-using-a-wildcard-)
   - [Display IATI Registry dataset for publishers that use the same `organisation-identifier`](#display-iati-registry-dataset-for-publishers-that-use-the-same-organisation-identifier)
   - [Display IATI Registry dataset for an activity](#display-iati-registry-dataset-for-an-activity)
+  - [Display duplicate activities and their count](#display-duplicate-activities-and-their-count)
   - [Display IATI Registry dataset for duplicate activities where we know the `iati-identifier`](#display-iati-registry-dataset-for-duplicate-activities-where-we-know-the-iati-identifier)
   - [Exploring traceability within IATI data](#exploring-traceability-within-iati-data)
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
@@ -976,6 +977,36 @@ Result
         }
     ],
     duration: 0.252
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display duplicate activities and their count
+
+Multiple identifiers are only stored in the `slug` table so we should look there.
+
+[View this query](http://d-portal.org/dquery/#select%20aid,%20count(*)%0Afrom%20slug%0Agroup%20by%20aid%20having%20count(*)%20%3E%201%0Aorder%20by%20count(*)%20desc%0Alimit%201;)
+
+```sql
+select aid, count(*)
+from slug
+group by aid having count(*) > 1
+order by count(*) desc
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "ES-DIR3-E04585801-009-066169",
+            count: "105"
+        }
+    ],
+    duration: 0.557
 }
 ```
 
