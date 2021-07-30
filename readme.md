@@ -51,6 +51,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display duplicate activities and their count](#display-duplicate-activities-and-their-count)
   - [Display IATI Registry dataset for duplicate activities where we know the `iati-identifier`](#display-iati-registry-dataset-for-duplicate-activities-where-we-know-the-iati-identifier)
   - [Exploring traceability within IATI data](#exploring-traceability-within-iati-data)
+  - [Display top-level elements including namespaces](#display-top-level-elements-including-namespaces)
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
@@ -1230,6 +1231,106 @@ Result
         }
     ],
     duration: 0.004
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display top-level elements including namespaces
+Raised https://github.com/codeforIATI/iati-ideas/issues/29
+
+Publishers can add [all sorts of things](https://iatistandard.org/en/iati-standard/203/namespaces-extensions/) beyond the IATI Standard in their data so it would be nice to see what these things are.
+
+Presently, this poses some difficulties in querying these custom elements because their key names can be different.
+
+Here is a list of some of them (!).
+
+```
+@xmlns:afdb
+@xmlns:aidenvironment
+@xmlns:akvo
+@xmlns:budgetline
+@xmlns:cerf
+@xmlns:cgiar
+@xmlns:chd
+@xmlns:cso
+@xmlns:dstore
+@xmlns:gavi
+@xmlns:globalinitiative
+@xmlns:iati-activities
+@xmlns:interactions-ngoaidmap
+@xmlns:ir
+@xmlns:mcc
+@xmlns:p2
+@xmlns:unhcr
+@xmlns:usg
+```
+
+To get this list, we had to use `jsonb_object_keys` to return top-level elements in the table and filter out elements that are found in the Activity standard manually. More on that [here](https://www.postgresql.org/docs/current/functions-json.html#FUNCTIONS-JSON-PROCESSING-TABLE).
+
+```sql
+select distinct jsonb_object_keys(xson)
+from xson where root='/iati-activities/iati-activity'
+order by 1
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            jsonb_object_keys: "@xsi:schemaLocation"
+        }
+    ],
+    duration: 11.209
+}
+```
+
+The following is for the Organisation standard.
+
+```sql
+select distinct jsonb_object_keys(xson)
+from xson where root='/iati-organisations/iati-organisation'
+order by 1
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            jsonb_object_keys: "/aidstream:country"
+        }
+    ],
+    duration: 0.052
+}
+```
+
+You can then find an activity that uses this namespace and display its value.
+
+```sql
+select distinct aid, xson->>'@xmlns:afdb' as "XML namespace"
+from xson where root='/iati-activities/iati-activity'
+and xson->>'@xmlns:afdb' is not null
+order by 1
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "46002-G-EG-AAG-ZZZ-001",
+            XML namespace: http://afdb.org/iati/
+        }
+    ],
+    duration: 18.862
 }
 ```
 
