@@ -988,7 +988,7 @@ Result
 
 Multiple identifiers are only stored in the `slug` table so we should look there.
 
-[View this query](http://d-portal.org/dquery/#select%20aid,%20count(*)%0Afrom%20slug%0Agroup%20by%20aid%20having%20count(*)%20%3E%201%0Aorder%20by%20count(*)%20desc%0Alimit%201;)
+[View this query](http://d-portal.org/dquery/#select%20aid,%20count(*)%0Afrom%20slug%0Agroup%20by%20aid%20having%20count(*)%20%3E%201%0Aorder%20by%20count(*)%20desc%0Alimit%201;) on dQuery.
 
 ```sql
 select aid, count(*)
@@ -2128,19 +2128,16 @@ In this example, we are looking for [Previous Reporting Organisation Identifier]
 
 We are only looking for identifiers which have changed so we add `and xson->>'@ref' != pid` to the query as publishers can (and do) report any data, regardless of their state.
 
+[View this query](http://d-portal.org/dquery/#select%20xson-%3E%3E'@ref'%20as%20old_id,%20pid%20as%20new_id,%20count(*)%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/other-identifier'%0Aand%20xson-%3E%3E'@type'%20=%20'B1'%0Aand%20xson-%3E%3E'@ref'%20!=%20pid%0Agroup%20by%20xson-%3E%3E'@ref',%20pid%0Aorder%20by%203%20desc%0Alimit%201;) on dQuery.
+
 ```sql
-select
-
-xson->>'@ref' as old_id, pid as new_id, count(*)
-
-from xson where root='/iati-activities/iati-activity/other-identifier' and xson->>'@type' = 'B1'
+select xson->>'@ref' as old_id, pid as new_id, count(*)
+from xson where root='/iati-activities/iati-activity/other-identifier'
+and xson->>'@type' = 'B1'
 and xson->>'@ref' != pid
 group by xson->>'@ref', pid
-
 order by 3 desc
-
 limit 1;
-
 ```
 
 Result
@@ -2168,6 +2165,8 @@ We can list old and new identifiers of various types by looking in the `other-id
 In this example, we are looking for [Previous Activity Identifier](https://iatistandard.org/en/iati-standard/203/codelists/otheridentifiertype/) `A3` and listing both their old and new identifier, along with the number of times this occurs in the data.
 
 We are only looking for identifiers which have changed so we add `and aid != xson->>'@ref'` to ignore old and new identifiers that remain the same.
+
+[View this query](http://d-portal.org/dquery/#select%20xson-%3E%3E'@ref'%20as%20old_id,%20aid%20as%20new_id,%20count(*)%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/other-identifier'%0Aand%20xson-%3E%3E'@type'%20=%20'A3'%0Aand%20aid%20!=%20xson-%3E%3E'@ref'%0Agroup%20by%20xson-%3E%3E'@ref',%20aid%0Aorder%20by%203%20desc%0Alimit%201;) on dQuery.
 
 ```sql
 select xson->>'@ref' as old_id, aid as new_id, count(*)
@@ -2199,6 +2198,8 @@ In this instance, the ignored identifier comes from a single publisher that is r
 
 You can consider this a data quality issue as it will not register as invalid by various validator tools currently out there.  
 This is one of many caveats of the IATI Standard - knowing when and where data could be invalid even when they are considered technically valid.
+
+[View this query](http://d-portal.org/dquery/#select%20xson-%3E%3E'@ref'%20as%20old_id,%20aid%20as%20new_id,%20count(*)%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/other-identifier'%0Aand%20xson-%3E%3E'@type'%20=%20'A3'%0Aand%20xson-%3E%3E'@ref'%20!=%20'41140'%0Agroup%20by%20xson-%3E%3E'@ref',%20aid%0Aorder%20by%203%20desc%0Alimit%201;) on dQuery.
 
 ```sql
 select xson->>'@ref' as old_id, aid as new_id, count(*)
