@@ -66,6 +66,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display narratives and count, grouped by publishers with `condition@type`](#display-narratives-and-count-grouped-by-publishers-with-conditiontype)
   - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
   - [Display a list of changed IATI organisation identifiers](#display-a-list-of-changed-iati-organisation-identifiers)
+  - [Display a list of changed IATI activity identifiers](#display-a-list-of-changed-iati-activity-identifiers)
   - [Display full activity data within an element for multiple identifiers](#display-full-activity-data-within-an-element-for-multiple-identifiers)
   - [Display identifiers of activities that are published in version 1 of the standard](#display-identifiers-of-activities-that-are-published-in-version-1-of-the-standard)
   - [Display identifiers sorted by the second column (narrative) in descending order](#display-identifiers-sorted-by-the-second-column-narrative-in-descending-order)
@@ -1313,7 +1314,7 @@ Result
 You can then find an activity that uses this namespace and display its value.
 
 ```sql
-select distinct aid, xson->>'@xmlns:afdb' as "XML namespace"
+select distinct aid, xson->>'@xmlns:afdb' as "@xmlns:afdb url"
 from xson where root='/iati-activities/iati-activity'
 and xson->>'@xmlns:afdb' is not null
 order by 1
@@ -1327,7 +1328,7 @@ Result
     result: [
         {
             aid: "46002-G-EG-AAG-ZZZ-001",
-            XML namespace: http://afdb.org/iati/
+            @xmlns:afdb url: http://afdb.org/iati/
         }
     ],
     duration: 18.862
@@ -2125,12 +2126,15 @@ We can list old and new identifiers of various types by looking in the `other-id
 
 In this example, we are looking for [Previous Reporting Organisation Identifier](https://iatistandard.org/en/iati-standard/203/codelists/otheridentifiertype/) `B1` and listing both their old and new identifier, along with the number of times this occurs in the data.
 
+We are only looking for identifiers which have changed so we add `and xson->>'@ref' != pid` to the query as publishers can (and do) report any data, regardless of their state.
+
 ```sql
 select
 
 xson->>'@ref' as old_id, pid as new_id, count(*)
 
 from xson where root='/iati-activities/iati-activity/other-identifier' and xson->>'@type' = 'B1'
+and xson->>'@ref' != pid
 group by xson->>'@ref', pid
 
 order by 3 desc
@@ -2151,6 +2155,73 @@ Result
         },
     ],
     duration: 2.415
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display a list of changed IATI activity identifiers
+Raised https://github.com/IATI/ckanext-iati/issues/279#issuecomment-913618337
+
+We can list old and new identifiers of various types by looking in the `other-identifier` element.  
+
+In this example, we are looking for [Previous Activity Identifier](https://iatistandard.org/en/iati-standard/203/codelists/otheridentifiertype/) `A3` and listing both their old and new identifier, along with the number of times this occurs in the data.
+
+We are only looking for identifiers which have changed so we add `and aid != xson->>'@ref'` to ignore old and new identifiers that remain the same.
+
+```sql
+select xson->>'@ref' as old_id, aid as new_id, count(*)
+from xson where root='/iati-activities/iati-activity/other-identifier'
+and xson->>'@type' = 'A3'
+and aid != xson->>'@ref'
+group by xson->>'@ref', aid
+order by 3 desc
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            old_id: "41140",
+            new_id: "XM-DAC-41140-200119",
+            count: "1"
+        }
+    ],
+    duration: 0.274
+}
+```
+
+Further to this, you can ask dquery to ignore any identifiers.  
+In this instance, the ignored identifier comes from a single publisher that is reporting an previous organisation identifier instead of an activity identifier.
+
+You can consider this a data quality issue as it will not register as invalid by various validator tools currently out there.  
+This is one of many caveats of the IATI Standard - knowing when and where data could be invalid even when they are considered technically valid.
+
+```sql
+select xson->>'@ref' as old_id, aid as new_id, count(*)
+from xson where root='/iati-activities/iati-activity/other-identifier'
+and xson->>'@type' = 'A3'
+and xson->>'@ref' != '41140'
+group by xson->>'@ref', aid
+order by 3 desc
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            old_id: "47122-0205-CIV-02-Y",
+            new_id: "47122-CIV-ISS",
+            count: "1"
+        }
+    ],
+    duration: 0.327
 }
 ```
 
