@@ -56,6 +56,8 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
   - [Group by publishers that use a particular `@ref`](#group-by-publishers-that-use-a-particular-ref)
   - [Display first `/narrative` array in multiple roots, count and grouped for a particular `@ref`](#display-first-narrative-array-in-multiple-roots-count-and-grouped-for-a-particular-ref)
+  - [Display a random activity that has a Result Actual Comment](#display-a-random-activity-that-has-a-result-actual-comment)
+  - [Display activity with the lengthiest Result Actual Comment](#display-activity-with-the-lengthiest-result-actual-comment)
   - [Text search](#text-search)
   - [Display all publishers listing (GIZ) in `participating-org/narrative`](#display-all-publishers-listing-giz-in-participating-orgnarrative)
   - [Display all `participating-org` with `@crs-channel-code`](#display-all-participating-org-with-crs-channel-code)
@@ -1468,6 +1470,119 @@ Result
         }
     ],
     duration: 7.945
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display a random activity that has a Result Actual Comment
+
+This query gives you a random activity that has a comment in the `result/actual` element and spits out the comment narrative and language it is published in.
+
+View this [query](http://d-portal.org/dquery/#select%20jsonb_array_elements(xson%20-%3E%20'/comment/narrative')%20as%20%22Comment%22,%20aid%0Afrom%20xson%0Awhere%20root='/iati-activities/iati-activity/result/indicator/period/actual'%0Aand%20xson-%3E%3E'/comment/narrative'%20is%20not%20null%0Alimit%201;) on dQuery.
+
+```sql
+select jsonb_array_elements(xson -> '/comment/narrative') as "Comment", aid
+from xson
+where root='/iati-activities/iati-activity/result/indicator/period/actual'
+and xson->>'/comment/narrative' is not null
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Comment: {
+                : "Numerator: 0.88",
+                @xml:lang: "EN"
+            },
+            aid: "47045-UZB-H-RAC"
+        }
+    ],
+    duration: 0.001
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display activity with the lengthiest Result Actual Comment
+
+This query will give you the activity that has a comment in the `result/actual` element with the most number of words as well as the count of words found.
+
+`length()` in [PostgreSQL](https://www.postgresql.org/docs/13/functions-string.html#id-1.5.8.10.7.2.2.9.1.1.1) returns the number of characters in the string.
+
+We then order the length in a descending order to give us the highest number.
+
+View this [query](http://d-portal.org/dquery/#select%20LENGTH(xson-%3E%3E'/comment/narrative'),%20jsonb_array_elements(xson%20-%3E%20'/comment/narrative')%20as%20%22Comment%22,%20aid%0Afrom%20xson%0Awhere%20root='/iati-activities/iati-activity/result/indicator/period/actual'%0Aand%20xson-%3E%3E'/comment/narrative'%20is%20not%20null%0Aorder%20by%201%20desc%0Alimit%201;) in dQuery.
+
+```sql
+select length(xson->>'/comment/narrative'), jsonb_array_elements(xson -> '/comment/narrative') as "Comment", aid
+from xson
+where root='/iati-activities/iati-activity/result/indicator/period/actual'
+and xson->>'/comment/narrative' is not null
+order by 1 desc
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            length: 593769,
+            Comment: {
+                : "Output1. Economic and fiscal Advisory role provided
+                Prepared an advisory note to the Minister for ministerial discussions on needed economic and fiscal reforms over the short and medium terms.
+                Prepared a comprehensive analysis to the minister on debt financing for the 2018-2019 period and a proposal for liability management of foreign currency debt maturities to reduce debt financing cost.
+                Updated the medium-term macro-fiscal framework for 2018 onwards including projections of macroeconomic assumptions and fiscal metrics. Provided an internal assessment of the 2018 budget.
+                Developed further the Oil and Gas financial Model through benchmarking analysis with Egypt and Cyprus.
+                Completed monthly and quarterly reports (Personal cost Jan-June 2017, Euromain Jan-Feb 2018, Public Finance Monitor Jan-Nov 2017, Completed draft version for annual report 2016 after receiving final data, average cost for treasury bills and bonds Jan-Feb 2018).
+                Followed up on the oil and gas draft laws in parliament and provided advisory notes to the Minister of Finance on the topic.
+                Followed up with S&P, and Moody’s rating agencies on their draft country credit reports.
+
+                Output 2: Legal Advisory
+
+                Reviewed, commented and conducted negotiations for the World Bank loans and granst and followed up on the file with the Council of Ministers for approval and signature namely: “Greater Beirut Urban Transport Project” (loan negotiated on February 16, 2018).
+                 Prepared with the Revenues Department a PowerPoint presentation for the introductory session of the training done by the Institute of Finance to the civil servants, regarding the Automatic Exchange of Information (AEOI) and the Exchange of Information on Request (EOIR) and present it before the directors of the departments of the ministry of finance.
+                Finalized the Exchange of Information Manual
+                Worked on the French version of the Lebanese model of IPPA
+                Output 3: Multilateral Coordination
+                Support the Minister on the technical committee of the Lebanon Crisis Response Plan (LCRP), an inter-governmental/inter-agency committee on managing the humanitarian and development aid for the Syrian crisis
+                 Support the Office of the Minister of State for Women Affairs in developing policies that will improve the gender gap in Lebanon
+                Output 4: Tax Reform
+                E-services:
+                - Data reconciliation between the e-services and SIGTAS was performed to guarantee data consistency.
+                - Support to VAT e-services and e-payment continued.
+
+                • BPR of the Tax functions
+                - New tax forms were designed to simplify the tax procedures, for self-assessment and audit partial payment
+                - Reconciliation between the Treasury System and VAT distribution of deductions in SIGTAS was carried out
+                - VAT Arrears were prepared for the years 2002 until 2016.
+                - Consolidation of all deductions and assessments reports
+                - New procedures for the BDL’s VAT settlements were developed
+                - New reports for compliance, data processing and refunds departments were designed
+                - The automatic issuance of VAT registration certificates including the e-signature of the head of department was developed and implemented
+
+                • Overhauling  the MOF's English Website
+                - Real-time translation of MOF’s latest news, decisions, notices, procedures and activities was ensured.
+
+                Output 5: Customs Reform
+                The e-Manifest project was implemented in the airport in order to receive the manifest from abroad.
+                The Part shipment was developed in order to cover the goods that arrive on different flights although they belong to the same bill of lading
+                Output 6: Land Registry and Cadastre Reform
+                Data Analysis was conducted to the development of multiple statistical reports concerning the foreign ownerships in Lebanon
+                Data analysis was performed to extract a new report regarding sale transactions sent to the Financial Prosecution Department
+                 Monitoring the nationality correction of foreign individual real estate owners",
+                @xml:lang: "EN"
+            },
+            aid: "XM-DAC-41114-OUTPUT-00102280"
+        }
+    ],
+    duration: 0.916
 }
 ```
 
