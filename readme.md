@@ -75,6 +75,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
   - [Display `@percentage` reported for `recipient-country`, starting with the lowest number](#display-percentage-reported-for-recipient-country-starting-with-the-lowest-number)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
+  - [Diplay list of Publishers reporting SDG Goals and Targets](#diplay-list-of-publishers-reporting-sdg-goals-and-targets)
   - [Diplay `sum` of all transaction types that are `@code` 3](#diplay-sum-of-all-transaction-types-that-are-code-3)
   - [Display activities with more than 10 `actual` values reported in results data](#display-activities-with-more-than-10-actual-values-reported-in-results-data)
   - [Subquery to get full activity data](#subquery-to-get-full-activity-data)
@@ -2605,6 +2606,75 @@ Result
 }
 ```
 
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Diplay list of Publishers reporting SDG Goals and Targets
+
+There are a couple of ways publishers can report these activities - via the `tag` or the `sector` element.
+
+The following query will display publishers that report UN Sustainable Development Goals (SDG) and UN SDG Targets in the `tag` element.
+
+This query will also list the number of activities per publisher.
+
+[View this query](http://d-portal.org/dquery/#select%20count(distinct%20aid)%20as%20%22Number%20of%20activities%22,%20pid%20as%20%22Publisher%22%0A%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/tag'%20%0Aand%20xson-%3E%3E'@vocabulary'%20in%20('2','3')%0A%0Agroup%20by%202%0Aorder%20by%201%20desc%0A%0Alimit%201;%0A) on dQuery.
+
+```sql
+select count(distinct aid) as "Number of activities", pid as "Publisher"
+
+from xson where root='/iati-activities/iati-activity/tag' 
+and xson->>'@vocabulary' in ('2','3')
+
+group by 2
+order by 1 desc
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Number of activities: "21144",
+            Publisher: "XM-DAC-41114"
+        }
+    ],
+    duration: 0.825
+}
+```
+
+The following query will display publishers that report UN Sustainable Development Goals (SDG) and UN SDG Targets in the `sector` element.
+
+This query will also list the number of activities per publisher.
+
+[View this query](http://d-portal.org/dquery/#select%20count(distinct%20aid)%20as%20%22Number%20of%20activities%22,%20pid%20as%20%22Publisher%22%0A%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/sector'%20%0Aand%20xson-%3E%3E'@vocabulary'%20in%20('7','8')%0A%0Agroup%20by%202%0Aorder%20by%201%20desc%0A%0Alimit%201;) on dQuery.
+
+```sql
+select count(distinct aid) as "Number of activities", pid as "Publisher"
+
+from xson where root='/iati-activities/iati-activity/sector' 
+and xson->>'@vocabulary' in ('7','8')
+
+group by 2
+order by 1 desc
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Number of activities: "21218",
+            Publisher: "XM-DAC-41114"
+        }
+    ],
+    duration: 1.656
+}
+```
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
 ### Diplay `sum` of all transaction types that are `@code` 3
