@@ -108,7 +108,7 @@ View results in the browser. ( _Keyboard Shortcut_ **Ctrl** + **Enter** )
 
 **View on d-portal**  
 View the results of the query on the d-portal website.  
-*Only works if query includes activity identifiers.*
+*Only works if query includes activity identifiers using the `aid` command.*
 
 **Download**  
 Download data in various formats without viewing results in the browser.
@@ -189,6 +189,9 @@ select distinct aid
 ```sql
 select * 
 ```
+
+By using the `select aid` command, you will get a list of activity identifiers that you can then explore on d-portal by clicking on the, 'View on d-portal' button.  
+*Note that if you rename this column by using the `as` command, you will not be able to view the results on d-portal.*
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
@@ -2610,11 +2613,12 @@ Result
 
 ### Diplay list of Publishers reporting SDG Goals and Targets
 
-There are a couple of ways publishers can report these activities - via the `tag` or the `sector` element.
+There are a few ways publishers can report these activities by using the `tag`, `sector`, `transaction` and `result` element.
+We could combine them all, like we do with the complex COVID-19 query but here they are individually, in various ways, so it's easier to understand them with context.
 
 The following query will display publishers that report UN Sustainable Development Goals (SDG) and UN SDG Targets in the `tag` element.
 
-This query will also list the number of activities per publisher.
+This query will also list the publisher with the most number of activities.
 
 [View this query](http://d-portal.org/dquery/#select%20count(distinct%20aid)%20as%20%22Number%20of%20activities%22,%20pid%20as%20%22Publisher%22%0A%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/tag'%20%0Aand%20xson-%3E%3E'@vocabulary'%20in%20('2','3')%0A%0Agroup%20by%202%0Aorder%20by%201%20desc%0A%0Alimit%201;%0A) on dQuery.
 
@@ -2646,7 +2650,7 @@ Result
 
 The following query will display publishers that report UN Sustainable Development Goals (SDG) and UN SDG Targets in the `sector` element.
 
-This query will also list the number of activities per publisher.
+This query will also list the number of activities per publisher, with the most at the top.
 
 [View this query](http://d-portal.org/dquery/#select%20count(distinct%20aid)%20as%20%22Number%20of%20activities%22,%20pid%20as%20%22Publisher%22%0A%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/sector'%20%0Aand%20xson-%3E%3E'@vocabulary'%20in%20('7','8')%0A%0Agroup%20by%202%0Aorder%20by%201%20desc%0A%0Alimit%201;) on dQuery.
 
@@ -2675,6 +2679,155 @@ Result
     duration: 1.656
 }
 ```
+
+You can go further and display just the identifiers of these activities so that you can explore that data on d-portal.  
+Click 'View on d-portal' to explore these activities.
+
+[View this query](http://d-portal.org/dquery/#select%20distinct%20aid%0A%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/sector'%20%0Aand%20xson-%3E%3E'@vocabulary'%20in%20('7','8','9')%0A%0Alimit%2010;)
+
+For this example, we have limited the query to 10 so we can get a list.
+
+```sql
+select distinct aid
+
+from xson where root='/iati-activities/iati-activity/sector' 
+and xson->>'@vocabulary' in ('7','8','9')
+
+limit 10;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            aid: "XM-DAC-41114-PROJECT-00128417"
+        },
+        {
+            aid: "XM-DAC-41122-Programme Division-456D/D0/09/102/026"
+        },
+        {
+            aid: "NL-KVK-27378529-MAG15GH02"
+        },
+        {
+            aid: XM-DAC-928-ET-2016-17-02.006.AF01.ETH02
+        },
+        {
+            aid: XM-DAC-928-AM-2016-17-02.001.EU01.ARM01
+        },
+        {
+            aid: "XM-DAC-41114-OUTPUT-00118486"
+        },
+        {
+            aid: "XM-DAC-41114-OUTPUT-00112009"
+        },
+        {
+            aid: "XM-DAC-41114-PROJECT-00059495"
+        },
+        {
+            aid: "XM-DAC-41122-Nigeria-3210/A0/04/101/002"
+        },
+        {
+            aid: "XM-DAC-41114-PROJECT-00131086"
+        }
+    ],
+    duration: 0.575
+}
+```
+
+The following query will display publishers that report UN SDG Goals, Targets and Indicators in the `transaction/sector` element.  
+Click 'View on d-portal' to explore these activities.
+
+This query will also list the identifiers of these activities.
+
+[View this query](http://d-portal.org/dquery/#select%20count(distinct%20aid)%20as%20%22Number%20of%20activities%22,%20pid%20as%20%22Publisher%22,%20aid%0A%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/transaction/sector'%20%0Aand%20xson-%3E%3E'@vocabulary'%20in%20('7','8','9')%0A%0Agroup%20by%202,%203%0Aorder%20by%201%20desc%0A%0Alimit%201;)
+
+```sql
+select pid as "Publisher", aid
+
+from xson where root='/iati-activities/iati-activity/transaction/sector' 
+and xson->>'@vocabulary' in ('7','8','9')
+
+group by 1, 2
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Publisher: "GB-EDU-133784",
+            aid: "GB-EDU-133784-EquiTrauma130036"
+        }
+    ],
+    duration: 0.473
+}
+```
+
+If we just want to display number of activities per publisher, with the most at the top, we can use this query.
+
+```sql
+select count(distinct aid) as "Number of activities", pid as "Publisher"
+
+from xson where root='/iati-activities/iati-activity/transaction/sector' 
+and xson->>'@vocabulary' in ('7','8','9')
+
+group by 2
+order by 1 desc
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Number of activities: "1",
+            Publisher: "GB-CHC-1110434"
+        }
+    ],
+    duration: 0.559
+}
+```
+
+The following query will display publishers that report UN SDG Indicators in the `result/indicator/reference` element.
+
+This query will also list the number of activities per publisher, with the most at the top.
+
+[View this query](http://d-portal.org/dquery/#select%20count(distinct%20aid)%20as%20%22Number%20of%20activities%22,%20pid%20as%20%22Publisher%22%0A%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/result/indicator/reference'%20%0Aand%20xson-%3E%3E'@vocabulary'%20in%20('9')%0A%0Agroup%20by%202%0Aorder%20by%201%20desc%0A%0Alimit%201;)
+
+```sql
+select count(distinct aid) as "Number of activities", pid as "Publisher"
+
+from xson where root='/iati-activities/iati-activity/result/indicator/reference' 
+and xson->>'@vocabulary' in ('9')
+
+group by 2
+order by 1 desc
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    result: [
+        {
+            Number of activities: "39",
+            Publisher: "NL-KVK-40409352"
+        }
+    ],
+    duration: 0.06
+}
+```
+
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
 ### Diplay `sum` of all transaction types that are `@code` 3
