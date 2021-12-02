@@ -120,6 +120,37 @@ You can drag the partition to increase or decrease the space of either panel.
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
+## Run
+
+When you click 'Run' or press 'Ctrl+Enter', the console to the right of the editor will display the results of your query.
+
+Generally, it will look something like this:
+
+```sql
+{
+    rows: [
+        {
+            aid: "DK-CVR-40781218-AA"
+        }
+    ],
+    dquery: http://d-portal.org/dquery#select%20aid%0Afrom%20xson%20where%20root='/iati-activities/iati-activity'%0Alimit%201;%0A,
+    time: 0.017,
+    count: 1
+}
+```
+
+That's quite a bit to dissect, isn't it?
+
+There are 4 separate things being displayed here but you will probably only need `rows`.
+
+`rows` will contain the data you asked for.  
+
+`dquery` is the url of the current query page.  
+`time` is how long the database took to answer this query, in seconds.  
+`count` is how many rows there are in total on the page.
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
 ## Data formats
 
 Downloads of data is available as csv, json, xml and html.
@@ -491,7 +522,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "SE-0-SE-6-10451A0101-MLI-72012",
             pid: "SE-0",
@@ -505,7 +536,7 @@ Result
             }
         }
     ],
-    duration: 0.014
+    time: 0.014
 }
 ```
 
@@ -521,12 +552,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "XM-DAC-903-SPI-10117"
         }
     ],
-    duration: 0.035
+    time: 0.035
 }
 ```
 
@@ -541,7 +572,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: null,
             pid: "XM-DAC-41123",
@@ -555,7 +586,7 @@ Result
             }
         }
     ],
-    duration: 0.009
+    time: 0.009
 }
 ```
 
@@ -571,13 +602,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             pid: "XM-DAC-41146",
             Total Expenditure in USD: "354113927"
         }
     ],
-    duration: 0.009
+    time: 0.009
 }
 ```
 
@@ -771,12 +802,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             reporting_org: "XM-DAC-69-0"
         }
     ],
-    duration: 0.015
+    time: 0.015
 }
 ```
 
@@ -805,12 +836,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             reporting_org: "XM-DAC-69-0"
         }
     ],
-    duration: 17.329
+    time: 17.329
 }
 ```
 
@@ -831,12 +862,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             count: "437"
         }
     ],
-    duration: 0.053
+    time: 0.053
 }
 ```
 
@@ -866,7 +897,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "1022474"
         },
@@ -874,7 +905,7 @@ Result
             aid: "DE-1-201022474"
         }
     ],
-    duration: 18.484
+    time: 18.484
 }
 ```
 
@@ -896,7 +927,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             identifier: "1022474"
         },
@@ -904,7 +935,7 @@ Result
             identifier: "DE-1-201022474"
         }
     ],
-    duration: 1.457
+    time: 1.457
 }
 ```
 
@@ -926,12 +957,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             IATI Registry Dataset: "humana_houben-org"
         }
     ],
-    duration: 0.058
+    time: 0.058
 }
 ```
 
@@ -952,14 +983,14 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Publisher: "Humana people to people",
             Publisher Name: "Humana people to people",
             IATI Registry Dataset: "humana_houben-org"
         }
     ],
-    duration: 0.059
+    time: 0.059
 }
 ```
 
@@ -979,12 +1010,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             IATI Registry Dataset: "aics-jo"
         }
     ],
-    duration: 0.252
+    time: 0.252
 }
 ```
 
@@ -1008,13 +1039,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "ES-DIR3-E04585801-009-066169",
             count: "105"
         }
     ],
-    duration: 0.557
+    time: 0.557
 }
 ```
 
@@ -1036,7 +1067,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "XM-DAC-6-4-011752-01-6",
             slug: "aics-679"
@@ -1046,7 +1077,7 @@ Result
             slug: "aics-jo"
         }
     ],
-    duration: 0.009
+    time: 0.009
 }
 ```
 
@@ -1230,14 +1261,14 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             provider-activity-id: "GB-CHC-1038860-28437",
             receiver-narrative: "ACS/AMO Congo",
             transaction-type: "2"
         }
     ],
-    duration: 0.004
+    time: 0.004
 }
 ```
 
@@ -1286,12 +1317,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             jsonb_object_keys: "@xsi:schemaLocation"
         }
     ],
-    duration: 11.209
+    time: 11.209
 }
 ```
 
@@ -1308,12 +1339,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             jsonb_object_keys: "/aidstream:country"
         }
     ],
-    duration: 0.052
+    time: 0.052
 }
 ```
 
@@ -1331,13 +1362,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "46002-G-EG-AAG-ZZZ-001",
             @xmlns:afdb url: http://afdb.org/iati/
         }
     ],
-    duration: 18.862
+    time: 18.862
 }
 ```
 
@@ -1363,12 +1394,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "US-GOV-1-00001"
         }
     ],
-    duration: 7.962
+    time: 7.962
 }
 ```
 
@@ -1394,7 +1425,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             pid: "DK-CVR-12006004",
             budgetvalue: "8800000",
@@ -1405,7 +1436,7 @@ Result
             status: "2"
         },
 	    ],
-    duration: 0.031
+    time: 0.031
 }
 ```
 
@@ -1430,13 +1461,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             org: "XM-OCHA-CBPF",
             count: "308"
         }
     ],
-    duration: 29.328
+    time: 29.328
 }
 ```
 
@@ -1465,7 +1496,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             reference: "XM-OCHA-CBPF-NGA75",
             narrative: "Nigeria Humanitarian Fund",
@@ -1473,7 +1504,7 @@ Result
             count: "308"
         }
     ],
-    duration: 7.945
+    time: 7.945
 }
 ```
 
@@ -1497,7 +1528,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Comment: {
                 : "Numerator: 0.88",
@@ -1506,7 +1537,7 @@ Result
             aid: "47045-UZB-H-RAC"
         }
     ],
-    duration: 0.001
+    time: 0.001
 }
 ```
 
@@ -1535,7 +1566,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             length: 593769,
             Comment: {
@@ -1586,7 +1617,7 @@ Result
             aid: "XM-DAC-41114-OUTPUT-00102280"
         }
     ],
-    duration: 0.916
+    time: 0.916
 }
 ```
 
@@ -1619,12 +1650,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "BE-BCE_KBO-0423616717-KH_PE_17-21_DGD"
         }
     ],
-    duration: 0.079
+    time: 0.079
 }
 ```
 
@@ -1661,7 +1692,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             role_: "3",
             type_: null,
@@ -1670,7 +1701,7 @@ Result
             count: "2911"
         },
     ],
-    duration: 2.757
+    time: 2.757
 }
 ```
 
@@ -1696,7 +1727,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Name: "Donor Committee for Enterprise Development",
             Participating Org Ref: null,
@@ -1705,7 +1736,7 @@ Result
             CRS Channel Code: "21000"
         }
     ],
-    duration: 0.007
+    time: 0.007
 }
 ```
 
@@ -1754,7 +1785,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Participating Org: "Abu Dhabi Department of Finance",
             ref: "AE-2",
@@ -1763,7 +1794,7 @@ Result
             Transaction type: "3"
         }
     ],
-    duration: 16.211
+    time: 16.211
 }
 ```
 
@@ -1786,7 +1817,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             jsonb_array_length: 1
         },
@@ -2070,7 +2101,7 @@ Result
             jsonb_array_length: null
         }
     ],
-    duration: 7.423
+    time: 7.423
 }
 ```
 
@@ -2089,12 +2120,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "XM-DAC-21018-MDRHT008"
         }
     ],
-    duration: 18.859
+    time: 18.859
 }
 ```
 
@@ -2130,7 +2161,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             pid: "ES-DIR3-EA0035768",
             Participating Org: "ACCIONA MICROENERGÍA PANAMÁ",
@@ -2139,7 +2170,7 @@ Result
             type: null
         }
     ],
-    duration: 5.93
+    time: 5.93
 }
 ```
 
@@ -2163,13 +2194,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             org_id: "XM-DAC-41122",
             count: "14359"
         },
     ],
-    duration: 0.493
+    time: 0.493
 }
 ```
 
@@ -2193,7 +2224,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             narrative: "[{\"\": \"Should contribute directly to results for children as outlined in the UNDAF, national results and/or UNICEF Strategic Plan and within the scope defined in the CPD, CPAP, OMP or other agreed upon programme documents\", \"@xml:lang\": \"EN\"}]",
             condition_type: "1",
@@ -2201,7 +2232,7 @@ Result
             count: "14359"
         },
     ],
-    duration: 0.55
+    time: 0.55
 }
 ```
 
@@ -2225,14 +2256,14 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             narrative: "[{\"\": \"Should contribute directly to results for children as outlined in the UNDAF, national results and/or UNICEF Strategic Plan and within the scope defined in the CPD, CPAP, OMP or other agreed upon programme documents\", \"@xml:lang\": \"EN\"}]",
             org: "XM-DAC-41122",
             count: "14359"
         },
     ],
-    duration: 1.696
+    time: 1.696
 }
 ```
 
@@ -2263,14 +2294,14 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             old_id: "US-GOV",
             new_id: "US-USAGOV",
             count: "279337"
         },
     ],
-    duration: 2.415
+    time: 2.415
 }
 ```
 
@@ -2301,14 +2332,14 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             old_id: "41140",
             new_id: "XM-DAC-41140-200119",
             count: "1"
         }
     ],
-    duration: 0.274
+    time: 0.274
 }
 ```
 
@@ -2334,14 +2365,14 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             old_id: "47122-0205-CIV-02-Y",
             new_id: "47122-CIV-ISS",
             count: "1"
         }
     ],
-    duration: 0.327
+    time: 0.327
 }
 ```
 
@@ -2374,7 +2405,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "BE-10-3013816",
             pid: "XM-DAC-2-10",
@@ -2389,7 +2420,7 @@ Result
             }
         }
     ],
-    duration: 0.007
+    time: 0.007
 }
 ```
 
@@ -2411,12 +2442,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "GB-CHC-288701-IN110"
         }
     ],
-    duration: 0.216
+    time: 0.216
 }
 ```
 
@@ -2440,13 +2471,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "SE-ON-802005-9823-LA-500399",
             jsonb_array_length: 63
         }
     ],
-    duration: 13.104
+    time: 13.104
 }
 ```
 
@@ -2468,7 +2499,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             jsonb_array_length: 1
         },
@@ -2482,7 +2513,7 @@ Result
             jsonb_array_length: null
         }
     ],
-    duration: 5.479
+    time: 5.479
 }
 ```
 
@@ -2499,12 +2530,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "GB-CHC-1045348-Families' Empowerment Project"
         }
     ],
-    duration: 18.991
+    time: 18.991
 }
 ```
 
@@ -2526,13 +2557,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             code: "KE",
             percentage: "0"
         }
     ],
-    duration: 2.845
+    time: 2.845
 }
 ```
 
@@ -2551,13 +2582,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             code: "TR",
             percentage: 0.0084
         }
     ],
-    duration: 0.007
+    time: 0.007
 }
 ```
 
@@ -2582,7 +2613,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             jsonb_array_length: 2,
             aid: "XM-DAC-301-2-107720-001",
@@ -2605,7 +2636,7 @@ Result
             }
         }
     ],
-    duration: 3.428
+    time: 3.428
 }
 ```
 
@@ -2638,13 +2669,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Number of activities: "21144",
             Publisher: "XM-DAC-41114"
         }
     ],
-    duration: 0.825
+    time: 0.825
 }
 ```
 
@@ -2670,13 +2701,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Number of activities: "21218",
             Publisher: "XM-DAC-41114"
         }
     ],
-    duration: 1.656
+    time: 1.656
 }
 ```
 
@@ -2700,7 +2731,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "XM-DAC-41114-PROJECT-00128417"
         },
@@ -2732,7 +2763,7 @@ Result
             aid: "XM-DAC-41114-PROJECT-00131086"
         }
     ],
-    duration: 0.575
+    time: 0.575
 }
 ```
 
@@ -2758,13 +2789,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Publisher: "GB-EDU-133784",
             aid: "GB-EDU-133784-EquiTrauma130036"
         }
     ],
-    duration: 0.473
+    time: 0.473
 }
 ```
 
@@ -2786,13 +2817,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Number of activities: "1",
             Publisher: "GB-CHC-1110434"
         }
     ],
-    duration: 0.559
+    time: 0.559
 }
 ```
 
@@ -2818,13 +2849,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Number of activities: "39",
             Publisher: "NL-KVK-40409352"
         }
     ],
-    duration: 0.06
+    time: 0.06
 }
 ```
 
@@ -2842,12 +2873,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             Sum of all Disbursements in USD: 485037470000
         }
     ],
-    duration: 6.617
+    time: 6.617
 }
 ```
 
@@ -2871,13 +2902,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "NL-KVK-41160054-112859",
             pid: "NL-KVK-41160054"
         }
     ],
-    duration: 0.654
+    time: 0.654
 }
 ```
 
@@ -2901,14 +2932,14 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "44000-P150481",
             pid: "44000",
             root: "/iati-activities/iati-activity",
             xson: {
                 /budget: [144 items],
-                /result: [24 items],
+                /rows: [24 items],
                 @xml:lang: "EN",
                 @hierarchy: 1,
                 /description: [1 item],
@@ -2940,7 +2971,7 @@ Result
             }
         }
     ],
-    duration: 0.029
+    time: 0.029
 }
 ```
 
@@ -2959,7 +2990,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "XM-DAC-41114-PROJECT-00038671",
             pid: "XM-DAC-41114",
@@ -2974,7 +3005,7 @@ Result
             }
         }
     ],
-    duration: 0.013
+    time: 0.013
 }
 ```
 
@@ -2999,12 +3030,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "44000-P150481"
         }
     ],
-    duration: 0.017
+    time: 0.017
 }
 ```
 
@@ -3030,13 +3061,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             code: null,
             count: "28222"
         }
     ],
-    duration: 0.131
+    time: 0.131
 }
 ```
 
@@ -3081,7 +3112,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "CZ-ICO-25755277-AGOZ000116",
             reporting: "People in Need",
@@ -3107,7 +3138,7 @@ Result
             country_percent: 100
         }
     ],
-    duration: 2.411
+    time: 2.411
 }
 ```
 
@@ -3161,7 +3192,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             publisher: "BD-NAB-1301",
             activity: 1301-4.0000,
@@ -3183,7 +3214,7 @@ Result
             url: https://www.ti-bangladesh.org/beta3/index.php/en/
         }
     ],
-    duration: 0.012
+    time: 0.012
 }
 ```
 
@@ -3212,7 +3243,7 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             publisher: "US-EIN-11-3803281",
             activity: "US-EIN-11-3803281-ATF 2",
@@ -3220,7 +3251,7 @@ Result
             url: http://acetforafrica.org/ATF/
         }
     ],
-    duration: 3.75
+    time: 3.75
 }
 ```
 
@@ -3245,13 +3276,13 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             publisher: "US-USAGOV",
             count: "739161"
         }
     ],
-    duration: 3.327
+    time: 3.327
 }
 ```
 
@@ -3274,12 +3305,12 @@ Result
 
 ```jsonc
 {
-    result: [
+    rows: [
         {
             reporting_ref: "GH-DSW-4711 "
         }
     ],
-    duration: 3.719
+    time: 3.719
 }
 ```
 
@@ -3299,13 +3330,13 @@ limit 1;
 ```
 ```jsonc
 {
-    result: [
+    rows: [
         {
             aid: "41119-SO-O1-RT",
             updated: "2021-05-04T12:50:39"
         }
     ],
-    duration: 0.66
+    time: 0.66
 }
 ```
 
@@ -3331,8 +3362,8 @@ order by updated desc
 ```
 ```jsonc
 {
-    result: [9310 items],
-    duration: 19.626
+    rows: [9310 items],
+    time: 19.626
 }
 ```
 
@@ -3351,8 +3382,8 @@ order by updated desc
 ```
 ```jsonc
 {
-    result: [9310 items],
-    duration: 4.289
+    rows: [9310 items],
+    time: 4.289
 }
 ```
 
