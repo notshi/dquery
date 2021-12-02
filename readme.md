@@ -829,7 +829,7 @@ from xson where root='/iati-activities/iati-activity'
 and xson->>'@dstore:dataset' = 'slovakaid-69_1_ac'
 group by reporting_org
 order by reporting_org
-limit1 ;
+limit 1;
 ```
 
 Result
