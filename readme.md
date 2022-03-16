@@ -82,8 +82,8 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display full activity data with attribute of certain value](#display-full-activity-data-with-attribute-of-certain-value)
   - [Display unique activity identifiers with attribute of certain value](#display-unique-activity-identifiers-with-attribute-of-certain-value)
   - [Get a table of most used values sorted by count](#get-a-table-of-most-used-values-sorted-by-count)
-  - [Display the number of humanitarian activities for multiple countries](#display-the-number-of-humanitarian-activities-for-multiple-countries)
-  - [Display number of activities with search term in transaction narrative for multiple countries](#display-number-of-activities-with-search-term-in-transaction-narrative-for-multiple-countries)
+  - [Find humanitarian activities at activity level for multiple countries](#find-humanitarian-activities-at-activity-level-for-multiple-countries)
+  - [Freetext search in transaction narrative for multiple countries](#freetext-search-in-transaction-narrative-for-multiple-countries)
   - [Freetext search on humanitarian activities including transactions for multiple countries](#freetext-search-on-humanitarian-activities-including-transactions-for-multiple-countries)
   - [Display all activities for a country_code within COVID-19](#display-all-activities-for-a-country_code-within-covid-19)
   - [Flattening `document-link` with higher level elements in `iati-activity`](#flattening-document-link-with-higher-level-elements-in-iati-activity)
@@ -3076,7 +3076,11 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
-## Display the number of top-tier humanitarian activities for multiple countries
+## Find humanitarian activities at activity level for multiple countries
+
+Use `distinct` to *only* count unique activities to avoid double counting.
+
+Replace `count(distinct aid)` with `distinct aid` to get a list of identifiers instead.
 
 ```sql
 SELECT count(distinct aid) FROM xson WHERE
@@ -3104,11 +3108,16 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
-## Display number of activities with search term in transaction narrative for multiple countries
+## Freetext search in transaction narrative for multiple countries
+
+Use `distinct` to *only* count unique activities to avoid double counting.
+
+Replace `count(distinct aid)` with `distinct aid` to get a list of identifiers instead.
 
 ```sql
 SELECT count(distinct aid) FROM xson WHERE
-root='/iati-activities/iati-activity/transaction/description/narrative' AND to_tsvector('simple', xson->>'') @@ to_tsquery('simple','''climate change''') AND
+root='/iati-activities/iati-activity/transaction/description/narrative' AND
+to_tsvector('simple', xson->>'') @@ to_tsquery('simple','''climate change''') AND
 aid in (
     SELECT aid FROM xson WHERE
     root = '/iati-activities/iati-activity/recipient-country' AND
@@ -3132,6 +3141,10 @@ Result
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
 ## Freetext search on humanitarian activities including transactions for multiple countries
+
+Use `distinct` to *only* count unique activities to avoid double counting.
+
+Replace `count(distinct x1.aid)` with `distinct x1.aid` to get a list of identifiers instead.
 
 ```sql
 SELECT COUNT(DISTINCT x1.aid) FROM (
