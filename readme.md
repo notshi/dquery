@@ -82,6 +82,9 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display full activity data with attribute of certain value](#display-full-activity-data-with-attribute-of-certain-value)
   - [Display unique activity identifiers with attribute of certain value](#display-unique-activity-identifiers-with-attribute-of-certain-value)
   - [Get a table of most used values sorted by count](#get-a-table-of-most-used-values-sorted-by-count)
+  - [Display the number of humanitarian activities for multiple countries](#display-the-number-of-humanitarian-activities-for-multiple-countries)
+  - [Display number of activities with search term in transaction narrative for multiple countries](#display-number-of-activities-with-search-term-in-transaction-narrative-for-multiple-countries)
+  - [Freetext search on humanitarian activities including transactions for multiple countries](#freetext-search-on-humanitarian-activities-including-transactions-for-multiple-countries)
   - [Display all activities for a country_code within COVID-19](#display-all-activities-for-a-country_code-within-covid-19)
   - [Flattening `document-link` with higher level elements in `iati-activity`](#flattening-document-link-with-higher-level-elements-in-iati-activity)
   - [Display unique `document-link@url`, publisher and activity identifier](#display-unique-document-linkurl-publisher-and-activity-identifier)
@@ -3068,6 +3071,112 @@ Result
         }
     ],
     time: 0.131
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+## Display the number of top-tier humanitarian activities for multiple countries
+
+```sql
+SELECT count(distinct aid) FROM xson WHERE
+root = '/iati-activities/iati-activity' AND
+xson->>'@humanitarian' = '1' AND
+aid in (
+    SELECT aid FROM xson WHERE
+    root = '/iati-activities/iati-activity/recipient-country' AND
+    xson->>'@code' IN ( 'UG' , 'BD' , 'HN' )
+)
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            count: "2589"
+        }
+    ],
+    time: 1.462
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+## Display number of activities with search term in transaction narrative for multiple countries
+
+```sql
+SELECT count(distinct aid) FROM xson WHERE
+root='/iati-activities/iati-activity/transaction/description/narrative' AND to_tsvector('simple', xson->>'') @@ to_tsquery('simple','''climate change''') AND
+aid in (
+    SELECT aid FROM xson WHERE
+    root = '/iati-activities/iati-activity/recipient-country' AND
+    xson->>'@code' IN ( 'UG' , 'BD' , 'HN' )
+)
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            count: "5"
+        }
+    ],
+    time: 1.294
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+## Freetext search on humanitarian activities including transactions for multiple countries
+
+```sql
+SELECT COUNT(DISTINCT x1.aid) FROM (
+
+/* The transaction is humanitarian and goes to any of the countries */
+SELECT aid FROM xson WHERE
+    root = '/iati-activities/iati-activity/transaction' AND
+    xson->>'@humanitarian' = '1' AND
+    xson->>'/recipient-country@code' IN ( 'UG' , 'BD' , 'HN' )
+
+UNION
+
+/* The activity is humanitarian and lists any of the countries */
+SELECT aid FROM xson WHERE
+    root = '/iati-activities/iati-activity' AND
+    xson->>'@humanitarian' = '1' AND
+    aid in (
+        SELECT aid FROM xson WHERE
+        root = '/iati-activities/iati-activity/recipient-country' AND
+        xson->>'@code' IN ( 'UG' , 'BD' , 'HN' )
+    )
+
+) AS x1
+
+INNER JOIN
+
+(
+
+/* Narrative search in all descriptions */
+SELECT aid FROM xson WHERE
+to_tsvector('simple', xson->>'') @@ to_tsquery('simple','''coffee''')
+
+) AS x2 ON x1.aid=x2.aid
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            count: "4"
+        }
+    ],
+    time: 4.143
 }
 ```
 
