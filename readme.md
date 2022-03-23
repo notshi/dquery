@@ -78,6 +78,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Diplay list of Publishers reporting SDG Goals and Targets](#diplay-list-of-publishers-reporting-sdg-goals-and-targets)
   - [Diplay `sum` of all transaction types that are `@code` 3](#diplay-sum-of-all-transaction-types-that-are-code-3)
   - [Display activities with more than 10 `actual` values reported in results data](#display-activities-with-more-than-10-actual-values-reported-in-results-data)
+  - [Display activities with more than 1 comment reported in results data](#display-activities-with-more-than-1-comment-reported-in-results-data)
   - [Subquery to get full activity data](#subquery-to-get-full-activity-data)
   - [Display full activity data with attribute of certain value](#display-full-activity-data-with-attribute-of-certain-value)
   - [Display unique activity identifiers with attribute of certain value](#display-unique-activity-identifiers-with-attribute-of-certain-value)
@@ -2912,6 +2913,53 @@ Result
         }
     ],
     time: 0.654
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display activities with more than 1 comment reported in results data
+
+We also want to display the comments, the activity identifier and order the results with the most at the top.
+
+```sql
+select jsonb_array_length(xson -> '/comment/narrative') as "Comment", aid, xson
+from xson
+where root='/iati-activities/iati-activity/result/indicator/period/actual'
+and jsonb_array_length(xson -> '/comment/narrative') > 1
+order by 1 desc
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            Comment: 2,
+            aid: "47045-SEN-H-ANCS",
+            xson: {
+                /dimension: [
+                    {
+                        @name: "Age",
+                        @value: "<25"
+                    }
+                ],
+                /comment/narrative: [
+                    {
+                        : "Numerator: 19.1",
+                        @xml:lang: "EN"
+                    },
+                    {
+                        : "Target for: 2018",
+                        @xml:lang: "EN"
+                    }
+                ]
+            }
+        }
+    ],
+    time: 1.448
 }
 ```
 
