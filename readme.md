@@ -71,7 +71,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display a list of changed IATI activity identifiers](#display-a-list-of-changed-iati-activity-identifiers)
   - [Display full activity data within an element for multiple identifiers](#display-full-activity-data-within-an-element-for-multiple-identifiers)
   - [Display identifiers of activities that are published in version 1 of the standard](#display-identifiers-of-activities-that-are-published-in-version-1-of-the-standard)
-  - [Display identifiers sorted by the second column (narrative) in descending order](#display-identifiers-sorted-by-the-second-column-narrative-in-descending-order)
+  - [Find the activity with most number of `narrative` in an element](#find-the-activity-with-most-number-of-narrative-in-an-element)
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
   - [Display `@percentage` reported for `recipient-country`, starting with the lowest number](#display-percentage-reported-for-recipient-country-starting-with-the-lowest-number)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
@@ -1828,276 +1828,7 @@ Result
         {
             jsonb_array_length: 2
         },
-        {
-            jsonb_array_length: 3
-        },
-        {
-            jsonb_array_length: 4
-        },
-        {
-            jsonb_array_length: 5
-        },
-        {
-            jsonb_array_length: 6
-        },
-        {
-            jsonb_array_length: 7
-        },
-        {
-            jsonb_array_length: 8
-        },
-        {
-            jsonb_array_length: 9
-        },
-        {
-            jsonb_array_length: 10
-        },
-        {
-            jsonb_array_length: 11
-        },
-        {
-            jsonb_array_length: 12
-        },
-        {
-            jsonb_array_length: 13
-        },
-        {
-            jsonb_array_length: 14
-        },
-        {
-            jsonb_array_length: 15
-        },
-        {
-            jsonb_array_length: 16
-        },
-        {
-            jsonb_array_length: 17
-        },
-        {
-            jsonb_array_length: 18
-        },
-        {
-            jsonb_array_length: 19
-        },
-        {
-            jsonb_array_length: 20
-        },
-        {
-            jsonb_array_length: 21
-        },
-        {
-            jsonb_array_length: 22
-        },
-        {
-            jsonb_array_length: 23
-        },
-        {
-            jsonb_array_length: 24
-        },
-        {
-            jsonb_array_length: 25
-        },
-        {
-            jsonb_array_length: 26
-        },
-        {
-            jsonb_array_length: 27
-        },
-        {
-            jsonb_array_length: 28
-        },
-        {
-            jsonb_array_length: 29
-        },
-        {
-            jsonb_array_length: 30
-        },
-        {
-            jsonb_array_length: 31
-        },
-        {
-            jsonb_array_length: 32
-        },
-        {
-            jsonb_array_length: 33
-        },
-        {
-            jsonb_array_length: 34
-        },
-        {
-            jsonb_array_length: 35
-        },
-        {
-            jsonb_array_length: 36
-        },
-        {
-            jsonb_array_length: 37
-        },
-        {
-            jsonb_array_length: 38
-        },
-        {
-            jsonb_array_length: 39
-        },
-        {
-            jsonb_array_length: 40
-        },
-        {
-            jsonb_array_length: 41
-        },
-        {
-            jsonb_array_length: 42
-        },
-        {
-            jsonb_array_length: 43
-        },
-        {
-            jsonb_array_length: 44
-        },
-        {
-            jsonb_array_length: 45
-        },
-        {
-            jsonb_array_length: 46
-        },
-        {
-            jsonb_array_length: 47
-        },
-        {
-            jsonb_array_length: 48
-        },
-        {
-            jsonb_array_length: 49
-        },
-        {
-            jsonb_array_length: 50
-        },
-        {
-            jsonb_array_length: 51
-        },
-        {
-            jsonb_array_length: 52
-        },
-        {
-            jsonb_array_length: 53
-        },
-        {
-            jsonb_array_length: 54
-        },
-        {
-            jsonb_array_length: 55
-        },
-        {
-            jsonb_array_length: 56
-        },
-        {
-            jsonb_array_length: 57
-        },
-        {
-            jsonb_array_length: 58
-        },
-        {
-            jsonb_array_length: 59
-        },
-        {
-            jsonb_array_length: 60
-        },
-        {
-            jsonb_array_length: 61
-        },
-        {
-            jsonb_array_length: 62
-        },
-        {
-            jsonb_array_length: 63
-        },
-        {
-            jsonb_array_length: 64
-        },
-        {
-            jsonb_array_length: 65
-        },
-        {
-            jsonb_array_length: 66
-        },
-        {
-            jsonb_array_length: 67
-        },
-        {
-            jsonb_array_length: 68
-        },
-        {
-            jsonb_array_length: 69
-        },
-        {
-            jsonb_array_length: 70
-        },
-        {
-            jsonb_array_length: 71
-        },
-        {
-            jsonb_array_length: 72
-        },
-        {
-            jsonb_array_length: 78
-        },
-        {
-            jsonb_array_length: 79
-        },
-        {
-            jsonb_array_length: 82
-        },
-        {
-            jsonb_array_length: 84
-        },
-        {
-            jsonb_array_length: 85
-        },
-        {
-            jsonb_array_length: 86
-        },
-        {
-            jsonb_array_length: 88
-        },
-        {
-            jsonb_array_length: 91
-        },
-        {
-            jsonb_array_length: 92
-        },
-        {
-            jsonb_array_length: 98
-        },
-        {
-            jsonb_array_length: 100
-        },
-        {
-            jsonb_array_length: 107
-        },
-        {
-            jsonb_array_length: 108
-        },
-        {
-            jsonb_array_length: 114
-        },
-        {
-            jsonb_array_length: 117
-        },
-        {
-            jsonb_array_length: 120
-        },
-        {
-            jsonb_array_length: 123
-        },
-        {
-            jsonb_array_length: 125
-        },
-        {
-            jsonb_array_length: 138
-        },
-        {
-            jsonb_array_length: 186
-        },
+        ...
         {
             jsonb_array_length: 203
         },
@@ -2108,6 +1839,8 @@ Result
     time: 7.423
 }
 ```
+
+*Note: The example above has been truncated at `...` to reduce space.*
 
 From the results, we can see that the most number of `participating-org` you can find in an activity is 203.
 
@@ -2457,7 +2190,15 @@ Result
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
-### Display identifiers sorted by the second column (narrative) in descending order
+### Find the activity with most number of `narrative` in an element
+
+For this query, we wanted to find the activity that has the most number of `narrative` elements (arrays) in a single field.  
+The activity, at the time of query, has 63 `narrative` elements in a single `participating-org`.
+
+This is a rare occurance and an example of a **data issue**.
+
+In this context, `narrative` is being used as multiple `participating-org` and not a freetext name for the same organisation in different languages, as [stated in the standard](https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/participating-org/narrative/).
+
 You can order by `aid` and `desc` as well.
 
 ```sql
