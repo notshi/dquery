@@ -64,6 +64,9 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display `participating-org` with their `@role`, `@ref`, `@type` and include associated transaction types](#display-participating-org-with-their-role-ref-type-and-include-associated-transaction-types)
   - [Display number of `participating-org` found in activities and then display the activity with the most](#display-number-of-participating-org-found-in-activities-and-then-display-the-activity-with-the-most)
   - [Display all `participating-org` names, grouped by `@ref`](#display-all-participating-org-names-grouped-by-ref)
+  - [Display the `participating-org@ref` with the most narratives](#display-the-participating-org-ref-with-the-most-narratives)
+  - [Display all `narrative` grouped by `participating-org@ref`](#display-all-narrative-grouped-by-participating-org-ref)
+  - [Display all narratives and their count for a specific `participating-org@ref`](#display-all-narratives-and-their-count-for-a-specific-participating-org-ref)
   - [Display all publishers with `conditions@attached` as YES](#display-all-publishers-with-conditionsattached-as-yes)
   - [Display narratives and count, grouped by publishers with `condition@type`](#display-narratives-and-count-grouped-by-publishers-with-conditiontype)
   - [Display narratives grouped by publishers with `condition@type` 1](#display-narratives-grouped-by-publishers-with-conditiontype-1)
@@ -1913,6 +1916,225 @@ Result
         }
     ],
     time: 5.93
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display the `participating-org@ref` with the most narratives
+
+This query gets you the reference number with the most narratives.
+
+Usually it is better to ignore `null` results but in this case, to get a clearer picture of all data published, it is important to highlight **data issues** published in this element.
+
+Publishing `null` as reference numbers will make it harder for data consumers to attempt traceability analysis and networked data, and thus accountablity for all organisations involved.
+
+```sql
+select ref,
+count(*)
+from (
+
+    select
+    xson->>'@ref' as ref ,
+    xson->'/narrative'->0->>'' as narrative ,
+    count(*)
+    from xson where root='/iati-activities/iati-activity/participating-org' 
+    group by 1,2
+    
+) as q1
+
+group by 1
+order by 2 desc
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            ref: null,
+            count: "103665"
+        }
+    ],
+    time: 17.233
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display all `narrative` grouped by `participating-org@ref`
+
+This query displays all the narratives found for all participating-org reference numbers.
+
+Grouping the query by `@ref` makes it possible to view all the different narratives per organisation.
+
+When an organisation publishes a report, there are various ways to spell a name of an organisation.  
+IATI does not have an official list so it is useful to know what has been published to get a sense of what names are being used out there.
+
+```sql
+select
+ref,
+count(*),
+array_to_string(array_agg(narrative), '
+') as narrative
+from (
+    
+    select
+    xson->>'@ref' as ref ,
+    xson->'/narrative'->0->>'' as narrative ,
+    count(*)
+    
+    from xson where root='/iati-activities/iati-activity/participating-org' 
+    and xson->'/narrative'->0->>'' is not null
+    and xson->>'@ref' is not null
+    
+    group by 1,2
+
+) as q1
+
+group by 1
+order by 2 desc
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+			ref: "XM-DAC-47066",
+			count: "20",
+			narrative: "******
+			International Organisation for Migration
+			International Organisation for Migration (IOM)
+			International Organization for Migration
+			INTERNATIONAL ORGANIZATION FOR MIGRATION
+			International Organization for Migration, China
+			INTERNATIONAL ORGANIZATION FOR MIGRATION (INT)
+			International Organization for Migration (IOM)
+			International Organization for Migration, Regional Office for West and Central Africa, Senegal
+			International Organization for Migration, Sri Lanka
+			Int'l Organization for Migration
+			IOM
+			IOM Development Fund
+			IOM (International Organisation for Migration)
+			IOM (International Organization for Migration)
+			IOM – International Organization for Migration
+			IOM - ORGANIZZAZIONE INTERNAZIONALE PER LE MIGRAZIONI
+			Organisation internationale des migrations
+			Private Individual Donations
+			USAID - U.S. Agency for International Development"
+        },
+    ],
+    time: 8.885
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display all narratives and their count for a specific `participating-org@ref`
+
+This query gets you all the narratives for one reference number and the number of times that narrative is found in the database.
+
+```sql
+select
+xson->>'@ref' as participating_org_ref, 
+xson->'/narrative'->0->>'' as narrative, 
+count(*)
+
+from xson where root='/iati-activities/iati-activity/participating-org' 
+and xson->>'@ref'='GB-COH-213890'
+
+group by
+narrative,
+participating_org_ref
+
+order by 3 desc
+limit 100;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save The Children UK",
+            count: "2286"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children UK",
+            count: "564"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children",
+            count: "23"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children UK (Start Fund)",
+            count: "22"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children (Start Fund)",
+            count: "20"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "HET NEDERLANDSE RODE KRUIS (NLD)",
+            count: "16"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Elrha (Hosted by Save the Children UK)",
+            count: "7"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children Fund (SCUK)",
+            count: "2"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children Mozambique",
+            count: "1"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children Fund",
+            count: "1"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children (Start Network)",
+            count: "1"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save the Children Ethiopia",
+            count: "1"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "Save The Children",
+            count: "1"
+        },
+        {
+            participating_org_ref: "GB-COH-213890",
+            narrative: "SAVE",
+            count: "1"
+        }
+    ],
+    time: 6.761
 }
 ```
 
