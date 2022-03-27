@@ -110,15 +110,20 @@ Some example recipes.
 View results in the browser. ( _Keyboard Shortcut_ **Ctrl** + **Enter** )  
 *Please limit your results! If queries are complex, this can slow down the browser.*  
 
+**Explain**  
+Inserts the SQL keyword, "explain" in front of your query.  
+Tells you how the query will run instead of running it.  
+*Can be used to optimise queries.*
+
 **View on d-portal**  
 View the results of the query on the d-portal website.  
 *Only works if query includes activity identifiers using the `aid` command.*
 
 **Download**  
-Download data in various formats without viewing results in the browser.
+Download data in various formats **without** viewing results in the browser.
 
 **How to**  
-Sends you to this documentation page.
+Sends you to this documentation page in a new window/tab.
 
 You can drag the partition to increase or decrease the space of either panel.  
 
