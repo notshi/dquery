@@ -1974,6 +1974,12 @@ Grouping the query by `@ref` makes it possible to view all the different narrati
 When an organisation publishes a report, there are various ways to spell a name of an organisation.  
 IATI does not have an official list so it is useful to know what has been published to get a sense of what names are being used out there.
 
+In this example, the `@ref` number XM-DAC-47066 has been published with 20 different names by different organisations in their activities data.  
+The [standard states](https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/participating-org/narrative/) that you can publish as many narratives as you want for an organisation name because it might differ depending on language.  
+This explains some of the different names listed below but not all.
+
+From the data we've seen, and as per the example below, it is usually a different combination of lower and uppercase letters that account for the different names.
+
 ```sql
 select
 ref,
