@@ -2525,7 +2525,7 @@ Result
 
 This query lists the number of active projects grouped by `recipient-country` using the `act` table.
 
-Publishers can sometimes report invalid countries like '999' or even leave this field none so this query can really highlight this **data issue**.
+Publishers can sometimes report invalid countries like '999' or even leave this field empty so this query can really highlight this **data issue**.
 
 On d-portal, we do a number of calculations to determine if an activity is still active.  
 We ignore the `activity-status` as this is usually inaccurate or not up-to-date.
