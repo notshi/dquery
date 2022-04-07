@@ -76,6 +76,8 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display identifiers of activities that are published in version 1 of the standard](#display-identifiers-of-activities-that-are-published-in-version-1-of-the-standard)
   - [Find the activity with most number of `narrative` in an element](#find-the-activity-with-most-number-of-narrative-in-an-element)
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
+  - [Display active projects grouped by country](#display-active-projects-grouped-by-country)
+  - [Freetext search for activities starting in year 2022](#freetext-search-for-activities-starting-in-year-2022)
   - [Display `@percentage` reported for `recipient-country`, starting with the lowest number](#display-percentage-reported-for-recipient-country-starting-with-the-lowest-number)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
   - [Diplay list of Publishers reporting SDG Goals and Targets](#diplay-list-of-publishers-reporting-sdg-goals-and-targets)
@@ -2515,6 +2517,87 @@ Result
     ],
     time: 18.991
 }
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display active projects grouped by country
+
+This query lists the number of active projects grouped by `recipient-country` using the `act` table.
+
+Publishers can sometimes report invalid countries like '999' or even leave this field none so this query can really highlight this **data issue**.
+
+On d-portal, we do a number of calculations to determine if an activity is still active.  
+We ignore the `activity-status` as this is usually inaccurate or not up-to-date.
+
+Instead, we use a mixture of start and end dates in relation to today's date using the `epoch from now()` PostgreSQL function.
+
+```sql
+select count(distinct aid) as count, country_code
+from act join country using (aid) where
+    
+    day_start <= floor(extract(epoch from now())/(60*60*24)) and
+    (day_end >= floor(extract(epoch from now())/(60*60*24)) or day_end is null) and  
+    day_length is not null
+    
+group by country_code
+limit 1;
+```
+
+Resul
+
+```jsonc
+{
+    rows: [
+        {
+            count: "33",
+            country_code: "KN"
+        }
+    ],
+    time: 0.052
+}
+```
+
+You can add the following to order the list by the most number of activities at the top.
+
+```sql
+order by count desc
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Freetext search for activities starting in year 2022
+
+For this query, we use an inner join to search within certain parameters.
+
+In this case, for a freetext search for `cookies`, we want only activities that took place from the start of 2022 to before the start of 2023.
+
+```sql
+SELECT DISTINCT x1.aid FROM (
+
+/* Date starts from 2022 only */
+select aid from act where
+    day_start > ((2022-1970)*365.25) and
+    day_start < ((2023-1970)*365.25)
+
+) AS x1
+
+INNER JOIN
+
+(
+
+/* Narrative search in all description */
+SELECT aid FROM xson WHERE to_tsvector('simple', xson->>'') @@ to_tsquery('simple','''cookies''')
+
+) AS x2 ON x1.aid=x2.aid
+
+limit 1;
+```
+
+Result
+
+```jsonc
+
 ```
 
 <p align="right"><a href="#tada-introduction">To Top</a></p>
