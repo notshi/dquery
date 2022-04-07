@@ -2544,7 +2544,7 @@ group by country_code
 limit 1;
 ```
 
-Resul
+Result
 
 ```jsonc
 {
