@@ -78,6 +78,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
   - [Display active projects grouped by country](#display-active-projects-grouped-by-country)
   - [Freetext search for activities starting in year 2022](#freetext-search-for-activities-starting-in-year-2022)
+  - [Display location data for active projects for a country](#display-location-data-for-active-projects-for-a-country)
   - [Display `@percentage` reported for `recipient-country`, starting with the lowest number](#display-percentage-reported-for-recipient-country-starting-with-the-lowest-number)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
   - [Diplay list of Publishers reporting SDG Goals and Targets](#diplay-list-of-publishers-reporting-sdg-goals-and-targets)
@@ -2604,6 +2605,50 @@ Result
         }
     ],
     time: 0.45
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display location data for active projects for a country
+
+We want location data, specifically the longitude and latitude, so that we can display these activities on a map.
+
+Using the `act` table, this query also includes the IATI activity identifier and title.
+
+```sql
+select * from (
+select distinct aid, title
+from act join country using (aid) where
+    
+    day_start <= floor(extract(epoch from now())/(60*60*24))  and
+    (day_end >= floor(extract(epoch from now())/(60*60*24)) or day_end is null)  and  
+    day_length is not null
+    
+and country_code='af'
+) as q1 join location using (aid)
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            aid: "41119-AF-O1-RT",
+            title: "UNFPA Afghanistan Improved programming for results activities",
+            location_code: null,
+            location_gazetteer_ref: null,
+            location_gazetteer: null,
+            location_name: "Afghanistan",
+            location_longitude: 67.679,
+            location_latitude: 33.93,
+            location_precision: null,
+            location_percent: null
+        }
+    ],
+    time: 0.099
 }
 ```
 
