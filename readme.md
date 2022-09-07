@@ -743,13 +743,10 @@ limit 1;
 
 The following dumps can be imported locally and queried using the same SQL code that is used on the web interface so you can run large queries on it without clogging up d-portal.
 
-1. PostgreSQL dump *(Updated nightly)*  
-    [http://d-portal.org/db/dstore.sql.gz](http://d-portal.org/db/dstore.sql.gz)
-
-2. `pg_dump` custom format so `pg_restore` can be used with its various options *(Updated nightly)*  
+1. PostgreSQL `pg_dump` custom format so `pg_restore` can be used with its various options *(Updated nightly)*  
     [http://d-portal.org/db/dstore.pg](http://d-portal.org/db/dstore.pg)
 
-3. A zip of all the raw cached xml *(Updated nightly)*  
+2. A zip of all the raw cached xml *(Updated nightly)*  
     [http://d-portal.org/db/cache.xml.zip](http://d-portal.org/db/cache.xml.zip)
 
 
