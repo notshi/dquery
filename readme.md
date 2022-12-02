@@ -2616,6 +2616,8 @@ An example of this is when we find text in `@iso-date`; ie. "Inception start dat
 We only want activities that have a planned start date (`@type` is 1).  
 We use `distinct` so we do not double count any activities.
 
+[View this query](https://d-portal.org/dquery/#SELECT%20count%28distinct%20aid%29%20FROM%0A%28%0A%20%20%20%20SELECT%20aid,%20%20%28regexp_matches%28%20xson-%3E%3E%27@iso-date%27%20,%20%27%5Cd%7B4%7D-%5Cd%7B2%7D-%5Cd%7B2%7D%27%20%29%29%5B1%5D::DATE%20AS%20startdate%0A%20%20%20%20FROM%20xson%0A%20%20%20%20WHERE%0A%20%20%20%20%20%20%20%20root=%27/iati-activities/iati-activity/activity-date%27%0A%20%20%20%20AND%0A%20%20%20%20%20%20%20%20xson-%3E%3E%27@type%27=%271%27%0A%20%20%20%20%20%20%20%20%0A%29%20AS%20aiddates%20WHERE%20aiddates.startdate%20%3E%20%272021-01-01%27::DATE%0A%0A) on dQuery.
+
 ```sql
 SELECT count(distinct aid) FROM
 (
