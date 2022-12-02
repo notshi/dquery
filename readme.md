@@ -78,6 +78,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
   - [Display active projects grouped by country](#display-active-projects-grouped-by-country)
   - [Freetext search for activities starting in year 2022](#freetext-search-for-activities-starting-in-year-2022)
+  - [Count active projects from 2021 onwards](#count-active-projects-from-2021-onwards)
   - [Display location data for active projects for a country](#display-location-data-for-active-projects-for-a-country)
   - [Display `@percentage` reported for `recipient-country`, starting with the lowest number](#display-percentage-reported-for-recipient-country-starting-with-the-lowest-number)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
@@ -2602,6 +2603,41 @@ Result
         }
     ],
     time: 0.45
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Count active projects from 2021 onwards
+
+This query adds a regex check to make sure the `@iso-date` is valid instead of throwing up an error when unexpected data is found.  
+An example of this is when we find text in `@iso-date`; ie. "Inception start date 28/10/2016".
+
+We use `distinct` so we do not double count any activities.
+
+```sql
+SELECT count(distinct aid) FROM
+(
+    SELECT aid,  (regexp_matches( xson->>'@iso-date' , '\d{4}-\d{2}-\d{2}' ))[1]::DATE AS startdate
+    FROM xson
+    WHERE
+        root='/iati-activities/iati-activity/activity-date'
+    AND
+        xson->>'@type'='1'
+       
+) AS aiddates WHERE aiddates.startdate > '2021-01-01'::DATE
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            count: "66843"
+        }
+    ],
+    time: 10.258
 }
 ```
 
