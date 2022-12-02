@@ -2613,6 +2613,7 @@ Result
 This query adds a regex check to make sure the `@iso-date` is valid instead of throwing up an error when unexpected data is found.  
 An example of this is when we find text in `@iso-date`; ie. "Inception start date 28/10/2016".
 
+We only want activities that have a planned start date (`@type` is 1).  
 We use `distinct` so we do not double count any activities.
 
 ```sql
