@@ -2644,7 +2644,7 @@ Result
 }
 ```
 
-The following uses the `epoch` option to count all activities that starts in 01 January 2021.
+The following uses the `epoch` option to count all activities that start in 01 January 2021.
 
 ```sql
 SELECT count(aid) FROM xson WHERE root = '/iati-activities/iati-activity'
@@ -2668,9 +2668,9 @@ Result
 }
 ```
 
-The following uses the `epoch` option, groups the results by activity and orders the activities by date and description.
+The following uses the `epoch` option, groups the results by activity and sorts the activities by date and description.
 
-This is an expensive and large query asking for activity identifiers and its details so adding a `limit` will help the server and your browser.  
+This is an expensive and large query asking for activity identifiers and its details, so adding a `limit` will help the server and your browser.  
 Otherwise, it will attempt to list all 82,366 results!
 
 ```sql
