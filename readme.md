@@ -2670,8 +2670,7 @@ Result
 
 The following uses the `epoch` option, groups the results by activity and sorts the activities by date and description.
 
-This is an expensive and large query asking for activity identifiers and its details, so adding a `limit` will help the server and your browser.  
-Otherwise, it will attempt to list all 82,366 results!
+This is an expensive and large query asking for activity identifiers and its details, so adding a `limit` will help the server and your browser. Otherwise, it will attempt to list all 82,366 results!
 
 ```sql
 SELECT * FROM xson WHERE root = '/iati-activities/iati-activity'
