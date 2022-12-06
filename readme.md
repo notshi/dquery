@@ -2644,6 +2644,62 @@ Result
 }
 ```
 
+The following uses the `epoch` option to count all activities that starts in 01 January 2021.
+
+```sql
+SELECT count(aid) FROM xson WHERE root = '/iati-activities/iati-activity'
+AND aid IN
+(
+  SELECT aid from act WHERE day_start >= FLOOR(EXTRACT(epoch FROM '2021-01-01'::DATE)/(60*60*24))
+)
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            count: "82366"
+        }
+    ],
+    time: 5.735
+}
+```
+
+The following uses the `epoch` option, groups the results by activity and orders the activities by date and description.
+
+This is an expensive and large query asking for activity identifiers and its details so adding a `limit` will help the server and your browser.  
+Otherwise, it will attempt to list all 82,366 results!
+
+```sql
+SELECT * FROM xson WHERE root = '/iati-activities/iati-activity'
+AND aid IN
+(
+  SELECT aid from act WHERE day_start >= FLOOR(EXTRACT(epoch FROM '2021-01-01'::DATE)/(60*60*24))
+  GROUP by aid
+  ORDER BY day_start, aid desc
+)
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            aid: "ZW-ROD-MA0000405/2015-4000004082",
+            pid: "ZW-ROD-MA0000405/2015",
+            root: "/iati-activities/iati-activity",
+            xson: {25 items}
+        }
+    ],
+    time: 0.732
+}
+```
+
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
 ### Display location data for active projects for a country
