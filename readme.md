@@ -51,6 +51,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display duplicate activities and their count](#display-duplicate-activities-and-their-count)
   - [Display IATI Registry dataset for duplicate activities where we know the `iati-identifier`](#display-iati-registry-dataset-for-duplicate-activities-where-we-know-the-iati-identifier)
   - [Exploring traceability within IATI data](#exploring-traceability-within-iati-data)
+  - [Display activities with Sector code in transactions for a specific publisher](#display-activities-with-sector-code-in-transactions-for-a-specific-publisher)
   - [Display top-level elements including namespaces](#display-top-level-elements-including-namespaces)
   - [Filtering on custom namespace elements](#filtering-on-custom-namespace-elements)
   - [Display iati-organisation id with curated elements within `total-budget`](#display-iati-organisation-id-with-curated-elements-within-total-budget)
@@ -1284,6 +1285,36 @@ Result
         }
     ],
     time: 0.004
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Display activities with Sector code in transactions for a specific publisher
+
+This query looks for activities that have a specific 5 Digit Sector code published in the Transaction element of a specified publisher.
+
+[View this query](http://d-portal.org/dquery/#select%20pid%20as%20%22Publisher%22,%20aid%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/transaction/sector'%20%0Aand%20xson-%3E%3E'@code'%20=%20'13040'%0Aand%20pid%20='US-GOV-14'%0Alimit%201) on dQuery.
+
+```sql
+select pid as "Publisher", aid
+from xson where root='/iati-activities/iati-activity/transaction/sector' 
+and xson->>'@code' = '13040'
+and pid ='US-GOV-14'
+limit 1
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {   
+            Publisher: "US-GOV-14",
+        aid: "US-GOV-14-NU2GGH000144"
+		}
+	],
+	time: 0.038
 }
 ```
 
