@@ -1290,7 +1290,7 @@ Result
 
 ### Display activities with Sector code in transactions for a specific publisher
 
-This query looks for activities that have a specific 5 Digit Sector code published in the Transaction element of a specified publisher.
+This query looks for activities that have a 5 Digit Sector code published in the Transaction element for a specific publisher.
 
 [View this query](http://d-portal.org/dquery/#select%20pid%20as%20%22Publisher%22,%20aid%0Afrom%20xson%20where%20root='/iati-activities/iati-activity/transaction/sector'%20%0Aand%20xson-%3E%3E'@code'%20=%20'13040'%0Aand%20pid%20='US-GOV-14'%0Alimit%201) on dQuery.
 
