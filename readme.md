@@ -79,6 +79,7 @@ We are on Discord https://discord.gg/UxvKPVMz
   - [Display number of transactions you can find in an activity](#display-number-of-transactions-you-can-find-in-an-activity)
   - [Display active projects grouped by country](#display-active-projects-grouped-by-country)
   - [Freetext search for activities starting in year 2022](#freetext-search-for-activities-starting-in-year-2022)
+  - [Count active projects from 2021 onwards](#count-active-projects-from-2021-onwards)
   - [Display location data for active projects for a country](#display-location-data-for-active-projects-for-a-country)
   - [Display `@percentage` reported for `recipient-country`, starting with the lowest number](#display-percentage-reported-for-recipient-country-starting-with-the-lowest-number)
   - [Display number of items with full activity data for an element and vocab](#display-number-of-items-with-full-activity-data-for-an-element-and-vocab)
@@ -744,13 +745,10 @@ limit 1;
 
 The following dumps can be imported locally and queried using the same SQL code that is used on the web interface so you can run large queries on it without clogging up d-portal.
 
-1. PostgreSQL dump *(Updated nightly)*  
-    [http://d-portal.org/db/dstore.sql.gz](http://d-portal.org/db/dstore.sql.gz)
-
-2. `pg_dump` custom format so `pg_restore` can be used with its various options *(Updated nightly)*  
+1. PostgreSQL `pg_dump` custom format so `pg_restore` can be used with its various options *(Updated nightly)*  
     [http://d-portal.org/db/dstore.pg](http://d-portal.org/db/dstore.pg)
 
-3. A zip of all the raw cached xml *(Updated nightly)*  
+2. A zip of all the raw cached xml *(Updated nightly)*  
     [http://d-portal.org/db/cache.xml.zip](http://d-portal.org/db/cache.xml.zip)
 
 
@@ -2636,6 +2634,99 @@ Result
         }
     ],
     time: 0.45
+}
+```
+
+<p align="right"><a href="#tada-introduction">To Top</a></p>
+
+### Count active projects from 2021 onwards
+
+This query adds a regex check to make sure the `@iso-date` is valid instead of throwing up an error when unexpected data is found.  
+An example of this is when we find text in `@iso-date`; ie. "Inception start date 28/10/2016".
+
+We only want activities that have a planned start date (`@type` is 1).  
+We use `distinct` so we do not double count any activities.
+
+[View this query](https://d-portal.org/dquery/#SELECT%20count%28distinct%20aid%29%20FROM%0A%28%0A%20%20%20%20SELECT%20aid,%20%20%28regexp_matches%28%20xson-%3E%3E%27@iso-date%27%20,%20%27%5Cd%7B4%7D-%5Cd%7B2%7D-%5Cd%7B2%7D%27%20%29%29%5B1%5D::DATE%20AS%20startdate%0A%20%20%20%20FROM%20xson%0A%20%20%20%20WHERE%0A%20%20%20%20%20%20%20%20root=%27/iati-activities/iati-activity/activity-date%27%0A%20%20%20%20AND%0A%20%20%20%20%20%20%20%20xson-%3E%3E%27@type%27=%271%27%0A%20%20%20%20%20%20%20%20%0A%29%20AS%20aiddates%20WHERE%20aiddates.startdate%20%3E%20%272021-01-01%27::DATE%0A%0A) on dQuery.
+
+```sql
+SELECT count(distinct aid) FROM
+(
+    SELECT aid,  (regexp_matches( xson->>'@iso-date' , '\d{4}-\d{2}-\d{2}' ))[1]::DATE AS startdate
+    FROM xson
+    WHERE
+        root='/iati-activities/iati-activity/activity-date'
+    AND
+        xson->>'@type'='1'
+       
+) AS aiddates WHERE aiddates.startdate > '2021-01-01'::DATE
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            count: "66843"
+        }
+    ],
+    time: 10.258
+}
+```
+
+The following uses the `epoch` option to count all activities that start in 01 January 2021.
+
+```sql
+SELECT count(aid) FROM xson WHERE root = '/iati-activities/iati-activity'
+AND aid IN
+(
+  SELECT aid from act WHERE day_start >= FLOOR(EXTRACT(epoch FROM '2021-01-01'::DATE)/(60*60*24))
+)
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            count: "82366"
+        }
+    ],
+    time: 5.735
+}
+```
+
+The following uses the `epoch` option, groups the results by activity and sorts the activities by date and description.
+
+This is an expensive and large query asking for activity identifiers and its details, so adding a `limit` will help the server and your browser. Otherwise, it will attempt to list all 82,366 results!
+
+```sql
+SELECT * FROM xson WHERE root = '/iati-activities/iati-activity'
+AND aid IN
+(
+  SELECT aid from act WHERE day_start >= FLOOR(EXTRACT(epoch FROM '2021-01-01'::DATE)/(60*60*24))
+  GROUP by aid
+  ORDER BY day_start, aid desc
+)
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            aid: "ZW-ROD-MA0000405/2015-4000004082",
+            pid: "ZW-ROD-MA0000405/2015",
+            root: "/iati-activities/iati-activity",
+            xson: {25 items}
+        }
+    ],
+    time: 0.732
 }
 ```
 
