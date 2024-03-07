@@ -1995,6 +1995,45 @@ Result
 }
 ```
 
+Add a `IS NOT NULL` rule to ignore `null` results.
+
+It is worth noting that several publishers use this `@ref` as a general identifier for an organisation; ie. 'NGO based in a developing country'.
+
+```sql
+select ref,
+count(*)
+from (
+
+    select
+    xson->>'@ref' as ref ,
+    xson->'/narrative'->0->>'' as narrative ,
+    count(*)
+    from xson where root='/iati-activities/iati-activity/participating-org' 
+    and xson->>'@ref' IS NOT NULL
+    group by 1,2
+    
+) as q1
+
+group by 1
+order by 2 desc
+
+limit 1;
+```
+
+Result
+
+```jsonc
+{
+    rows: [
+        {
+            ref: "XM-DAC-23000",
+            count: "977"
+        }
+    ],
+    time: 2.857
+}
+```
+
 <p align="right"><a href="#tada-introduction">To Top</a></p>
 
 ### Display all `narrative` grouped by `participating-org@ref`
@@ -2093,7 +2132,8 @@ narrative,
 participating_org_ref
 
 order by 3 desc
-limit 100;
+
+limit 5;
 ```
 
 Result
@@ -2125,54 +2165,69 @@ Result
             participating_org_ref: "GB-COH-213890",
             narrative: "Save the Children (Start Fund)",
             count: "20"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "HET NEDERLANDSE RODE KRUIS (NLD)",
-            count: "16"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "Elrha (Hosted by Save the Children UK)",
-            count: "7"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "Save the Children Fund (SCUK)",
-            count: "2"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "Save the Children Mozambique",
-            count: "1"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "Save the Children Fund",
-            count: "1"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "Save the Children (Start Network)",
-            count: "1"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "Save the Children Ethiopia",
-            count: "1"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "Save The Children",
-            count: "1"
-        },
-        {
-            participating_org_ref: "GB-COH-213890",
-            narrative: "SAVE",
-            count: "1"
         }
     ],
     time: 6.761
+}
+```
+
+Add a few more lines to include the reporting-org publishing the data and order the list so that the most instances are at the top.
+
+```sql
+SELECT
+
+xson->>'@ref' AS "@ref" ,
+xson->'/narrative'->0->>'' AS "/narrative" ,
+pid as "reporting-org",
+count(*) AS count
+
+FROM xson WHERE root='/iati-activities/iati-activity/participating-org' 
+AND xson->>'@ref'='XM-DAC-23000'
+
+GROUP BY 1,2,3
+order by 4 desc
+
+limit 5;
+```
+
+Result
+
+```jsonc
+{
+
+    rows: [
+        {
+            @ref: "XM-DAC-23000",
+            /narrative: "ONG basée dans un pays en développement",
+            reporting-org: "CH-4",
+            count: "3150"
+        },
+        {
+            @ref: "XM-DAC-23000",
+            /narrative: null,
+            reporting-org: "SE-0",
+            count: "2762"
+        },
+        {
+            @ref: "XM-DAC-23000",
+            /narrative: "Odefinierat",
+            reporting-org: "SE-0",
+            count: "1038"
+        },
+        {
+            @ref: "XM-DAC-23000",
+            /narrative: "Misc",
+            reporting-org: "SE-0",
+            count: "476"
+        },
+        {
+            @ref: "XM-DAC-23000",
+            /narrative: "Dev. country based NGOs",
+            reporting-org: "SE-0",
+            count: "324"
+        }
+    ],
+    time: 0.205
 }
 ```
 
